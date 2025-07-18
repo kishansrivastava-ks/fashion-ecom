@@ -15,21 +15,21 @@ const tabs = [
 const sampleCourses = {
   Popular: [
     {
-      image: '/images/data-science.jpg',
+      image: '/images/web.png',
       title: 'Complete Data Science & Machine Learning Bootcamp',
       category: 'Technology & Analytics',
       price: '₹12,999',
       rating: 4.8,
     },
     {
-      image: '/images/digital-marketing.jpg',
+      image: '/images/online-learning.jpg',
       title: 'Digital Marketing Masterclass - SEO, Social Media & Growth',
       category: 'Soft Skills',
       price: '₹8,999',
       rating: 4.7,
     },
     {
-      image: '/images/blockchain.jpg',
+      image: '/images/mba.jpg',
       title: 'Blockchain & Cryptocurrency Fundamentals',
       category: 'Web 3.0',
       price: '₹15,999',
@@ -242,8 +242,9 @@ const Wrapper = styled.div`
   padding: 4rem 2rem;
   max-width: 1280px;
   margin: 0 auto;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  /* background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); */
   border-radius: 20px;
+  /* border: 1px solid red; */
 `
 
 const Heading = styled.div`
@@ -351,6 +352,9 @@ const LikeIcon = styled.div`
   z-index: 2;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     background: #e63946;

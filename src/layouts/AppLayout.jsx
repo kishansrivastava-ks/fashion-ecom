@@ -285,8 +285,9 @@ const Logo = styled.div`
   gap: 0.5rem;
   font-size: 1.5rem;
   font-weight: 800;
-  color: white;
+  /* color: white; */
   text-decoration: none;
+  color: #ffe284;
 
   @media (max-width: 768px) {
     font-size: 1.3rem;
@@ -317,6 +318,7 @@ const SearchContainer = styled.div`
   align-items: center;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  /* border: 1px solid #ffe284; */
   border-radius: 50px;
   overflow: hidden;
   backdrop-filter: blur(10px);
@@ -340,12 +342,13 @@ const SearchInput = styled.input`
   padding: 0.75rem 0;
   background: transparent;
   border: none;
-  color: white;
+  color: black;
   font-size: 0.95rem;
   outline: none;
 
   &::placeholder {
-    color: rgba(255, 255, 255, 0.6);
+    /* color: rgba(255, 255, 255, 0.6); */
+    color: #9ca3af;
   }
 `
 
@@ -373,7 +376,8 @@ const NavLink = styled(Link)`
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  color: white;
+  /* color: white; */
+  color: #fdda68;
   font-size: 0.95rem;
   font-weight: 500;
   text-decoration: none;
@@ -422,7 +426,8 @@ const ActionButton = styled.button`
   height: 40px;
   border: none;
   background: rgba(255, 255, 255, 0.1);
-  color: white;
+  color: #fdda68;
+
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -431,10 +436,11 @@ const ActionButton = styled.button`
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid #fdda68;
 
   &:hover {
     background: rgba(255, 255, 255, 0.2);
-    color: #ffeaa7;
+    /* color: #ffeaa7; */
   }
 `
 

@@ -153,7 +153,7 @@ export default HeroSection
 const HeroContainer = styled.div`
   position: relative;
   min-height: 100vh;
-  width: 100vw;
+  /* width: 100vw; */
   margin-left: calc(-50vw + 50%);
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   background-image: url('https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=1920&h=1080&fit=crop');

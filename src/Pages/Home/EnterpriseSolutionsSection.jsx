@@ -147,11 +147,11 @@ const EnterpriseSolutionsSection = () => {
 export default EnterpriseSolutionsSection
 
 const Wrapper = styled.div`
-  padding: 4rem 2rem;
-  max-width: 1400px;
+  padding: 4rem 4rem;
+  max-width: 1500px;
   margin: 0 auto;
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  border-radius: 20px;
+  /* border-radius: 20px; */
 `
 
 const Heading = styled.div`
@@ -235,6 +235,11 @@ const IconOverlay = styled.div`
   color: #667eea;
   z-index: 2;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  height: 45px;
+  width: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
 const ContentColumn = styled.div`

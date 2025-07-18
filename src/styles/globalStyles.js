@@ -18,6 +18,13 @@ export const GlobalStyles = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     scroll-behavior: smooth;
+
+    /* remove the scrollbar */
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+    
   }
 
   a {
