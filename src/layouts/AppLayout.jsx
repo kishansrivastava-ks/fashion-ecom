@@ -29,8 +29,8 @@ const AppLayout = () => {
         <NavbarContainer>
           <Logo to="/">Career Counselling Corporation of India</Logo>
           <NavItems>
-            <StyledLink to="/courses">Courses</StyledLink>
-            <StyledLink to="/institutes">Institutes</StyledLink>
+            <StyledLink to="/training-and-placements">Training & Placements</StyledLink>
+            {/* <StyledLink to="/institutes">Institutes</StyledLink> */}
             <StyledLink to="/about">About Us</StyledLink>
             <StyledLink to="/contact">Contact</StyledLink>
           </NavItems>

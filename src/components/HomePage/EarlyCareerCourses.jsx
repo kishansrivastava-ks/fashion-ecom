@@ -242,7 +242,7 @@ const courses = [
   {
     id: 1,
     title: 'Banking Pro - Certificate Programme in Banking, Financial Services, & Insurance',
-    brand: 'TimesPro',
+    brand: 'CCCOI',
     category: 'Banking & Finance',
     salary: '₹ 2,70,000 PA',
     rating: 4.9,
@@ -251,7 +251,7 @@ const courses = [
   {
     id: 2,
     title: 'Certificate in Logistics and Supply Chain Management',
-    brand: 'TimesPro',
+    brand: 'CCCOI',
     category: 'Operations & Supply Chain',
     salary: '₹ 1,44,000 PA',
     rating: 4.8,
@@ -260,7 +260,7 @@ const courses = [
   {
     id: 3,
     title: 'Certificate Programme in Hospitality and Hotel Management',
-    brand: 'Marriott International',
+    brand: 'CCCOI',
     category: 'Hospitality',
     salary: '₹ 2,50,000 PA',
     rating: 4.7,

@@ -3,6 +3,7 @@ import { GlobalStyles } from './styles/globalStyles'
 import Home from './Pages/Home'
 import { ThemeProvider } from './contexts/ThemeProvider'
 import AppLayout from './layouts/AppLayout'
+import TrainingAndPlacements from './Pages/TrainingAndPlacements'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<AppLayout />}>
             <Route path="" element={<Home />} />
+            <Route path="training-and-placements" element={<TrainingAndPlacements />} />
           </Route>
         </Routes>
       </BrowserRouter>
