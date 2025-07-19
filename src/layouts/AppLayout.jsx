@@ -27,7 +27,10 @@ const AppLayout = () => {
         transition={{ duration: 0.3, ease: 'easeInOut' }}
       >
         <NavbarContainer>
-          <Logo to="/">Career Counselling Corporation of India</Logo>
+          <LogoContainer>
+            <LogoImage />
+            <Logo to="/">Career Counselling Corporation of India</Logo>
+          </LogoContainer>
           <NavItems>
             <StyledLink to="/training-and-placements">Training & Placements</StyledLink>
             {/* <StyledLink to="/institutes">Institutes</StyledLink> */}
@@ -138,13 +141,39 @@ const NavbarContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 1.2rem 2rem;
-  max-width: 1400px;
+  max-width: 1500px;
   margin: 0 auto;
+`
+const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  /* gap: 1rem; */
+  flex-shrink: 0;
+  @media (max-width: 768px) {
+    gap: 0.5rem;
+    flex-shrink: 1;
+  }
+`
+
+const LogoImage = styled.img.attrs({
+  src: '/logo.png',
+  alt: 'Logo',
+})`
+  width: 50px;
+  height: 50px;
+  margin-right: 1rem;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: scale(1.05);
+  }
 `
 
 const Logo = styled(Link)`
   font-size: 1.3rem;
-  font-weight: 700;
+  font-weight: 400;
+  letter-spacing: 1px;
   color: #000080;
   text-decoration: none;
   white-space: nowrap;
@@ -153,7 +182,7 @@ const Logo = styled(Link)`
 const NavItems = styled.div`
   display: flex;
   align-items: center;
-  gap: 2.5rem;
+  gap: 2rem;
 
   @media (max-width: 1024px) {
     display: none; // Example: Hide for a mobile menu implementation
@@ -208,7 +237,7 @@ const SearchBar = styled.input`
 `
 
 const AuthButton = styled(Link)`
-  padding: 0.7rem 1.5rem;
+  padding: 0.35rem 1.5rem;
   background: #d9534f;
   color: white;
   border-radius: 8px;
@@ -221,6 +250,7 @@ const AuthButton = styled(Link)`
     background: #c9302c;
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(217, 83, 79, 0.3);
+    color: #ffffff;
   }
 `
 
