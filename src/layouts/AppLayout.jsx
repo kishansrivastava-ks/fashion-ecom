@@ -32,7 +32,7 @@ const AppLayout = () => {
             <StyledLink to="/training-and-placements">Training & Placements</StyledLink>
             {/* <StyledLink to="/institutes">Institutes</StyledLink> */}
             <StyledLink to="/about">About Us</StyledLink>
-            <StyledLink to="/contact">Contact</StyledLink>
+            <StyledLink to="/recommendations">Recommendations</StyledLink>
           </NavItems>
           <AuthContainer>
             <SearchBar type="text" placeholder="Search..." />
