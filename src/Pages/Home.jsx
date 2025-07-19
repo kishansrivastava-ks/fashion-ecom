@@ -1,3 +1,4 @@
+import EarlyCareerCourses from '@/components/HomePage/EarlyCareerCourses'
 import ConnectWithUsSection from './Home/ConnectWithUsSection'
 import EarlyCareerCoursesSection from './Home/EarlyCareerCoursesSection'
 import EnterpriseSolutionsSection from './Home/EnterpriseSolutionsSection'
@@ -7,11 +8,24 @@ import InDemandDomainsSection from './Home/InDemandDomainsSection'
 import SelfPacedCoursesSection from './Home/SelfPacedCoursesSection'
 import TestimonialsSection from './Home/TestimonialsSection'
 import WhyUsSection from './Home/WhyUsSection'
+import ExecutiveEducationCourses from '@/components/HomePage/ExecutiveEducationCourses'
+import SelfPacedCourses from '@/components/HomePage/SelfPacedCourses'
+import EnterpriseSolutions from '@/components/HomePage/EnterpriseSolutions'
+import InDemandDomains from '@/components/HomePage/InDemandDomains'
+import PremierInstitutes from '@/components/HomePage/PremierInstitutes'
+import AdvantageSection from '@/components/HomePage/AdvantageSection'
 
 function Home() {
   return (
     <>
-      <HeroSection />
+      <EarlyCareerCourses />
+      <ExecutiveEducationCourses />
+      <SelfPacedCourses />
+      <EnterpriseSolutions />
+      <InDemandDomains />
+      <PremierInstitutes />
+      <AdvantageSection />
+      {/* <HeroSection />
       <EarlyCareerCoursesSection />
       <ExecutiveEducationSection />
       <SelfPacedCoursesSection />
@@ -19,7 +33,7 @@ function Home() {
       <InDemandDomainsSection />
       <WhyUsSection />
       <TestimonialsSection />
-      <ConnectWithUsSection />
+      <ConnectWithUsSection /> */}
     </>
   )
 }
