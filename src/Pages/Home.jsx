@@ -14,6 +14,8 @@ import EnterpriseSolutions from '@/components/HomePage/EnterpriseSolutions'
 import InDemandDomains from '@/components/HomePage/InDemandDomains'
 import PremierInstitutes from '@/components/HomePage/PremierInstitutes'
 import AdvantageSection from '@/components/HomePage/AdvantageSection'
+import SuccessStories from '@/components/HomePage/SuccessStories'
+import ConnectWithUs from '@/components/HomePage/ConnectWithUs'
 
 function Home() {
   return (
@@ -25,6 +27,8 @@ function Home() {
       <InDemandDomains />
       <PremierInstitutes />
       <AdvantageSection />
+      <SuccessStories />
+      <ConnectWithUs />
       {/* <HeroSection />
       <EarlyCareerCoursesSection />
       <ExecutiveEducationSection />
