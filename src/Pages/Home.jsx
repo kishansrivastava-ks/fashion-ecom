@@ -7,10 +7,12 @@ import PremierInstitutes from '@/components/HomePage/PremierInstitutes'
 import AdvantageSection from '@/components/HomePage/AdvantageSection'
 import SuccessStories from '@/components/HomePage/SuccessStories'
 import ConnectWithUs from '@/components/HomePage/ConnectWithUs'
+import HomePageHero from '@/components/HomePage/HomePageHero'
 
 function Home() {
   return (
     <>
+      <HomePageHero />
       <EarlyCareerCourses />
       <ExecutiveEducationCourses />
       <SelfPacedCourses />

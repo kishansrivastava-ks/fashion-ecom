@@ -1,5 +1,7 @@
-import React from 'react'
+import { AnimatePresence } from 'framer-motion'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import RequestCallbackModal from '../modals/RequestCallbackModal'
 
 // --- STYLED COMPONENTS ---
 
@@ -127,29 +129,38 @@ const Circle3 = styled(Circle1)`
 
 // --- MAIN COMPONENT ---
 const ConnectWithUs = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   return (
-    <ConnectSectionContainer>
-      <CtaBanner>
-        <TextContent>
-          <Heading>Connect with us</Heading>
-          <Subheading>
-            Just share your details and we will contact you at your convenience.
-          </Subheading>
-          <CallbackButton href="#">Request a Callback &rarr;</CallbackButton>
-        </TextContent>
-        <ImageContainer>
-          <Circle1 />
-          <Circle2 />
-          <Circle3 />
-          <AgentImage
-            src="https://placehold.co/300x300/ffffff/333?text=Agent&font=png"
-            alt="Support agent"
-            // Using a transparent placeholder to better show the effect
-            style={{ backgroundColor: 'transparent' }}
-          />
-        </ImageContainer>
-      </CtaBanner>
-    </ConnectSectionContainer>
+    <>
+      <ConnectSectionContainer>
+        <CtaBanner>
+          <TextContent>
+            <Heading>Connect with us</Heading>
+            <Subheading>
+              Just share your details and we will contact you at your convenience.
+            </Subheading>
+            <CallbackButton onClick={() => setIsModalOpen(true)}>
+              Request a Callback &rarr;
+            </CallbackButton>
+          </TextContent>
+          <ImageContainer>
+            <Circle1 />
+            <Circle2 />
+            <Circle3 />
+            <AgentImage
+              src="https://placehold.co/300x300/ffffff/333?text=Agent&font=png"
+              alt="Support agent"
+              // Using a transparent placeholder to better show the effect
+              style={{ backgroundColor: 'transparent' }}
+            />
+          </ImageContainer>
+        </CtaBanner>
+      </ConnectSectionContainer>
+      <AnimatePresence>
+        {isModalOpen && <RequestCallbackModal setOpen={setIsModalOpen} />}
+      </AnimatePresence>
+    </>
   )
 }
 
