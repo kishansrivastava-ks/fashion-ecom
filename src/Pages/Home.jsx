@@ -8,6 +8,8 @@ import AdvantageSection from '@/components/HomePage/AdvantageSection'
 import SuccessStories from '@/components/HomePage/SuccessStories'
 import ConnectWithUs from '@/components/HomePage/ConnectWithUs'
 import HomePageHero from '@/components/HomePage/HomePageHero'
+import ProdegreePartners from '@/components/HomePage/ProdegreePartners'
+import AlliancesSection from '@/components/HomePage/AlliancesSection'
 
 function Home() {
   return (
@@ -21,6 +23,8 @@ function Home() {
       <PremierInstitutes />
       <AdvantageSection />
       <SuccessStories />
+      <ProdegreePartners />
+      <AlliancesSection />
       <ConnectWithUs />
     </>
   )
