@@ -83,7 +83,7 @@ const LogoCard = styled(motion.a)`
 
   img {
     max-width: 80%;
-    max-height: 70px; // Ensures logos are of a considerable size
+    max-height: 100px; // Ensures logos are of a considerable size
     transition: transform 0.3s ease;
   }
 

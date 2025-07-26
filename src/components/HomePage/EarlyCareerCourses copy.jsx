@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 // Helper for icons - in a real app, you'd use an icon library like react-icons
@@ -237,174 +237,34 @@ const RatingText = styled.span`
   color: #555;
 `
 
-const allCourses = [
-  // Banking & Finance
+// Mock Data
+const courses = [
   {
     id: 1,
-    title: 'Banking Pro - Certificate Programme',
+    title: 'Banking Pro - Certificate Programme in Banking, Financial Services, & Insurance',
     brand: 'CCCOI',
     category: 'Banking & Finance',
     salary: '₹ 2,70,000 PA',
     rating: 4.9,
-    imageUrl: 'https://placehold.co/600x400/E0F2F1/333?text=Banking+Pro',
+    imageUrl: 'https://placehold.co/600x400/E0F2F1/333?text=Course+Image+1',
   },
   {
     id: 2,
-    title: 'Certified Financial Planner Program',
-    brand: 'FinSchool',
-    category: 'Banking & Finance',
-    salary: '₹ 3,50,000 PA',
-    rating: 4.8,
-    imageUrl: 'https://placehold.co/600x400/E0F2F1/333?text=CFP+Program',
-  },
-  {
-    id: 3,
-    title: 'Investment Banking Analyst Course',
-    brand: 'WallStreet Prep',
-    category: 'Banking & Finance',
-    salary: '₹ 4,20,000 PA',
-    rating: 4.9,
-    imageUrl: 'https://placehold.co/600x400/E0F2F1/333?text=Investment+Banking',
-  },
-  // Operations & Supply Chain
-  {
-    id: 4,
-    title: 'Certificate in Logistics Management',
+    title: 'Certificate in Logistics and Supply Chain Management',
     brand: 'CCCOI',
     category: 'Operations & Supply Chain',
     salary: '₹ 1,44,000 PA',
     rating: 4.8,
-    imageUrl: 'https://placehold.co/600x400/E3F2FD/333?text=Logistics',
+    imageUrl: 'https://placehold.co/600x400/E3F2FD/333?text=Course+Image+2',
   },
   {
-    id: 5,
-    title: 'PG in e-Commerce & Supply Chain',
+    id: 3,
+    title: 'Certificate Programme in Hospitality and Hotel Management',
     brand: 'CCCOI',
-    category: 'Operations & Supply Chain',
-    salary: '₹ 3,50,000 PA',
-    rating: 4.8,
-    imageUrl: 'https://placehold.co/600x400/E3F2FD/333?text=e-Commerce+SCM',
-  },
-  {
-    id: 6,
-    title: 'Certificate in Logistics Planning',
-    brand: 'Om Logistics',
-    category: 'Operations & Supply Chain',
-    salary: '₹ 2,40,000 PA',
-    rating: 5.0,
-    imageUrl: 'https://placehold.co/600x400/E3F2FD/333?text=Logistics+Planning',
-  },
-  // Technology & Analytics
-  {
-    id: 7,
-    title: 'PG Advanced Certificate in Data Science',
-    brand: 'CCCOI',
-    category: 'Technology & Analytics',
-    salary: '₹ 15,00,000 PA',
-    rating: 4.9,
-    imageUrl: 'https://placehold.co/600x400/D1C4E9/333?text=Data+Science',
-  },
-  {
-    id: 8,
-    title: 'Full Stack Web Development Course',
-    brand: 'DevAcademy',
-    category: 'Technology & Analytics',
-    salary: '₹ 5,00,000 PA',
-    rating: 5.0,
-    imageUrl: 'https://placehold.co/600x400/D1C4E9/333?text=Full+Stack+Dev',
-  },
-  {
-    id: 9,
-    title: 'Cloud Computing & DevOps Certification',
-    brand: 'CloudPro',
-    category: 'Technology & Analytics',
-    salary: '₹ 7,50,000 PA',
-    rating: 4.8,
-    imageUrl: 'https://placehold.co/600x400/D1C4E9/333?text=Cloud+Computing',
-  },
-  // Healthcare
-  {
-    id: 10,
-    title: 'Certificate in Occupational English for Nurses',
-    brand: 'Jobizo',
-    category: 'Healthcare',
-    salary: '₹ 23,80,219 PA',
-    rating: 4.8,
-    imageUrl: 'https://placehold.co/600x400/F8BBD0/333?text=Nursing+English',
-  },
-  {
-    id: 11,
-    title: 'Medical Coding and Billing Certificate',
-    brand: 'HealthCode',
-    category: 'Healthcare',
-    salary: '₹ 3,00,000 PA',
-    rating: 4.7,
-    imageUrl: 'https://placehold.co/600x400/F8BBD0/333?text=Medical+Coding',
-  },
-  {
-    id: 12,
-    title: 'Hospital Administration Program',
-    brand: 'Medversity',
-    category: 'Healthcare',
-    salary: '₹ 4,50,000 PA',
-    rating: 4.8,
-    imageUrl: 'https://placehold.co/600x400/F8BBD0/333?text=Hospital+Admin',
-  },
-  // Hospitality
-  {
-    id: 13,
-    title: 'Certificate in Hospitality & Hotel Management',
-    brand: 'Marriott',
     category: 'Hospitality',
     salary: '₹ 2,50,000 PA',
     rating: 4.7,
-    imageUrl: 'https://placehold.co/600x400/FCE4EC/333?text=Hotel+Management',
-  },
-  {
-    id: 14,
-    title: 'Aviation & Cabin Crew Training',
-    brand: 'FlyHigh Academy',
-    category: 'Hospitality',
-    salary: '₹ 4,00,000 PA',
-    rating: 4.9,
-    imageUrl: 'https://placehold.co/600x400/FCE4EC/333?text=Cabin+Crew',
-  },
-  {
-    id: 15,
-    title: 'Professional Chef Certification',
-    brand: 'Le Cordon Bleu',
-    category: 'Hospitality',
-    salary: '₹ 3,80,000 PA',
-    rating: 4.9,
-    imageUrl: 'https://placehold.co/600x400/FCE4EC/333?text=Pro+Chef',
-  },
-  // General Management
-  {
-    id: 16,
-    title: 'BIMTECH PG Diploma in Management (Online)',
-    brand: 'BIMTECH',
-    category: 'General Management',
-    salary: '₹ 5,00,000 PA',
-    rating: 4.7,
-    imageUrl: 'https://placehold.co/600x400/C5CAE9/333?text=PGDM+Online',
-  },
-  {
-    id: 17,
-    title: 'Certificate in Business Administration',
-    brand: 'BizSchool',
-    category: 'General Management',
-    salary: '₹ 3,20,000 PA',
-    rating: 4.6,
-    imageUrl: 'https://placehold.co/600x400/C5CAE9/333?text=Business+Admin',
-  },
-  {
-    id: 18,
-    title: 'Startup & Entrepreneurship Program',
-    brand: 'InnovateHub',
-    category: 'General Management',
-    salary: 'N/A',
-    rating: 4.8,
-    imageUrl: 'https://placehold.co/600x400/C5CAE9/333?text=Startup+Program',
+    imageUrl: 'https://placehold.co/600x400/FCE4EC/333?text=Course+Image+3',
   },
 ]
 
@@ -418,24 +278,9 @@ const tabs = [
   'General Management',
 ]
 
-// --- UPDATED MAIN COMPONENT ---
+// Main Component
 const EarlyCareerCourses = () => {
   const [activeTab, setActiveTab] = useState('Popular')
-  const [popularCourses, setPopularCourses] = useState([])
-
-  // Effect to set the initial random popular courses
-  useEffect(() => {
-    const shuffled = [...allCourses].sort(() => 0.5 - Math.random())
-    setPopularCourses(shuffled.slice(0, 3))
-  }, [])
-
-  // Filtering logic
-  const filteredCourses = useMemo(() => {
-    if (activeTab === 'Popular') {
-      return popularCourses
-    }
-    return allCourses.filter((course) => course.category === activeTab)
-  }, [activeTab, popularCourses])
 
   const renderStars = (rating) => {
     const totalStars = 5
@@ -465,7 +310,7 @@ const EarlyCareerCourses = () => {
       </TabsContainer>
 
       <CoursesGrid>
-        {filteredCourses.map((course) => (
+        {courses.map((course) => (
           <CourseCard key={course.id}>
             <CardImageContainer>
               <CardImage src={course.imageUrl} alt={course.title} />

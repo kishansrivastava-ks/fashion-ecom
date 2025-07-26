@@ -279,35 +279,533 @@ const RatingText = styled.span`
 `
 
 // --- MOCK DATA ---
-const courses = [
-  {
-    id: 1,
-    title: 'IIM Kozhikode Professional Certificate Programme in Fintech - Batch 07',
-    institution: 'IIM Kozhikode',
-    startsIn: '7 days',
-    fee: '₹ 2,10,000',
-    rating: 4.9,
-    imageUrl: 'https://placehold.co/600x400/bdc3c7/333?text=Fintech+Course',
-  },
-  {
-    id: 2,
-    title: 'IIM Calcutta Executive Programme in Business Management - Batch 31',
-    institution: 'IIM Calcutta',
-    startsIn: '14 days',
-    fee: '₹ 7,02,000',
-    rating: 4.9,
-    imageUrl: 'https://placehold.co/600x400/95a5a6/333?text=Business+Mngmt',
-  },
-  {
-    id: 3,
-    title: 'IIM Nagpur Certificate Programme in Project Management - Batch 07',
-    institution: 'IIM Nagpur',
-    startsIn: '41 days',
-    fee: '₹ 1,35,000',
-    rating: 4.9,
-    imageUrl: 'https://placehold.co/600x400/7f8c8d/333?text=Project+Mngmt',
-  },
-]
+// const courses = [
+//   {
+//     id: 1,
+//     title: 'IIM Kozhikode Professional Certificate Programme in Fintech - Batch 07',
+//     institution: 'IIM Kozhikode',
+//     startsIn: '7 days',
+//     fee: '₹ 2,10,000',
+//     rating: 4.9,
+//     imageUrl: 'https://placehold.co/600x400/bdc3c7/333?text=Fintech+Course',
+//   },
+//   {
+//     id: 2,
+//     title: 'IIM Calcutta Executive Programme in Business Management - Batch 31',
+//     institution: 'IIM Calcutta',
+//     startsIn: '14 days',
+//     fee: '₹ 7,02,000',
+//     rating: 4.9,
+//     imageUrl: 'https://placehold.co/600x400/95a5a6/333?text=Business+Mngmt',
+//   },
+//   {
+//     id: 3,
+//     title: 'IIM Nagpur Certificate Programme in Project Management - Batch 07',
+//     institution: 'IIM Nagpur',
+//     startsIn: '41 days',
+//     fee: '₹ 1,35,000',
+//     rating: 4.9,
+//     imageUrl: 'https://placehold.co/600x400/7f8c8d/333?text=Project+Mngmt',
+//   },
+// ]
+
+// const tabs = [
+//   'Popular',
+//   'Technology & Analytics',
+//   'Leadership & Strategy',
+//   'General Management',
+//   'Operations & Supply Chain',
+//   'Marketing & Sales',
+//   'MBA',
+//   'Banking & Finance',
+//   'Innovation & Transformation',
+//   'Human Resources',
+//   'Healthcare',
+//   'Product Management',
+//   'Web 3.0',
+//   'Law',
+// ]
+
+// // --- MAIN COMPONENT ---
+// const ExecutiveEducationCourses = () => {
+//   const [activeTab, setActiveTab] = useState('Popular')
+
+//   const renderStars = (rating) => {
+//     const totalStars = 5
+//     let stars = []
+//     for (let i = 1; i <= totalStars; i++) {
+//       stars.push(<StarIcon key={i} filled={i <= rating} />)
+//     }
+//     return stars
+//   }
+
+//   return (
+//     <CoursesContainer>
+//       <SectionHeader>
+//         <TopLink href="#">Explore All Executive Education Courses →</TopLink>
+//         <SectionTitle>
+//           Scale Up Your Career With
+//           <strong>Executive Education Courses</strong>
+//         </SectionTitle>
+//       </SectionHeader>
+
+//       <TabsContainer>
+//         {tabs.map((tab) => (
+//           <TabButton key={tab} active={activeTab === tab} onClick={() => setActiveTab(tab)}>
+//             {tab}
+//           </TabButton>
+//         ))}
+//       </TabsContainer>
+
+//       <CoursesGrid>
+//         {courses.map((course) => (
+//           <CourseCard key={course.id}>
+//             <CardImageContainer>
+//               <CardImage src={course.imageUrl} alt={course.title} />
+//               <HeartButton>
+//                 <HeartIcon />
+//               </HeartButton>
+//               <AdmissionButton>Admission Open</AdmissionButton>
+//             </CardImageContainer>
+//             <CardContent>
+//               <CourseTitle>{course.title}</CourseTitle>
+//               <InstitutionInfo>
+//                 <InstitutionName>
+//                   <InstitutionIcon />
+//                   {course.institution}
+//                 </InstitutionName>
+//                 <StartDate>
+//                   <CalendarIcon />
+//                   Starts in {course.startsIn}
+//                 </StartDate>
+//               </InstitutionInfo>
+//               <CardFooter>
+//                 <FeeInfo>
+//                   Course Fee
+//                   <strong>{course.fee}</strong>
+//                 </FeeInfo>
+//                 <RatingContainer>
+//                   <Stars>{renderStars(course.rating)}</Stars>
+//                   <RatingText>({course.rating})</RatingText>
+//                 </RatingContainer>
+//               </CardFooter>
+//             </CardContent>
+//           </CourseCard>
+//         ))}
+//       </CoursesGrid>
+//     </CoursesContainer>
+//   )
+// }
+
+// --- EXTENDED MOCK DATA ---
+const coursesData = {
+  Popular: [
+    {
+      id: 1,
+      title: 'IIM Kozhikode Professional Certificate Programme in Fintech - Batch 07',
+      institution: 'IIM Kozhikode',
+      startsIn: '7 days',
+      fee: '₹ 2,10,000',
+      rating: 4.9,
+      imageUrl: 'https://placehold.co/600x400/bdc3c7/333?text=Fintech+Course',
+    },
+    {
+      id: 2,
+      title: 'IIM Calcutta Executive Programme in Business Management - Batch 31',
+      institution: 'IIM Calcutta',
+      startsIn: '14 days',
+      fee: '₹ 7,02,000',
+      rating: 4.9,
+      imageUrl: 'https://placehold.co/600x400/95a5a6/333?text=Business+Mngmt',
+    },
+    {
+      id: 3,
+      title: 'IIM Nagpur Certificate Programme in Project Management - Batch 07',
+      institution: 'IIM Nagpur',
+      startsIn: '41 days',
+      fee: '₹ 1,35,000',
+      rating: 4.9,
+      imageUrl: 'https://placehold.co/600x400/7f8c8d/333?text=Project+Mngmt',
+    },
+  ],
+  'Technology & Analytics': [
+    {
+      id: 4,
+      title: 'IIT Delhi Executive Programme in Data Science & AI - Batch 12',
+      institution: 'IIT Delhi',
+      startsIn: '10 days',
+      fee: '₹ 3,50,000',
+      rating: 4.8,
+      imageUrl: 'https://placehold.co/600x400/3498db/333?text=Data+Science',
+    },
+    {
+      id: 5,
+      title: 'IIM Bangalore Advanced Certificate in Machine Learning - Batch 08',
+      institution: 'IIM Bangalore',
+      startsIn: '21 days',
+      fee: '₹ 2,75,000',
+      rating: 4.7,
+      imageUrl: 'https://placehold.co/600x400/9b59b6/333?text=ML+Analytics',
+    },
+    {
+      id: 6,
+      title: 'ISB Professional Certificate in Business Analytics - Batch 15',
+      institution: 'ISB Hyderabad',
+      startsIn: '35 days',
+      fee: '₹ 1,95,000',
+      rating: 4.8,
+      imageUrl: 'https://placehold.co/600x400/2ecc71/333?text=Business+Analytics',
+    },
+  ],
+  'Leadership & Strategy': [
+    {
+      id: 7,
+      title: 'IIM Ahmedabad Advanced Management Programme - Batch 45',
+      institution: 'IIM Ahmedabad',
+      startsIn: '5 days',
+      fee: '₹ 8,50,000',
+      rating: 4.9,
+      imageUrl: 'https://placehold.co/600x400/e74c3c/333?text=Leadership+AMP',
+    },
+    {
+      id: 8,
+      title: 'XLRI Executive Programme in Strategic Leadership - Batch 22',
+      institution: 'XLRI Jamshedpur',
+      startsIn: '18 days',
+      fee: '₹ 6,25,000',
+      rating: 4.8,
+      imageUrl: 'https://placehold.co/600x400/f39c12/333?text=Strategic+Leadership',
+    },
+    {
+      id: 9,
+      title: 'FMS Delhi Certificate in Corporate Strategy - Batch 11',
+      institution: 'FMS Delhi',
+      startsIn: '30 days',
+      fee: '₹ 3,75,000',
+      rating: 4.7,
+      imageUrl: 'https://placehold.co/600x400/1abc9c/333?text=Corporate+Strategy',
+    },
+  ],
+  'General Management': [
+    {
+      id: 10,
+      title: 'IIM Lucknow General Management Programme - Batch 28',
+      institution: 'IIM Lucknow',
+      startsIn: '12 days',
+      fee: '₹ 4,50,000',
+      rating: 4.8,
+      imageUrl: 'https://placehold.co/600x400/34495e/333?text=General+Management',
+    },
+    {
+      id: 11,
+      title: 'MDI Gurgaon Executive Development Programme - Batch 19',
+      institution: 'MDI Gurgaon',
+      startsIn: '25 days',
+      fee: '₹ 3,25,000',
+      rating: 4.7,
+      imageUrl: 'https://placehold.co/600x400/8e44ad/333?text=Executive+Dev',
+    },
+    {
+      id: 12,
+      title: 'SPJIMR Advanced General Management - Batch 16',
+      institution: 'SPJIMR Mumbai',
+      startsIn: '38 days',
+      fee: '₹ 5,75,000',
+      rating: 4.8,
+      imageUrl: 'https://placehold.co/600x400/d35400/333?text=Advanced+GM',
+    },
+  ],
+  'Operations & Supply Chain': [
+    {
+      id: 13,
+      title: 'IIM Indore Certificate in Supply Chain Management - Batch 09',
+      institution: 'IIM Indore',
+      startsIn: '8 days',
+      fee: '₹ 2,85,000',
+      rating: 4.7,
+      imageUrl: 'https://placehold.co/600x400/27ae60/333?text=Supply+Chain',
+    },
+    {
+      id: 14,
+      title: 'NITIE Operations Excellence Programme - Batch 13',
+      institution: 'NITIE Mumbai',
+      startsIn: '22 days',
+      fee: '₹ 3,15,000',
+      rating: 4.6,
+      imageUrl: 'https://placehold.co/600x400/2980b9/333?text=Operations+Excel',
+    },
+    {
+      id: 15,
+      title: 'IIT Bombay Advanced Operations Management - Batch 07',
+      institution: 'IIT Bombay',
+      startsIn: '45 days',
+      fee: '₹ 2,45,000',
+      rating: 4.8,
+      imageUrl: 'https://placehold.co/600x400/16a085/333?text=Advanced+Ops',
+    },
+  ],
+  'Marketing & Sales': [
+    {
+      id: 16,
+      title: 'IIM Calcutta Advanced Marketing Programme - Batch 24',
+      institution: 'IIM Calcutta',
+      startsIn: '6 days',
+      fee: '₹ 4,25,000',
+      rating: 4.9,
+      imageUrl: 'https://placehold.co/600x400/e67e22/333?text=Marketing+Prog',
+    },
+    {
+      id: 17,
+      title: 'MICA Certificate in Digital Marketing - Batch 18',
+      institution: 'MICA Ahmedabad',
+      startsIn: '19 days',
+      fee: '₹ 1,85,000',
+      rating: 4.6,
+      imageUrl: 'https://placehold.co/600x400/9c88ff/333?text=Digital+Marketing',
+    },
+    {
+      id: 18,
+      title: 'ISB Sales Leadership Programme - Batch 12',
+      institution: 'ISB Hyderabad',
+      startsIn: '33 days',
+      fee: '₹ 3,95,000',
+      rating: 4.7,
+      imageUrl: 'https://placehold.co/600x400/ff6b6b/333?text=Sales+Leadership',
+    },
+  ],
+  MBA: [
+    {
+      id: 19,
+      title: 'IIM Kozhikode Executive MBA Programme - Batch 17',
+      institution: 'IIM Kozhikode',
+      startsIn: '15 days',
+      fee: '₹ 12,50,000',
+      rating: 4.9,
+      imageUrl: 'https://placehold.co/600x400/4ecdc4/333?text=Executive+MBA',
+    },
+    {
+      id: 20,
+      title: 'FMS Delhi Weekend MBA Programme - Batch 09',
+      institution: 'FMS Delhi',
+      startsIn: '28 days',
+      fee: '₹ 8,75,000',
+      rating: 4.8,
+      imageUrl: 'https://placehold.co/600x400/45b7d1/333?text=Weekend+MBA',
+    },
+    {
+      id: 21,
+      title: 'XLRI Global MBA Programme - Batch 06',
+      institution: 'XLRI Jamshedpur',
+      startsIn: '42 days',
+      fee: '₹ 15,25,000',
+      rating: 4.9,
+      imageUrl: 'https://placehold.co/600x400/f7b731/333?text=Global+MBA',
+    },
+  ],
+  'Banking & Finance': [
+    {
+      id: 22,
+      title: 'IIM Bangalore Advanced Programme in Banking - Batch 14',
+      institution: 'IIM Bangalore',
+      startsIn: '9 days',
+      fee: '₹ 3,65,000',
+      rating: 4.8,
+      imageUrl: 'https://placehold.co/600x400/5f27cd/333?text=Banking+Prog',
+    },
+    {
+      id: 23,
+      title: 'JBIMS Certificate in Financial Management - Batch 21',
+      institution: 'JBIMS Mumbai',
+      startsIn: '23 days',
+      fee: '₹ 2,25,000',
+      rating: 4.7,
+      imageUrl: 'https://placehold.co/600x400/00d2d3/333?text=Financial+Mgmt',
+    },
+    {
+      id: 24,
+      title: 'ISB Risk Management Programme - Batch 08',
+      institution: 'ISB Hyderabad',
+      startsIn: '36 days',
+      fee: '₹ 4,15,000',
+      rating: 4.8,
+      imageUrl: 'https://placehold.co/600x400/ff9ff3/333?text=Risk+Management',
+    },
+  ],
+  'Innovation & Transformation': [
+    {
+      id: 25,
+      title: 'IIT Delhi Innovation Leadership Programme - Batch 05',
+      institution: 'IIT Delhi',
+      startsIn: '11 days',
+      fee: '₹ 3,85,000',
+      rating: 4.7,
+      imageUrl: 'https://placehold.co/600x400/54a0ff/333?text=Innovation+Lead',
+    },
+    {
+      id: 26,
+      title: 'IIM Ahmedabad Digital Transformation - Batch 10',
+      institution: 'IIM Ahmedabad',
+      startsIn: '26 days',
+      fee: '₹ 4,95,000',
+      rating: 4.9,
+      imageUrl: 'https://placehold.co/600x400/2ed573/333?text=Digital+Transform',
+    },
+    {
+      id: 27,
+      title: 'BITS Pilani Innovation Management - Batch 07',
+      institution: 'BITS Pilani',
+      startsIn: '39 days',
+      fee: '₹ 2,65,000',
+      rating: 4.6,
+      imageUrl: 'https://placehold.co/600x400/ffa502/333?text=Innovation+Mgmt',
+    },
+  ],
+  'Human Resources': [
+    {
+      id: 28,
+      title: 'XLRI Advanced HR Management Programme - Batch 26',
+      institution: 'XLRI Jamshedpur',
+      startsIn: '7 days',
+      fee: '₹ 3,45,000',
+      rating: 4.8,
+      imageUrl: 'https://placehold.co/600x400/ff6348/333?text=HR+Management',
+    },
+    {
+      id: 29,
+      title: 'TISS Strategic HR Leadership - Batch 15',
+      institution: 'TISS Mumbai',
+      startsIn: '20 days',
+      fee: '₹ 2,95,000',
+      rating: 4.7,
+      imageUrl: 'https://placehold.co/600x400/ff4757/333?text=HR+Leadership',
+    },
+    {
+      id: 30,
+      title: 'MDI Gurgaon People Analytics Programme - Batch 11',
+      institution: 'MDI Gurgaon',
+      startsIn: '34 days',
+      fee: '₹ 1,75,000',
+      rating: 4.6,
+      imageUrl: 'https://placehold.co/600x400/5352ed/333?text=People+Analytics',
+    },
+  ],
+  Healthcare: [
+    {
+      id: 31,
+      title: 'IIHMR Healthcare Management Programme - Batch 12',
+      institution: 'IIHMR Delhi',
+      startsIn: '13 days',
+      fee: '₹ 2,85,000',
+      rating: 4.7,
+      imageUrl: 'https://placehold.co/600x400/3742fa/333?text=Healthcare+Mgmt',
+    },
+    {
+      id: 32,
+      title: 'IIM Lucknow Hospital Administration - Batch 08',
+      institution: 'IIM Lucknow',
+      startsIn: '27 days',
+      fee: '₹ 3,25,000',
+      rating: 4.6,
+      imageUrl: 'https://placehold.co/600x400/2f3542/333?text=Hospital+Admin',
+    },
+    {
+      id: 33,
+      title: 'AIIMS Healthcare Leadership Programme - Batch 06',
+      institution: 'AIIMS Delhi',
+      startsIn: '40 days',
+      fee: '₹ 2,15,000',
+      rating: 4.8,
+      imageUrl: 'https://placehold.co/600x400/ff3838/333?text=Healthcare+Lead',
+    },
+  ],
+  'Product Management': [
+    {
+      id: 34,
+      title: 'ISB Product Strategy & Innovation - Batch 09',
+      institution: 'ISB Hyderabad',
+      startsIn: '16 days',
+      fee: '₹ 2,55,000',
+      rating: 4.7,
+      imageUrl: 'https://placehold.co/600x400/7bed9f/333?text=Product+Strategy',
+    },
+    {
+      id: 35,
+      title: 'IIT Bombay Digital Product Management - Batch 11',
+      institution: 'IIT Bombay',
+      startsIn: '29 days',
+      fee: '₹ 1,95,000',
+      rating: 4.6,
+      imageUrl: 'https://placehold.co/600x400/70a1ff/333?text=Digital+Product',
+    },
+    {
+      id: 36,
+      title: 'IIM Bangalore Product Leadership - Batch 13',
+      institution: 'IIM Bangalore',
+      startsIn: '37 days',
+      fee: '₹ 3,05,000',
+      rating: 4.8,
+      imageUrl: 'https://placehold.co/600x400/57606f/333?text=Product+Lead',
+    },
+  ],
+  'Web 3.0': [
+    {
+      id: 37,
+      title: 'IIT Delhi Blockchain & Web 3.0 Programme - Batch 04',
+      institution: 'IIT Delhi',
+      startsIn: '17 days',
+      fee: '₹ 1,85,000',
+      rating: 4.5,
+      imageUrl: 'https://placehold.co/600x400/ffd32a/333?text=Blockchain+Web3',
+    },
+    {
+      id: 38,
+      title: 'IIM Kozhikode Cryptocurrency & DeFi - Batch 03',
+      institution: 'IIM Kozhikode',
+      startsIn: '31 days',
+      fee: '₹ 1,45,000',
+      rating: 4.4,
+      imageUrl: 'https://placehold.co/600x400/ff9500/333?text=Crypto+DeFi',
+    },
+    {
+      id: 39,
+      title: 'BITS Pilani NFT & Metaverse Programme - Batch 02',
+      institution: 'BITS Pilani',
+      startsIn: '44 days',
+      fee: '₹ 1,25,000',
+      rating: 4.3,
+      imageUrl: 'https://placehold.co/600x400/c44569/333?text=NFT+Metaverse',
+    },
+  ],
+  Law: [
+    {
+      id: 40,
+      title: 'NLSIU Corporate Law Programme - Batch 18',
+      institution: 'NLSIU Bangalore',
+      startsIn: '24 days',
+      fee: '₹ 2,75,000',
+      rating: 4.8,
+      imageUrl: 'https://placehold.co/600x400/786fa6/333?text=Corporate+Law',
+    },
+    {
+      id: 41,
+      title: 'NALSAR IP & Technology Law - Batch 09',
+      institution: 'NALSAR Hyderabad',
+      startsIn: '32 days',
+      fee: '₹ 1,95,000',
+      rating: 4.7,
+      imageUrl: 'https://placehold.co/600x400/f8b500/333?text=IP+Tech+Law',
+    },
+    {
+      id: 42,
+      title: 'NUJS Banking & Finance Law - Batch 14',
+      institution: 'NUJS Kolkata',
+      startsIn: '46 days',
+      fee: '₹ 2,35,000',
+      rating: 4.6,
+      imageUrl: 'https://placehold.co/600x400/4b7bec/333?text=Banking+Law',
+    },
+  ],
+}
 
 const tabs = [
   'Popular',
@@ -329,6 +827,9 @@ const tabs = [
 // --- MAIN COMPONENT ---
 const ExecutiveEducationCourses = () => {
   const [activeTab, setActiveTab] = useState('Popular')
+
+  // Get courses for the active tab
+  const currentCourses = coursesData[activeTab] || []
 
   const renderStars = (rating) => {
     const totalStars = 5
@@ -358,7 +859,7 @@ const ExecutiveEducationCourses = () => {
       </TabsContainer>
 
       <CoursesGrid>
-        {courses.map((course) => (
+        {currentCourses.map((course) => (
           <CourseCard key={course.id}>
             <CardImageContainer>
               <CardImage src={course.imageUrl} alt={course.title} />
