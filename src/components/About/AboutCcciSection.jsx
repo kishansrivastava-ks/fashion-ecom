@@ -33,6 +33,7 @@ const Description = styled(motion.p)`
   max-width: 800px;
   margin: 1rem auto 4rem auto;
   line-height: 1.7;
+  text-align: center;
 `
 
 const PartnersContainer = styled.div`
@@ -114,16 +115,19 @@ const AboutCcciSection = () => {
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          With a rich legacy of knowledge and learning, the Career Counselling Corporation of India
-          (CCCI) is one of the nation's most recognized brands in professional development. We are a
-          leading conglomerate with a strong leadership presence across all sectors and verticals
-          that are powering India’s transformation into a knowledge economy. Trusted by millions,
-          CCCI prides itself in leveraging its intellectual capital and unmatched credibility to
-          acquire, create, disseminate, and apply knowledge to facilitate economic and social
-          development globally.
+          Our Story began with a simple but powerful vision—to bridge the gap between talent and
+          opportunity across India. Founded by a team of educators, career experts, and industry
+          professionals, the Career Counseling Corporation of India (CCCI) emerged as a response to
+          the growing disconnect between traditional education and real-world employment. What
+          started as a small initiative to guide students in rural communities has now grown into a
+          national movement empowering thousands through personalized counseling, skill development,
+          and job placement. Over the years, we’ve evolved into a digitally-driven, impact-focused
+          organisation that not only prepares individuals for jobs but helps them discover purpose,
+          passion, and potential. CCCI continues to grow with one mission at its core: to make
+          career success accessible, inclusive, and transformative for every Indian.
         </Description>
 
-        <PartnersContainer>
+        {/* <PartnersContainer>
           <PartnersHeading>Our Esteemed Partners & Collaborators</PartnersHeading>
           <PartnersGrid
             variants={containerVariants}
@@ -137,7 +141,7 @@ const AboutCcciSection = () => {
               </PartnerLogo>
             ))}
           </PartnersGrid>
-        </PartnersContainer>
+        </PartnersContainer> */}
       </ContentWrapper>
     </AboutGroupContainer>
   )

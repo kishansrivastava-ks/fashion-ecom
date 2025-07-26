@@ -123,35 +123,35 @@ const KnowMoreLink = styled.a`
 // --- MOCK DATA & CONFIG ---
 const leadershipTeam = [
   {
-    name: 'Priya Sharma',
-    title: 'President & CEO',
-    img: 'https://placehold.co/200x200/E6E6FA/333?text=PS',
+    name: 'Ms. Waseem Bano',
+    title: 'Director (Education Training and Consultant, Employment & Projects)',
+    img: 'https://placehold.co/200x200/E6E6FA/333?text=WB',
   },
   {
-    name: 'Rohan Gupta',
-    title: 'President, Enterprise & Skilling Business, CFO',
-    img: 'https://placehold.co/200x200/D8BFD8/333?text=RG',
+    name: 'Shivam Mishra',
+    title: 'Director (Education Training and Consultant, Employment & Projects)',
+    img: 'https://placehold.co/200x200/D8BFD8/333?text=SM',
   },
-  {
-    name: 'Dr. Alisha Khan',
-    title: 'Chief People Officer & Head - People, Places & HR',
-    img: 'https://placehold.co/200x200/DDA0DD/333?text=AK',
-  },
-  {
-    name: 'Vikram Singh',
-    title: 'Chief Digital Strategy Officer',
-    img: 'https://placehold.co/200x200/DA70D6/333?text=VS',
-  },
-  {
-    name: 'Sunita Reddy',
-    title: 'Business Head, Platforms',
-    img: 'https://placehold.co/200x200/BA55D3/333?text=SR',
-  },
-  {
-    name: 'Anil Mehta',
-    title: 'Vice President - Finance & Accounts',
-    img: 'https://placehold.co/200x200/9932CC/333?text=AM',
-  },
+  // {
+  //   name: 'Dr. Alisha Khan',
+  //   title: 'Chief People Officer & Head - People, Places & HR',
+  //   img: 'https://placehold.co/200x200/DDA0DD/333?text=AK',
+  // },
+  // {
+  //   name: 'Vikram Singh',
+  //   title: 'Chief Digital Strategy Officer',
+  //   img: 'https://placehold.co/200x200/DA70D6/333?text=VS',
+  // },
+  // {
+  //   name: 'Sunita Reddy',
+  //   title: 'Business Head, Platforms',
+  //   img: 'https://placehold.co/200x200/BA55D3/333?text=SR',
+  // },
+  // {
+  //   name: 'Anil Mehta',
+  //   title: 'Vice President - Finance & Accounts',
+  //   img: 'https://placehold.co/200x200/9932CC/333?text=AM',
+  // },
 ]
 
 const containerVariants = {
