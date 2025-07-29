@@ -7,6 +7,10 @@ import RequestCallbackModal from '../modals/RequestCallbackModal'
 
 const ConnectSectionContainer = styled.section`
   padding: 4rem 2rem;
+
+  @media (max-width: 768px) {
+    padding: 0;
+  }
 `
 
 const CtaBanner = styled.div`
@@ -26,6 +30,11 @@ const CtaBanner = styled.div`
     flex-direction: column;
     text-align: center;
     padding: 3rem 2rem;
+  }
+  @media (max-width: 768px) {
+    border-radius: 0;
+    padding-bottom: 4rem;
+    /* margin-bottom: 1rem; */
   }
 `
 
@@ -149,7 +158,8 @@ const ConnectWithUs = () => {
             <Circle2 />
             <Circle3 />
             <AgentImage
-              src="https://placehold.co/300x300/ffffff/333?text=Agent&font=png"
+              src="/callback.jpg"
+              // src="https://placehold.co/300x300/ffffff/333?text=Agent&font=png"
               alt="Support agent"
               // Using a transparent placeholder to better show the effect
               style={{ backgroundColor: 'transparent' }}

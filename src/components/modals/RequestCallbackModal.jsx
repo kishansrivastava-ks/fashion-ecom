@@ -32,6 +32,13 @@ const ModalBackdrop = styled(motion.div)`
   align-items: center;
   z-index: 1001;
   backdrop-filter: blur(5px);
+  padding: 1rem;
+
+  @media (max-width: 768px) {
+    align-items: flex-start;
+    padding: 0;
+    padding-top: 5vh;
+  }
 `
 
 const ModalContainer = styled(motion.div)`
@@ -42,6 +49,23 @@ const ModalContainer = styled(motion.div)`
   display: flex;
   overflow: hidden;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    width: 95%;
+    max-width: 450px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 12px;
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    height: 100vh;
+    max-height: none;
+    border-radius: 0;
+    overflow-y: auto;
+  }
 `
 
 const InfoPanel = styled.div`
@@ -57,7 +81,7 @@ const InfoPanel = styled.div`
 
   // Decorative quote icon for better UI
   &::before {
-    content: '“';
+    content: '"';
     position: absolute;
     top: 1rem;
     left: 2rem;
@@ -85,7 +109,36 @@ const InfoPanel = styled.div`
   }
 
   @media (max-width: 768px) {
-    display: none;
+    width: 100%;
+    padding: 2rem 1.5rem;
+    text-align: center;
+
+    &::before {
+      display: none;
+    }
+
+    h3 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1rem;
+      max-width: none;
+      margin: 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 1.5rem 1rem;
+
+    h3 {
+      font-size: 1.6rem;
+    }
+
+    p {
+      font-size: 0.95rem;
+    }
   }
 `
 
@@ -93,6 +146,15 @@ const FormPanel = styled.div`
   padding: 3rem;
   width: 60%;
   position: relative;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 2rem 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1.5rem 1rem;
+  }
 `
 
 const CloseButton = styled.button`
@@ -105,10 +167,37 @@ const CloseButton = styled.button`
   cursor: pointer;
   color: #a0aec0;
   line-height: 1;
+  z-index: 10;
+
+  @media (max-width: 768px) {
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 1.8rem;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 480px) {
+    top: 1rem;
+    right: 1rem;
+    background: #ffffff;
+    color: #666666;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
 `
 
 const FormGroup = styled.div`
   margin-bottom: 1.25rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 1rem;
+  }
 `
 
 const FormLabel = styled.label`
@@ -117,6 +206,11 @@ const FormLabel = styled.label`
   font-weight: 500;
   margin-bottom: 0.5rem;
   color: #2d3748;
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    margin-bottom: 0.4rem;
+  }
 `
 
 const Input = styled.input`
@@ -126,10 +220,17 @@ const Input = styled.input`
   border-radius: 8px;
   font-size: 1rem;
   transition: all 0.2s ease;
+  box-sizing: border-box;
+
   &:focus {
     outline: none;
     border-color: #003380;
     box-shadow: 0 0 0 2px rgba(0, 51, 128, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.7rem 0.9rem;
+    font-size: 16px; /* Prevents zoom on iOS */
   }
 `
 
@@ -144,21 +245,53 @@ const CountryCodeSelect = styled.select`
   border-radius: 8px 0 0 8px;
   background-color: #f7f8fc;
   font-size: 1rem;
+
+  @media (max-width: 768px) {
+    padding: 0.7rem 0.5rem;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
 `
 
 const CheckboxGroup = styled.label`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   cursor: pointer;
   font-size: 0.9rem;
   color: #4a5568;
   margin-bottom: 0.75rem;
+  line-height: 1.4;
 
   input {
     margin-right: 0.75rem;
+    margin-top: 0.1rem;
     height: 18px;
     width: 18px;
     accent-color: #003380;
+    flex-shrink: 0;
+  }
+
+  span {
+    flex: 1;
+  }
+
+  a {
+    color: #003380;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    margin-bottom: 0.6rem;
+
+    input {
+      margin-right: 0.6rem;
+      height: 16px;
+      width: 16px;
+    }
   }
 `
 
@@ -166,6 +299,10 @@ const ErrorMessage = styled.p`
   color: #d9534f;
   font-size: 0.85rem;
   margin: 0.25rem 0 0 0;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
 `
 
 const SubmitButton = styled.button`
@@ -179,19 +316,57 @@ const SubmitButton = styled.button`
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
+
   &:disabled {
     background-color: #a0aec0;
     cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover {
+    background-color: #002966;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.8rem;
+    font-size: 1rem;
+    font-weight: 600;
   }
 `
 
 const SuccessMessage = styled.div`
   text-align: center;
   color: #2d3748;
+  padding: 2rem 0;
+
   h4 {
     font-size: 1.5rem;
     color: #28a745;
     margin: 1rem 0 0.5rem 0;
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #4a5568;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    padding: 1.5rem 0;
+
+    h4 {
+      font-size: 1.3rem;
+      margin: 0.8rem 0 0.4rem 0;
+    }
+
+    p {
+      font-size: 0.95rem;
+    }
+
+    svg {
+      width: 50px;
+      height: 50px;
+    }
   }
 `
 
@@ -205,21 +380,29 @@ const RequestCallbackModal = ({ setOpen }) => {
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: '' }))
+    }
   }
 
   const handleCheckboxChange = (e) => {
     const { name, checked } = e.target
     setCheckboxes((prev) => ({ ...prev, [name]: checked }))
+    // Clear error when user checks the box
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: '' }))
+    }
   }
 
   const validate = () => {
     let tempErrors = {}
-    if (!formData.fullName) tempErrors.fullName = 'Full name is required.'
-    if (!formData.mobileNumber) tempErrors.mobileNumber = 'Mobile number is required.'
-    else if (!/^\d{10}$/.test(formData.mobileNumber))
+    if (!formData.fullName.trim()) tempErrors.fullName = 'Full name is required.'
+    if (!formData.mobileNumber.trim()) tempErrors.mobileNumber = 'Mobile number is required.'
+    else if (!/^\d{10}$/.test(formData.mobileNumber.trim()))
       tempErrors.mobileNumber = 'Please enter a valid 10-digit number.'
-    if (!formData.email) tempErrors.email = 'Email is required.'
-    else if (!/\S+@\S+\.\S+/.test(formData.email)) tempErrors.email = 'Email is not valid.'
+    if (!formData.email.trim()) tempErrors.email = 'Email is required.'
+    else if (!/\S+@\S+\.\S+/.test(formData.email.trim())) tempErrors.email = 'Email is not valid.'
     if (!checkboxes.terms) tempErrors.terms = 'You must agree to the terms.'
     setErrors(tempErrors)
     return Object.keys(tempErrors).length === 0
@@ -236,17 +419,23 @@ const RequestCallbackModal = ({ setOpen }) => {
     }
   }
 
+  const handleBackdropClick = (e) => {
+    if (e.target === e.currentTarget) {
+      setOpen(false)
+    }
+  }
+
   return (
     <ModalBackdrop
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      onClick={() => setOpen(false)}
+      onClick={handleBackdropClick}
     >
       <ModalContainer
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: 50, opacity: 0 }}
+        initial={{ y: -50, opacity: 0, scale: 0.95 }}
+        animate={{ y: 0, opacity: 1, scale: 1 }}
+        exit={{ y: 50, opacity: 0, scale: 0.95 }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
       >
@@ -272,6 +461,7 @@ const RequestCallbackModal = ({ setOpen }) => {
                   name="fullName"
                   value={formData.fullName}
                   onChange={handleChange}
+                  autoComplete="name"
                 />
                 {errors.fullName && <ErrorMessage>{errors.fullName}</ErrorMessage>}
               </FormGroup>
@@ -288,6 +478,7 @@ const RequestCallbackModal = ({ setOpen }) => {
                     value={formData.mobileNumber}
                     onChange={handleChange}
                     style={{ borderRadius: '0 8px 8px 0' }}
+                    autoComplete="tel"
                   />
                 </PhoneInputGroup>
                 {errors.mobileNumber && <ErrorMessage>{errors.mobileNumber}</ErrorMessage>}
@@ -300,6 +491,7 @@ const RequestCallbackModal = ({ setOpen }) => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
+                  autoComplete="email"
                 />
                 {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
               </FormGroup>
@@ -312,8 +504,15 @@ const RequestCallbackModal = ({ setOpen }) => {
                     onChange={handleCheckboxChange}
                   />
                   <span>
-                    By registering I agree to the <a href="#">Terms of Service</a> and{' '}
-                    <a href="#">Privacy Policy</a>.
+                    By registering I agree to the{' '}
+                    <a href="#" onClick={(e) => e.preventDefault()}>
+                      Terms of Service
+                    </a>{' '}
+                    and{' '}
+                    <a href="#" onClick={(e) => e.preventDefault()}>
+                      Privacy Policy
+                    </a>
+                    .
                   </span>
                 </CheckboxGroup>
                 {errors.terms && <ErrorMessage>{errors.terms}</ErrorMessage>}

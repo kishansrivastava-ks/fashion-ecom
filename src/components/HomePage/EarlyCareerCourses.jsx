@@ -23,7 +23,8 @@ const HeartIcon = () => (
   </svg>
 )
 
-// Styled Components
+// --- Styled Components (with media queries for responsiveness) ---
+
 const CoursesContainer = styled.section`
   background-color: #ffffff;
   padding: 4rem 2rem;
@@ -31,12 +32,20 @@ const CoursesContainer = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (max-width: 768px) {
+    padding: 3rem 1rem;
+  }
 `
 
 const SectionHeader = styled.div`
   width: 100%;
   max-width: 1200px;
   margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    text-align: center;
+  }
 `
 
 const SectionTitle = styled.h2`
@@ -51,6 +60,12 @@ const SectionTitle = styled.h2`
     display: block;
     font-weight: bold;
   }
+
+  @media (max-width: 768px) {
+    strong {
+      font-size: 1.75rem;
+    }
+  }
 `
 
 const TopLink = styled.a`
@@ -62,6 +77,13 @@ const TopLink = styled.a`
   &:hover {
     text-decoration: underline;
   }
+
+  @media (max-width: 768px) {
+    float: none;
+    display: block;
+    margin-top: 1rem;
+    font-size: 1rem;
+  }
 `
 
 const TabsContainer = styled.div`
@@ -70,6 +92,17 @@ const TabsContainer = styled.div`
   margin-bottom: 2.5rem;
   width: 100%;
   max-width: 1200px;
+
+  @media (max-width: 768px) {
+    // Make the container scrollable horizontally on mobile
+    overflow-x: auto;
+    // Remove the default scrollbar for a cleaner UI
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 `
 
 const TabButton = styled.button`
@@ -82,6 +115,8 @@ const TabButton = styled.button`
   color: #666;
   margin-right: 1rem;
   transition: all 0.3s ease;
+  white-space: nowrap; // Prevent text wrapping
+  flex-shrink: 0; // Prevent buttons from shrinking in flex container
 
   ${({ active }) =>
     active &&
@@ -94,10 +129,16 @@ const TabButton = styled.button`
   &:hover {
     color: #000080;
   }
+
+  @media (max-width: 768px) {
+    padding: 0.75rem 1rem;
+  }
 `
 
 const CoursesGrid = styled.div`
   display: grid;
+  /* This is already responsive! It will create as many columns as fit that are at least 320px wide. */
+  /* On mobile, this results in a single column layout automatically. */
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
   width: 100%;
@@ -171,6 +212,10 @@ const CardContent = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
 `
 
 const CourseTitle = styled.h3`
@@ -236,6 +281,8 @@ const RatingText = styled.span`
   font-size: 0.9rem;
   color: #555;
 `
+
+// --- Component Data ---
 
 const allCourses = [
   // Banking & Finance
@@ -418,7 +465,7 @@ const tabs = [
   'General Management',
 ]
 
-// --- UPDATED MAIN COMPONENT ---
+// --- Main Component ---
 const EarlyCareerCourses = () => {
   const [activeTab, setActiveTab] = useState('Popular')
   const [popularCourses, setPopularCourses] = useState([])

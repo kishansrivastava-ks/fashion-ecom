@@ -4,15 +4,12 @@ import styled from 'styled-components'
 // --- STYLED COMPONENTS ---
 
 const SolutionsContainer = styled.section`
-  background-color: #f0f2f5;
+  background-color: #f0f2f5; // Light grey background
   padding: 4rem 2rem;
   font-family: 'Arial', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
-  @media (max-width: 600px) {
-    padding: 2.5rem 0.5rem;
-  }
 `
 
 const SectionHeader = styled.div`
@@ -20,10 +17,6 @@ const SectionHeader = styled.div`
   max-width: 1200px;
   margin-bottom: 2.5rem;
   text-align: left;
-  @media (max-width: 600px) {
-    text-align: center;
-    margin-bottom: 1.3rem;
-  }
 `
 
 const SectionTitle = styled.h2`
@@ -34,15 +27,9 @@ const SectionTitle = styled.h2`
 
   strong {
     font-size: 2rem;
-    color: #000080;
+    color: #000080; // Navy blue color
     display: block;
     font-weight: bold;
-  }
-  @media (max-width: 600px) {
-    font-size: 1.05rem;
-    strong {
-      font-size: 1.3rem;
-    }
   }
 `
 
@@ -50,11 +37,6 @@ const SectionSubTitle = styled.p`
   font-size: 1rem;
   color: #555;
   margin-top: 0.5rem;
-  @media (max-width: 600px) {
-    font-size: 0.95rem;
-    margin-top: 0.7rem;
-    margin-bottom: 0;
-  }
 `
 
 const SolutionsGrid = styled.div`
@@ -63,15 +45,6 @@ const SolutionsGrid = styled.div`
   gap: 1.5rem;
   width: 100%;
   max-width: 1200px;
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr; /* One column on tablets/phones */
-    gap: 1rem;
-  }
-
-  @media (max-width: 450px) {
-    gap: 0.6rem;
-  }
 `
 
 const SolutionCard = styled.div`
@@ -81,17 +54,12 @@ const SolutionCard = styled.div`
   display: flex;
   overflow: hidden;
   transition:
-    transform 0.3s,
-    box-shadow 0.3s;
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-  }
-
-  @media (max-width: 768px) {
-    flex-direction: column; /* image on top */
-    align-items: stretch;
   }
 `
 
@@ -101,25 +69,12 @@ const CardImage = styled.div`
   background-image: url(${(props) => props.src});
   background-size: cover;
   background-position: center;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    height: 170px;
-    min-height: 130px;
-  }
-  @media (max-width: 450px) {
-    height: 100px;
-    min-height: 80px;
-  }
 `
 
 const CardContent = styled.div`
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  @media (max-width: 600px) {
-    padding: 1rem;
-  }
 `
 
 const CardTitle = styled.h3`
@@ -127,10 +82,6 @@ const CardTitle = styled.h3`
   font-weight: 600;
   color: #333;
   margin: 0 0 0.75rem 0;
-  @media (max-width: 600px) {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-  }
 `
 
 const CardDescription = styled.p`
@@ -139,31 +90,22 @@ const CardDescription = styled.p`
   line-height: 1.5;
   margin: 0 0 1.5rem 0;
   flex-grow: 1;
-  @media (max-width: 600px) {
-    font-size: 0.93rem;
-    margin-bottom: 1rem;
-  }
 `
 
 const KnowMoreButton = styled.a`
   display: inline-block;
-  background-color: #d9534f;
+  background-color: #d9534f; // Red color from screenshot
   color: #ffffff;
   padding: 0.6rem 1.2rem;
   border-radius: 4px;
   text-decoration: none;
   font-weight: 500;
   font-size: 0.9rem;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
   align-self: flex-start;
 
   &:hover {
     background-color: #c9302c;
-  }
-
-  @media (max-width: 600px) {
-    padding: 0.5rem 1rem;
-    font-size: 0.95rem;
   }
 `
 

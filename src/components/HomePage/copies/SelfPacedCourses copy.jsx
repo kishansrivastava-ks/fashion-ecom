@@ -1,33 +1,41 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-// --- STYLED COMPONENTS (RESPONSIVE) ---
+// --- ICONS (in a real app, use an icon library) ---
+// No icons needed for this component based on the screenshot,
+// but keeping the structure in case they are added later.
+
+// --- STYLED COMPONENTS ---
 const CoursesContainer = styled.section`
-  background-color: #f9f9f9;
+  background-color: #f9f9f9; // A slightly different background to distinguish sections
   padding: 4rem 2rem;
   font-family: 'Arial', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
-  @media (max-width: 1024px) {
-    padding: 3rem 1rem;
-  }
 `
+
 const SectionHeader = styled.div`
   width: 100%;
   max-width: 1200px;
   margin-bottom: 2rem;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+`
 
-  @media (max-width: 600px) {
-    align-items: flex-start;
-    gap: 0.6rem;
-    margin-bottom: 1rem;
+const SectionTitle = styled.h2`
+  font-size: 1.25rem;
+  color: #333;
+  margin: 0;
+  font-weight: normal;
+
+  strong {
+    font-size: 2rem;
+    color: #000080; // A navy blue color
+    display: block;
+    font-weight: bold;
   }
 `
+
 const TopLink = styled.a`
   position: absolute;
   top: 10px;
@@ -39,32 +47,6 @@ const TopLink = styled.a`
   &:hover {
     text-decoration: underline;
   }
-  @media (max-width: 600px) {
-    position: static;
-    align-self: flex-end;
-    margin-top: 0.25rem;
-    margin-bottom: 0.25rem;
-    font-size: 1rem;
-  }
-`
-const SectionTitle = styled.h2`
-  font-size: 1.25rem;
-  color: #333;
-  margin: 0;
-  font-weight: normal;
-
-  strong {
-    font-size: 2rem;
-    color: #000080;
-    display: block;
-    font-weight: bold;
-  }
-  @media (max-width: 600px) {
-    font-size: 1.1rem;
-    strong {
-      font-size: 1.25rem;
-    }
-  }
 `
 
 const TabsContainer = styled.div`
@@ -74,17 +56,8 @@ const TabsContainer = styled.div`
   margin-bottom: 2.5rem;
   width: 100%;
   max-width: 1200px;
-
-  @media (max-width: 1024px) {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
 `
+
 const TabButton = styled.button`
   padding: 0.6rem 1.2rem;
   font-size: 0.875rem;
@@ -93,8 +66,6 @@ const TabButton = styled.button`
   border-radius: 6px;
   transition: all 0.3s ease;
   font-weight: 500;
-  white-space: nowrap;
-  flex-shrink: 0;
 
   ${({ active }) =>
     active
@@ -111,21 +82,16 @@ const TabButton = styled.button`
           border-color: #ccc;
         }
       `}
-  @media (max-width: 1024px) {
-    font-size: 0.92rem;
-    padding: 0.6rem 1rem;
-  }
 `
+
 const CoursesGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
   width: 100%;
   max-width: 1200px;
-  @media (max-width: 600px) {
-    gap: 1.25rem;
-  }
 `
+
 const CourseCard = styled.div`
   background-color: #fff;
   border-radius: 8px;
@@ -134,18 +100,21 @@ const CourseCard = styled.div`
   display: flex;
   flex-direction: column;
   transition:
-    transform 0.3s,
-    box-shadow 0.3s;
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   }
 `
+
 const CardImageContainer = styled.div`
   position: relative;
   width: 100%;
-  padding-top: 56.25%;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
 `
+
 const CardImage = styled.img`
   position: absolute;
   top: 0;
@@ -154,6 +123,7 @@ const CardImage = styled.img`
   height: 100%;
   object-fit: cover;
 `
+
 const AdmissionButton = styled.span`
   position: absolute;
   bottom: 10px;
@@ -164,15 +134,14 @@ const AdmissionButton = styled.span`
   border-radius: 4px;
   font-size: 0.8rem;
 `
+
 const CardContent = styled.div`
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  @media (max-width: 600px) {
-    padding: 1rem;
-  }
 `
+
 const CourseTitle = styled.h3`
   font-size: 1.1rem;
   font-weight: 600;
@@ -180,19 +149,23 @@ const CourseTitle = styled.h3`
   margin: 0 0 0.5rem 0;
   min-height: 44px;
 `
+
 const BrandTag = styled.span`
   color: #555;
   font-size: 0.9rem;
   margin-bottom: 1.5rem;
 `
+
 const CardFooter = styled.div`
   margin-top: auto;
   padding-top: 1rem;
   border-top: 1px solid #f0f0f0;
 `
+
 const FeeInfo = styled.div`
   font-size: 0.8rem;
   color: #666;
+
   strong {
     font-size: 1.2rem;
     color: #333;
@@ -225,6 +198,7 @@ const courses = [
     imageUrl: 'https://placehold.co/600x400/0984e3/ffffff?text=Data+Science',
   },
 ]
+
 const tabs = [
   'Popular',
   'Technology & Analytics',

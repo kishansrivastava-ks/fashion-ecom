@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 import { Outlet, Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import {
@@ -9,6 +9,8 @@ import {
   FaYoutube,
   FaLinkedinIn,
   FaGoogle,
+  FaBars, // Icon for mobile menu
+  FaTimes, // Icon to close mobile menu
 } from 'react-icons/fa'
 
 // Add this dummy data at the top of your AppLayout.js file
@@ -88,7 +90,7 @@ const courseCategories = [
   'Human Resources',
 ]
 
-// --- MegaMenu Component ---
+// --- MegaMenu Component (Desktop) ---
 const MegaMenu = ({ activeCategory, setActiveCategory }) => {
   const courses = coursesData[activeCategory] || {}
   return (
@@ -136,6 +138,103 @@ const MegaMenu = ({ activeCategory, setActiveCategory }) => {
   )
 }
 
+// --- Mobile Courses Accordion ---
+const CoursesAccordion = ({ onLinkClick }) => {
+  const [openCategory, setOpenCategory] = useState(null)
+
+  const toggleCategory = (category) => {
+    setOpenCategory(openCategory === category ? null : category)
+  }
+
+  return (
+    <AccordionContainer>
+      {courseCategories.map((category) => (
+        <div key={category}>
+          <AccordionHeader onClick={() => toggleCategory(category)}>
+            {category}
+            <AccordionIcon isOpen={openCategory === category}>▼</AccordionIcon>
+          </AccordionHeader>
+          <AnimatePresence>
+            {openCategory === category && (
+              <AccordionContent
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+              >
+                {Object.entries(coursesData[category]).map(([type, courseList]) => (
+                  <div key={type}>
+                    <AccordionSubHeader>{type} Courses</AccordionSubHeader>
+                    {courseList.map((course) => (
+                      <MobileCourseLink
+                        to={`/courses/${course.id}`}
+                        key={course.id}
+                        onClick={onLinkClick}
+                      >
+                        {course.logo} {course.title}
+                      </MobileCourseLink>
+                    ))}
+                  </div>
+                ))}
+              </AccordionContent>
+            )}
+          </AnimatePresence>
+        </div>
+      ))}
+    </AccordionContainer>
+  )
+}
+
+// --- Mobile Navigation Menu ---
+const MobileNavMenu = ({ isOpen, closeMenu, openAuthModal }) => {
+  const handleLinkClick = () => {
+    closeMenu()
+  }
+
+  const handleAuthClick = () => {
+    closeMenu()
+    openAuthModal()
+  }
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <MobileNavWrapper
+          initial={{ x: '100%' }}
+          animate={{ x: 0 }}
+          exit={{ x: '100%' }}
+          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        >
+          <MobileNavHeader>
+            <CloseMobileMenuButton onClick={closeMenu}>
+              <FaTimes />
+            </CloseMobileMenuButton>
+          </MobileNavHeader>
+          <MobileNavLinksContainer>
+            <SearchBar type="text" placeholder="Search..." mobile />
+            <MobileNavItem>
+              <MobileCoursesHeader>Courses</MobileCoursesHeader>
+              <CoursesAccordion onLinkClick={handleLinkClick} />
+            </MobileNavItem>
+            <MobileStyledLink to="/training-and-placements" onClick={handleLinkClick}>
+              Training & Placements
+            </MobileStyledLink>
+            <MobileStyledLink to="/about" onClick={handleLinkClick}>
+              About Us
+            </MobileStyledLink>
+            <MobileStyledLink to="/recommendations" onClick={handleLinkClick}>
+              Recommendations
+            </MobileStyledLink>
+            <AuthButton as="button" onClick={handleAuthClick} mobile>
+              Login / Register
+            </AuthButton>
+          </MobileNavLinksContainer>
+        </MobileNavWrapper>
+      )}
+    </AnimatePresence>
+  )
+}
+
 // --- AuthModal Component ---
 const AuthModal = ({ setOpen }) => {
   return (
@@ -167,10 +266,10 @@ const AuthModal = ({ setOpen }) => {
 
 const AppLayout = () => {
   const [scrolled, setScrolled] = useState(false)
-
   const [isDropdownOpen, setDropdownOpen] = useState(false)
   const [activeCategory, setActiveCategory] = useState(courseCategories[0])
   const [isModalOpen, setModalOpen] = useState(false)
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -180,8 +279,21 @@ const AppLayout = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Effect to lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isMobileMenuOpen])
+
   return (
     <LayoutWrapper>
+      <GlobalScrollLock isOpen={isMobileMenuOpen} />
       {/* --- Redesigned Navbar --- */}
       <NavbarWrapper
         animate={{
@@ -195,6 +307,8 @@ const AppLayout = () => {
             <LogoImage />
             <Logo to="/">Career Counselling Corporation of India</Logo>
           </LogoContainer>
+
+          {/* --- Desktop Navigation --- */}
           <NavItems>
             <NavItem
               onMouseEnter={() => setDropdownOpen(true)}
@@ -208,7 +322,6 @@ const AppLayout = () => {
               </AnimatePresence>
             </NavItem>
             <StyledLink to="/training-and-placements">Training & Placements</StyledLink>
-            {/* <StyledLink to="/institutes">Institutes</StyledLink> */}
             <StyledLink to="/about">About Us</StyledLink>
             <StyledLink to="/recommendations">Recommendations</StyledLink>
           </NavItems>
@@ -218,8 +331,20 @@ const AppLayout = () => {
               Login / Register
             </AuthButton>
           </AuthContainer>
+
+          {/* --- Mobile Menu Toggle --- */}
+          <MenuToggle onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}>
+            {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
+          </MenuToggle>
         </NavbarContainer>
       </NavbarWrapper>
+
+      {/* --- Mobile Navigation Menu --- */}
+      <MobileNavMenu
+        isOpen={isMobileMenuOpen}
+        closeMenu={() => setMobileMenuOpen(false)}
+        openAuthModal={() => setModalOpen(true)}
+      />
 
       {/* --- Main Content Area --- */}
       <Main>
@@ -292,6 +417,13 @@ export default AppLayout
 
 // --- Styled Components for the Layout ---
 
+// Global style to lock body scroll when mobile menu is open
+const GlobalScrollLock = createGlobalStyle`
+  body {
+    overflow: ${({ isOpen }) => (isOpen ? 'hidden' : 'auto')};
+  }
+`
+
 const LayoutWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -300,7 +432,6 @@ const LayoutWrapper = styled.div`
 `
 
 // --- Navbar Styles ---
-
 const NavbarWrapper = styled(motion.nav)`
   position: sticky;
   top: 0;
@@ -322,16 +453,16 @@ const NavbarContainer = styled.div`
   padding: 1.2rem 2rem;
   max-width: 1500px;
   margin: 0 auto;
+
+  @media (max-width: 1024px) {
+    padding: 1rem 1.5rem;
+  }
 `
 const LogoContainer = styled.div`
   display: flex;
   align-items: center;
-  /* gap: 1rem; */
   flex-shrink: 0;
-  @media (max-width: 768px) {
-    gap: 0.5rem;
-    flex-shrink: 1;
-  }
+  z-index: 1100; // Ensure logo is above mobile menu overlay when it animates
 `
 
 const LogoImage = styled.img.attrs({
@@ -347,6 +478,12 @@ const LogoImage = styled.img.attrs({
   &:hover {
     transform: scale(1.05);
   }
+
+  @media (max-width: 768px) {
+    width: 40px;
+    height: 40px;
+    margin-right: 0.5rem;
+  }
 `
 
 const Logo = styled(Link)`
@@ -356,6 +493,13 @@ const Logo = styled(Link)`
   color: #000080;
   text-decoration: none;
   white-space: nowrap;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    white-space: normal;
+    max-width: 150px; // Prevent long logo from pushing other elements
+    line-height: 1.2;
+  }
 `
 
 const NavItems = styled.div`
@@ -364,7 +508,7 @@ const NavItems = styled.div`
   gap: 2rem;
 
   @media (max-width: 1024px) {
-    display: none; // Example: Hide for a mobile menu implementation
+    display: none;
   }
 `
 
@@ -397,6 +541,9 @@ const AuthContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
+  @media (max-width: 1024px) {
+    display: none;
+  }
 `
 
 const SearchBar = styled.input`
@@ -405,13 +552,13 @@ const SearchBar = styled.input`
   border-radius: 8px;
   font-size: 0.9rem;
   transition: all 0.3s ease;
-  width: 180px;
+  width: ${({ mobile }) => (mobile ? '100%' : '180px')};
 
   &:focus {
     border-color: #000080;
     outline: none;
     box-shadow: 0 0 0 3px rgba(0, 0, 128, 0.1);
-    width: 220px;
+    width: ${({ mobile }) => (mobile ? '100%' : '220px')};
   }
 `
 
@@ -425,6 +572,10 @@ const AuthButton = styled(Link)`
   transition: all 0.3s ease;
   white-space: nowrap;
 
+  width: ${({ mobile }) => (mobile ? '100%' : 'auto')};
+  padding: ${({ mobile }) => (mobile ? '0.8rem 1.5rem' : '0.35rem 1.5rem')};
+  text-align: center;
+
   &:hover {
     background: #c9302c;
     transform: translateY(-2px);
@@ -433,14 +584,87 @@ const AuthButton = styled(Link)`
   }
 `
 
-// --- Main Content Styles ---
+// --- Mobile Navigation Styles ---
+const MenuToggle = styled.button`
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #000080;
+  cursor: pointer;
+  z-index: 1100; // Above overlay
 
+  @media (max-width: 1024px) {
+    display: block;
+  }
+`
+
+const MobileNavWrapper = styled(motion.div)`
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  background: #ffffff;
+  z-index: 1050;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+
+  @media (min-width: 577px) {
+    width: 375px; // A fixed width for larger mobile/tablet
+  }
+`
+const MobileNavHeader = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 1.5rem;
+  height: 86px; // Match navbar height
+  align-items: center;
+`
+
+const CloseMobileMenuButton = styled.button`
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #000080;
+  cursor: pointer;
+`
+
+const MobileNavLinksContainer = styled.div`
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  overflow-y: auto;
+  flex-grow: 1;
+`
+
+const MobileStyledLink = styled(Link)`
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 0.5rem 0;
+`
+const MobileNavItem = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+const MobileCoursesHeader = styled.h3`
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: 500;
+  margin: 0;
+  padding: 0.5rem 0;
+`
+
+// --- Main Content Styles ---
 const Main = styled.main`
   flex: 1;
 `
-
 // --- Footer Styles ---
-
 const Footer = styled.footer`
   background: #000080;
   color: #e0e0e0;
@@ -535,7 +759,7 @@ const FooterBottom = styled.div`
   color: #cce0ff;
 `
 
-// For the Dropdown Menu
+// For the Dropdown Menu (Desktop)
 const NavItem = styled.div`
   position: relative;
 `
@@ -553,7 +777,6 @@ const MegaMenuContainer = styled(motion.div)`
   padding: 2rem;
   z-index: 1;
   border-top: 1px solid #eee;
-  /* border: 2px solid red; */
 `
 
 const MenuLayout = styled.div`
@@ -645,6 +868,47 @@ const ViewAllButton = styled(Link)`
   &:hover {
     text-decoration: underline;
   }
+`
+
+// Styles for Mobile Courses Accordion
+const AccordionContainer = styled.div`
+  width: 100%;
+  border-top: 1px solid #eee;
+  margin-top: 1rem;
+`
+
+const AccordionHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  cursor: pointer;
+  font-weight: 500;
+  color: #4a5568;
+`
+
+const AccordionIcon = styled.span`
+  transition: transform 0.3s ease;
+  transform: ${({ isOpen }) => (isOpen ? 'rotate(180deg)' : 'rotate(0deg)')};
+`
+
+const AccordionContent = styled(motion.div)`
+  overflow: hidden;
+  padding-left: 1rem;
+  border-left: 2px solid #00008020;
+`
+const AccordionSubHeader = styled.h4`
+  font-size: 0.9rem;
+  color: #718096;
+  margin: 0.75rem 0 0.5rem;
+  text-transform: uppercase;
+`
+const MobileCourseLink = styled(Link)`
+  display: block;
+  padding: 0.5rem 0;
+  color: #2d3748;
+  text-decoration: none;
+  font-size: 1rem;
 `
 
 // For the Auth Modal

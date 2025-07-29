@@ -13,7 +13,7 @@ function AboutUs() {
       <AboutHeroSection />
       <ExcellenceSection />
       <VisionValuesSection />
-      <LeadershipSection />
+      {/* <LeadershipSection /> */}
       <AboutCcciSection />
       <ProdegreePartners />
       <AlliancesSection />
