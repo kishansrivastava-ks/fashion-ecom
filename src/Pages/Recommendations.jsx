@@ -1,7 +1,6 @@
-import React, { useState, useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { motion, AnimatePresence } from 'framer-motion'
-import ConnectWithUs from '@/components/HomePage/ConnectWithUs'
 
 // --- DUMMY DATA ---
 const experienceLevels = [
@@ -35,7 +34,7 @@ const dummyCourses = [
   { id: 'c4', title: 'Digital Marketing & Analytics', university: 'ISB Hyderabad' },
 ]
 
-// --- STYLED COMPONENTS ---
+// --- STYLED COMPONENTS WITH RESPONSIVE UPDATES ---
 const PageWrapper = styled.div`
   font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -45,6 +44,11 @@ const PageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem 1rem;
+    background-color: #ffffff; // Change background for a seamless feel on mobile
+  }
 `
 
 const WizardContainer = styled.div`
@@ -54,6 +58,11 @@ const WizardContainer = styled.div`
   border-radius: 16px;
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
   padding: 2.5rem;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    box-shadow: none; // Remove shadow on mobile if page bg is white
+  }
 `
 
 const ProgressBarContainer = styled.div`
@@ -100,6 +109,10 @@ const StepLabel = styled.span`
   color: ${({ active }) => (active ? '#1a202c' : '#a0aec0')};
   font-weight: 500;
   white-space: nowrap;
+
+  @media (max-width: 768px) {
+    display: none; // Hide labels on mobile to prevent clutter
+  }
 `
 
 const StepContent = styled(motion.div)`
@@ -111,12 +124,21 @@ const StepHeading = styled.h2`
   font-weight: 600;
   color: #1a202c;
   margin: 0 0 2rem 0;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `
 
 const OptionsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.5rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr; // Stack options vertically on mobile
+    gap: 1rem;
+  }
 `
 
 const OptionCard = styled(motion.div)`
@@ -132,6 +154,11 @@ const OptionCard = styled(motion.div)`
   &:hover {
     transform: translateY(-5px);
     border-color: #003380;
+  }
+
+  @media (max-width: 768px) {
+    padding: 1.2rem;
+    text-align: left;
   }
 `
 
@@ -172,6 +199,10 @@ const NavButton = styled.button`
       background-color: #f7f8fc;
     }
   }
+
+  @media (max-width: 480px) {
+    flex-grow: 1;
+  }
 `
 
 const ResultsContainer = styled(motion.div)`
@@ -184,6 +215,10 @@ const CourseGrid = styled.div`
   gap: 1.5rem;
   margin-top: 2rem;
   text-align: left;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr; // Stack courses vertically on mobile
+  }
 `
 
 const CourseCard = styled.div`
@@ -358,7 +393,7 @@ const Recommendations = () => {
               Start Over
             </NavButton>
           )}
-
+          {step === 1 && <div />} {/* Placeholder to keep 'Next' on the right */}
           {step < 3 && (
             <NavButton className="primary" onClick={nextStep} disabled={isNextDisabled()}>
               Next Step
