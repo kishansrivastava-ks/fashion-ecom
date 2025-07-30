@@ -55,7 +55,7 @@ const UsersIcon = () => (
   </svg>
 )
 
-// --- STYLED COMPONENTS (Updated with Media Queries) ---
+// --- STYLED COMPONENTS ---
 
 const HeroSectionContainer = styled.section`
   background-color: #f8f9fa;
@@ -77,19 +77,6 @@ const HeroSectionContainer = styled.section`
     border-radius: 50%;
     z-index: 0;
   }
-
-  // Responsive adjustments for padding on smaller screens
-  @media (max-width: 992px) {
-    padding: 5rem 2rem;
-  }
-
-  @media (max-width: 768px) {
-    padding: 4rem 1.5rem;
-    // Hide the decorative element on very small screens to reduce clutter
-    &::before {
-      display: none;
-    }
-  }
 `
 
 const ContentWrapper = styled.div`
@@ -102,16 +89,10 @@ const ContentWrapper = styled.div`
   position: relative;
   z-index: 1;
 
-  // On tablets and below, stack the columns and center-align text
   @media (max-width: 992px) {
     grid-template-columns: 1fr;
     gap: 3rem;
     text-align: center;
-  }
-
-  // Reduce the gap on mobile for a tighter layout
-  @media (max-width: 768px) {
-    gap: 2.5rem;
   }
 `
 
@@ -131,54 +112,29 @@ const Breadcrumb = styled.p`
 `
 
 const MainHeading = styled(motion.h1)`
-  font-size: 3rem;
+  font-size: 3rem; // Reduced font size
   font-weight: 700;
   color: #000080;
   margin: 0 0 1.5rem 0;
   line-height: 1.25;
-
-  // Adjust font size for tablets
-  @media (max-width: 992px) {
-    font-size: 2.75rem;
-  }
-  // Further adjust font size for mobile
-  @media (max-width: 768px) {
-    font-size: 2.25rem;
-    line-height: 1.3;
-  }
 `
 
 const Description = styled(motion.p)`
-  font-size: 1.05rem;
+  font-size: 1.05rem; // Reduced font size
   color: #4a5568;
   line-height: 1.7;
   max-width: 500px;
   margin-bottom: 2.5rem;
-
-  // Center the description text when the layout is stacked
   @media (max-width: 992px) {
     margin-left: auto;
     margin-right: auto;
-  }
-
-  // Adjust font size and margin for mobile
-  @media (max-width: 768px) {
-    font-size: 1rem;
-    margin-bottom: 2rem;
   }
 `
 
 const StatsContainer = styled.div`
   display: grid;
-  // This pattern is already responsive, it will wrap automatically.
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 1rem;
-
-  // On very small screens, ensure cards have enough space
-  @media (max-width: 400px) {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-  }
 `
 
 const StatCard = styled(motion.div)`
@@ -189,16 +145,6 @@ const StatCard = styled(motion.div)`
   display: flex;
   align-items: center;
   gap: 1rem;
-
-  // Center content within the card when text is centered globally
-  @media (max-width: 992px) {
-    justify-content: center;
-  }
-
-  // Revert to left alignment for a better look in a multi-column layout on smaller screens
-  @media (max-width: 570px) {
-    justify-content: flex-start;
-  }
 `
 
 const StatIconWrapper = styled.div`
@@ -208,18 +154,13 @@ const StatIconWrapper = styled.div`
 const StatText = styled.div``
 
 const StatValue = styled.div`
-  font-size: 1.5rem;
+  font-size: 1.5rem; // Reduced font size
   font-weight: 700;
   color: #1a202c;
-
-  // Reduce font size slightly on mobile
-  @media (max-width: 768px) {
-    font-size: 1.3rem;
-  }
 `
 
 const StatLabel = styled.div`
-  font-size: 0.85rem;
+  font-size: 0.85rem; // Reduced font size
   color: #718096;
 `
 
@@ -248,10 +189,6 @@ const VideoOverlay = styled.div`
   display: flex;
   align-items: flex-end;
   padding: 1.5rem;
-
-  @media (max-width: 768px) {
-    padding: 1rem;
-  }
 `
 
 const PlayButtonWrapper = styled.div`
@@ -275,12 +212,6 @@ const PlayButtonWrapper = styled.div`
     transform: translate(-50%, -50%) scale(1.1);
     background-color: white;
   }
-
-  // Make the play button smaller on mobile
-  @media (max-width: 768px) {
-    width: 60px;
-    height: 60px;
-  }
 `
 
 const VideoCaption = styled.div`
@@ -292,10 +223,6 @@ const PersonName = styled.h3`
   font-weight: 600;
   margin: 0;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-
-  @media (max-width: 768px) {
-    font-size: 1rem;
-  }
 `
 
 const PersonTitle = styled.p`
@@ -303,10 +230,6 @@ const PersonTitle = styled.p`
   margin: 0.25rem 0 0 0;
   opacity: 0.9;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-
-  @media (max-width: 768px) {
-    font-size: 0.8rem;
-  }
 `
 
 // --- Animation Variants ---
