@@ -182,7 +182,7 @@ const HomePageHero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
         >
-          Welcome
+          Your Career Path Starts Here
         </MobileTitle>
 
         <MobileSubtitle
@@ -190,7 +190,7 @@ const HomePageHero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut', delay: 0.4 }}
         >
-          Discover amazing experiences tailored just for you
+          Get expert guidance and find courses to achieve your professional goals.
         </MobileSubtitle>
 
         <GetStartedButton

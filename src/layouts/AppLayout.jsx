@@ -471,7 +471,7 @@ const LogoImage = styled.img.attrs({
 })`
   width: 50px;
   height: 50px;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
   border-radius: 50%;
   object-fit: cover;
   transition: transform 0.3s ease;
@@ -487,9 +487,8 @@ const LogoImage = styled.img.attrs({
 `
 
 const Logo = styled(Link)`
-  font-size: 1.3rem;
+  font-size: 1.3dvw;
   font-weight: 400;
-  letter-spacing: 1px;
   color: #000080;
   text-decoration: none;
   white-space: nowrap;
@@ -497,7 +496,7 @@ const Logo = styled(Link)`
   @media (max-width: 768px) {
     font-size: 1rem;
     white-space: normal;
-    max-width: 150px; // Prevent long logo from pushing other elements
+    max-width: 250px;
     line-height: 1.2;
   }
 `
@@ -505,7 +504,8 @@ const Logo = styled(Link)`
 const NavItems = styled.div`
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5vw;
+  /* border: 1px solid red; */
 
   @media (max-width: 1024px) {
     display: none;
@@ -604,7 +604,7 @@ const MobileNavWrapper = styled(motion.div)`
   top: 0;
   right: 0;
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
   background: #ffffff;
   z-index: 1050;
   display: flex;
