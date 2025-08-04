@@ -103,19 +103,19 @@ const ViewAllCard = styled(CardBase)`
 // --- MOCK DATA ---
 // Using placeholders for logos. In a real app, you'd use actual image URLs.
 const institutes = [
-  { name: 'IISc Bangalore', courses: 3, logo: 'https://placehold.co/100x100/ccc/333?text=IISc' },
+  { name: 'IISc Bangalore', courses: 3, logo: '/images/college-logos/iiscb.png' },
   {
     name: 'Manipal University Jaipur',
     courses: 1,
-    logo: 'https://placehold.co/100x100/ccc/333?text=MUJ',
+    logo: '/images/college-logos/manipal.jpeg',
   },
-  { name: 'IIM Kozhikode', courses: 24, logo: 'https://placehold.co/100x100/ccc/333?text=IIM-K' },
-  { name: 'IIM Calcutta', courses: 14, logo: 'https://placehold.co/100x100/ccc/333?text=IIM-C' },
-  { name: 'IIT Delhi', courses: 21, logo: 'https://placehold.co/100x100/ccc/333?text=IIT-D' },
-  { name: 'IIM Lucknow', courses: 13, logo: 'https://placehold.co/100x100/ccc/333?text=IIM-L' },
-  { name: 'IIM Indore', courses: 20, logo: 'https://placehold.co/100x100/ccc/333?text=IIM-I' },
-  { name: 'XLRI Jamshedpur', courses: 3, logo: 'https://placehold.co/100x100/ccc/333?text=XLRI' },
-  { name: 'IIM Raipur', courses: 2, logo: 'https://placehold.co/100x100/ccc/333?text=IIM-R' },
+  { name: 'IIM Kozhikode', courses: 24, logo: '/images/college-logos/iim-kzd.png' },
+  { name: 'IIM Calcutta', courses: 14, logo: '/images/college-logos/iim-calc.png' },
+  { name: 'IIT Delhi', courses: 21, logo: '/images/college-logos/iitd.png' },
+  { name: 'IIM Lucknow', courses: 13, logo: '/images/college-logos/iim-lko.png' },
+  { name: 'IIM Indore', courses: 20, logo: '/images/college-logos/iim-indore.png' },
+  { name: 'XLRI Jamshedpur', courses: 3, logo: '/images/college-logos/xlri-jamshedpur.png' },
+  { name: 'IIM Raipur', courses: 2, logo: '/images/college-logos/iim-raipur.png' },
 ]
 
 // --- MAIN COMPONENT ---

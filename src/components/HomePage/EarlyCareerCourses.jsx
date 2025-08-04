@@ -293,7 +293,7 @@ const allCourses = [
     category: 'Banking & Finance',
     salary: '₹ 2,70,000 PA',
     rating: 4.9,
-    imageUrl: 'https://placehold.co/600x400/E0F2F1/333?text=Banking+Pro',
+    imageUrl: '/images/courses/banking-programme.jpg',
   },
   {
     id: 2,
@@ -302,7 +302,7 @@ const allCourses = [
     category: 'Banking & Finance',
     salary: '₹ 3,50,000 PA',
     rating: 4.8,
-    imageUrl: 'https://placehold.co/600x400/E0F2F1/333?text=CFP+Program',
+    imageUrl: '/images/courses/financial-plan.png',
   },
   {
     id: 3,
@@ -311,7 +311,7 @@ const allCourses = [
     category: 'Banking & Finance',
     salary: '₹ 4,20,000 PA',
     rating: 4.9,
-    imageUrl: 'https://placehold.co/600x400/E0F2F1/333?text=Investment+Banking',
+    imageUrl: '/images/courses/investment-banking.jpg',
   },
   // Operations & Supply Chain
   {
@@ -321,7 +321,7 @@ const allCourses = [
     category: 'Operations & Supply Chain',
     salary: '₹ 1,44,000 PA',
     rating: 4.8,
-    imageUrl: 'https://placehold.co/600x400/E3F2FD/333?text=Logistics',
+    imageUrl: '/images/courses/logistics-management.png',
   },
   {
     id: 5,
@@ -330,7 +330,7 @@ const allCourses = [
     category: 'Operations & Supply Chain',
     salary: '₹ 3,50,000 PA',
     rating: 4.8,
-    imageUrl: 'https://placehold.co/600x400/E3F2FD/333?text=e-Commerce+SCM',
+    imageUrl: '/images/courses/e-commerce.jpg',
   },
   {
     id: 6,
@@ -339,7 +339,7 @@ const allCourses = [
     category: 'Operations & Supply Chain',
     salary: '₹ 2,40,000 PA',
     rating: 5.0,
-    imageUrl: 'https://placehold.co/600x400/E3F2FD/333?text=Logistics+Planning',
+    imageUrl: '/images/courses/logistics-planning.png',
   },
   // Technology & Analytics
   {

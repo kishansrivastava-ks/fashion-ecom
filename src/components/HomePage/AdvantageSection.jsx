@@ -207,13 +207,13 @@ const stats = [
 ]
 
 const imageData = [
-  { src: 'https://placehold.co/400x400/a29bfe/ffffff?text=Faculty', tag: 'Best-in-class Faculty' },
-  { src: 'https://placehold.co/400x400/74b9ff/ffffff?text=Courses', tag: 'Recommended Courses' },
+  { src: '/images/faculty.png', tag: 'Best-in-class Faculty' },
+  { src: '/images/courses.jpg', tag: 'Recommended Courses' },
   {
-    src: 'https://placehold.co/400x400/81ecec/ffffff?text=Finance',
+    src: '/images/finance-help.png',
     tag: 'Assured Finance Options',
   },
-  { src: 'https://placehold.co/400x400/55efc4/ffffff?text=Success', tag: 'Proven Career Success' },
+  { src: '/images/success.jpg', tag: 'Proven Career Success' },
 ]
 
 // --- MAIN COMPONENT ---

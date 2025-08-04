@@ -324,7 +324,7 @@ const coursesData = {
       startsIn: '7 days',
       fee: '₹ 2,10,000',
       rating: 4.9,
-      imageUrl: 'https://placehold.co/600x400/bdc3c7/333?text=Fintech+Course',
+      imageUrl: '/images/courses/fintech.jpg',
     },
     {
       id: 2,
@@ -333,7 +333,7 @@ const coursesData = {
       startsIn: '14 days',
       fee: '₹ 7,02,000',
       rating: 4.9,
-      imageUrl: 'https://placehold.co/600x400/95a5a6/333?text=Business+Mngmt',
+      imageUrl: '/images/courses/business-management.jpg',
     },
     {
       id: 3,
@@ -342,7 +342,7 @@ const coursesData = {
       startsIn: '41 days',
       fee: '₹ 1,35,000',
       rating: 4.9,
-      imageUrl: 'https://placehold.co/600x400/7f8c8d/333?text=Project+Mngmt',
+      imageUrl: '/images/courses/project-management.jpg',
     },
   ],
   'Technology & Analytics': [
@@ -353,7 +353,7 @@ const coursesData = {
       startsIn: '10 days',
       fee: '₹ 3,50,000',
       rating: 4.8,
-      imageUrl: 'https://placehold.co/600x400/3498db/333?text=Data+Science',
+      imageUrl: '/images/courses/iitd.jpg',
     },
     {
       id: 5,
@@ -362,7 +362,7 @@ const coursesData = {
       startsIn: '21 days',
       fee: '₹ 2,75,000',
       rating: 4.7,
-      imageUrl: 'https://placehold.co/600x400/9b59b6/333?text=ML+Analytics',
+      imageUrl: '/images/courses/iimb.webp',
     },
     {
       id: 6,
@@ -371,7 +371,7 @@ const coursesData = {
       startsIn: '35 days',
       fee: '₹ 1,95,000',
       rating: 4.8,
-      imageUrl: 'https://placehold.co/600x400/2ecc71/333?text=Business+Analytics',
+      imageUrl: '/images/courses/business-analytics.jpg',
     },
   ],
   'Leadership & Strategy': [

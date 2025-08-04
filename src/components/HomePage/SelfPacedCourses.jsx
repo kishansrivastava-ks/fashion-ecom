@@ -208,21 +208,21 @@ const courses = [
     title: 'Certificate Program in Full Stack Web Development',
     brand: 'CCCOI',
     fee: '₹ 9,499',
-    imageUrl: 'https://placehold.co/600x400/6c5ce7/ffffff?text=Full+Stack',
+    imageUrl: '/images/courses/webd.png',
   },
   {
     id: 2,
     title: 'Certificate Program in Data Analytics and Data Visualisation',
     brand: 'CCCOI',
     fee: '₹ 1,999',
-    imageUrl: 'https://placehold.co/600x400/00cec9/ffffff?text=Data+Analytics',
+    imageUrl: '/images/courses/data-analytics.jpg',
   },
   {
     id: 3,
     title: 'Certificate Program in Data Science and Artificial Intelligence',
     brand: 'CCCOI',
     fee: '₹ 11,999',
-    imageUrl: 'https://placehold.co/600x400/0984e3/ffffff?text=Data+Science',
+    imageUrl: '/images/courses/data-science.png',
   },
 ]
 const tabs = [
