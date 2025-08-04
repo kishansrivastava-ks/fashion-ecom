@@ -65,8 +65,8 @@ const SolutionsGrid = styled.div`
   max-width: 1200px;
 
   @media (max-width: 768px) {
-    grid-template-columns: 1fr; /* One column on tablets/phones */
-    gap: 1rem;
+    grid-template-columns: 1fr;
+    width: 95%;
   }
 
   @media (max-width: 450px) {
@@ -173,37 +173,37 @@ const solutions = [
     title: 'Organisational Development Consulting',
     description:
       'A bouquet of services to help organisations reinvent their people, processes, and organisational goals to rema...',
-    imageUrl: 'https://placehold.co/400x400/d7d7d7/333?text=Consulting',
+    imageUrl: '/images/consulting.jpg',
   },
   {
     title: 'Executive Education @ Work',
     description:
       'Executive Education @ Work by TimesPro offers customised corporate training solutions to organisations to enge...',
-    imageUrl: 'https://placehold.co/400x400/c7c7c7/333?text=Education',
+    imageUrl: '/images/education.png',
   },
   {
     title: 'Learning Experience Platform (LXP)',
     description:
       'Our LXP’s help you engage your workforce with learning interventions based on compelling content designed to be...',
-    imageUrl: 'https://placehold.co/400x400/b7b7b7/333?text=LXP',
+    imageUrl: '/images/lxp.jpg',
   },
   {
     title: 'Content Solutions',
     description:
       'TimesPro’s content creation services leverage its expertise and experience in developing over 18,000 hours of...',
-    imageUrl: 'https://placehold.co/400x400/a7a7a7/333?text=Content',
+    imageUrl: '/images/online-learning.jpg',
   },
   {
     title: 'Technology Programmes',
     description:
       'TimesPro’s technology training programmes service specific needs of corporates to train their teams on emergin...',
-    imageUrl: 'https://placehold.co/400x400/979797/333?text=Tech',
+    imageUrl: '/images/technology.png',
   },
   {
     title: 'L&D Solutions',
     description:
       'Our range of process-driven and outcome-based Learning and Development interventions are carefully crafted to...',
-    imageUrl: 'https://placehold.co/400x400/878787/333?text=L%26D',
+    imageUrl: '/images/solutions.jpg',
   },
 ]
 
