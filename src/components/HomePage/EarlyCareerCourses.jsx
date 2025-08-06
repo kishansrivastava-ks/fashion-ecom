@@ -349,7 +349,7 @@ const allCourses = [
     category: 'Technology & Analytics',
     salary: '₹ 15,00,000 PA',
     rating: 4.9,
-    imageUrl: 'https://placehold.co/600x400/D1C4E9/333?text=Data+Science',
+    imageUrl: '/images/courses/data-science.png',
   },
   {
     id: 8,
@@ -358,7 +358,7 @@ const allCourses = [
     category: 'Technology & Analytics',
     salary: '₹ 5,00,000 PA',
     rating: 5.0,
-    imageUrl: 'https://placehold.co/600x400/D1C4E9/333?text=Full+Stack+Dev',
+    imageUrl: '/images/courses/webd.png',
   },
   {
     id: 9,
@@ -367,7 +367,7 @@ const allCourses = [
     category: 'Technology & Analytics',
     salary: '₹ 7,50,000 PA',
     rating: 4.8,
-    imageUrl: 'https://placehold.co/600x400/D1C4E9/333?text=Cloud+Computing',
+    imageUrl: '/images/courses/cloud.jpg',
   },
   // Healthcare
   {
@@ -377,7 +377,7 @@ const allCourses = [
     category: 'Healthcare',
     salary: '₹ 23,80,219 PA',
     rating: 4.8,
-    imageUrl: 'https://placehold.co/600x400/F8BBD0/333?text=Nursing+English',
+    imageUrl: '/images/courses/nurse.jpg',
   },
   {
     id: 11,
@@ -386,7 +386,7 @@ const allCourses = [
     category: 'Healthcare',
     salary: '₹ 3,00,000 PA',
     rating: 4.7,
-    imageUrl: 'https://placehold.co/600x400/F8BBD0/333?text=Medical+Coding',
+    imageUrl: '/images/courses/medical-coding.png',
   },
   {
     id: 12,
@@ -395,7 +395,7 @@ const allCourses = [
     category: 'Healthcare',
     salary: '₹ 4,50,000 PA',
     rating: 4.8,
-    imageUrl: 'https://placehold.co/600x400/F8BBD0/333?text=Hospital+Admin',
+    imageUrl: '/images/courses/hospital.jpg',
   },
   // Hospitality
   {
@@ -405,7 +405,7 @@ const allCourses = [
     category: 'Hospitality',
     salary: '₹ 2,50,000 PA',
     rating: 4.7,
-    imageUrl: 'https://placehold.co/600x400/FCE4EC/333?text=Hotel+Management',
+    imageUrl: '/images/courses/hotel-management.png',
   },
   {
     id: 14,
@@ -414,7 +414,7 @@ const allCourses = [
     category: 'Hospitality',
     salary: '₹ 4,00,000 PA',
     rating: 4.9,
-    imageUrl: 'https://placehold.co/600x400/FCE4EC/333?text=Cabin+Crew',
+    imageUrl: '/images/courses/aviation.png',
   },
   {
     id: 15,
@@ -423,7 +423,7 @@ const allCourses = [
     category: 'Hospitality',
     salary: '₹ 3,80,000 PA',
     rating: 4.9,
-    imageUrl: 'https://placehold.co/600x400/FCE4EC/333?text=Pro+Chef',
+    imageUrl: '/images/courses/chef.png',
   },
   // General Management
   {
@@ -433,7 +433,7 @@ const allCourses = [
     category: 'General Management',
     salary: '₹ 5,00,000 PA',
     rating: 4.7,
-    imageUrl: 'https://placehold.co/600x400/C5CAE9/333?text=PGDM+Online',
+    imageUrl: '/images/courses/management.jpg',
   },
   {
     id: 17,
@@ -442,7 +442,7 @@ const allCourses = [
     category: 'General Management',
     salary: '₹ 3,20,000 PA',
     rating: 4.6,
-    imageUrl: 'https://placehold.co/600x400/C5CAE9/333?text=Business+Admin',
+    imageUrl: '/images/courses/business-admin.jpg',
   },
   {
     id: 18,
@@ -451,7 +451,7 @@ const allCourses = [
     category: 'General Management',
     salary: 'N/A',
     rating: 4.8,
-    imageUrl: 'https://placehold.co/600x400/C5CAE9/333?text=Startup+Program',
+    imageUrl: '/images/courses/startup.jpg',
   },
 ]
 

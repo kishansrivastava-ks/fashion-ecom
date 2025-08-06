@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 // --- STYLED COMPONENTS ---
 
 const HeroContainer = styled.section`
-  height: 75vh;
+  height: 72vh;
   width: 100%;
   position: relative;
   display: flex;
@@ -13,7 +13,7 @@ const HeroContainer = styled.section`
   justify-content: flex-start; /* Aligns content to the left */
   padding: 3rem;
   background-color: #e0e0e0; // Fallback color
-  background-image: url('https://placehold.co/1920x1080/a29bfe/ffffff?text=Your+Inspiring+Background+Image');
+  /* background-image: url('https://placehold.co/1920x1080/a29bfe/ffffff?text=Your+Inspiring+Background+Image'); */
   background-image: url('/hero.jpg');
   background-size: contain;
   background-position: center;
@@ -28,7 +28,8 @@ const HeroContainer = styled.section`
   @media (max-width: 768px) {
     /* Remove background image on mobile */
     background-image: url('/hero-mobile.jpg');
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+    background-image: url('/hero.jpg');
 
     /* Center content for mobile */
     align-items: center;
@@ -163,7 +164,7 @@ const DesktopButton = styled(GetStartedButton)`
 const HomePageHero = () => {
   return (
     <HeroContainer>
-      <Overlay />
+      {/* <Overlay /> */}
 
       {/* Desktop Button - positioned as before */}
       <DesktopButton
