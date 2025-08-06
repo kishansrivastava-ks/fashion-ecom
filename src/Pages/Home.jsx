@@ -22,7 +22,7 @@ function Home() {
       <InDemandDomains />
       <PremierInstitutes />
       <AdvantageSection />
-      <SuccessStories />
+      {/* <SuccessStories /> */}
       <ProdegreePartners />
       <AlliancesSection />
       <ConnectWithUs />

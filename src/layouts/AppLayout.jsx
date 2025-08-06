@@ -305,7 +305,7 @@ const AppLayout = () => {
         <NavbarContainer>
           <LogoContainer>
             <LogoImage />
-            <Logo to="/">Career Counselling Corporation of India</Logo>
+            <Logo to="/">Career Counseling Corporation of India</Logo>
           </LogoContainer>
 
           {/* --- Desktop Navigation --- */}
@@ -314,7 +314,7 @@ const AppLayout = () => {
               onMouseEnter={() => setDropdownOpen(true)}
               onMouseLeave={() => setDropdownOpen(false)}
             >
-              <StyledLink to="/courses">Courses</StyledLink>
+              <StyledLink>Courses</StyledLink>
               <AnimatePresence>
                 {isDropdownOpen && (
                   <MegaMenu activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
@@ -355,7 +355,7 @@ const AppLayout = () => {
       <Footer>
         <FooterContainer>
           <FooterColumn>
-            <FooterLogo>Career Counselling Corporation of India</FooterLogo>
+            <FooterLogo>Career Counseling Corporation of India</FooterLogo>
             <FooterText>
               Empowering learners and professionals with curated content and guidance to achieve
               their career aspirations across diverse industries and skills.
