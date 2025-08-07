@@ -10,11 +10,13 @@ import ConnectWithUs from '@/components/HomePage/ConnectWithUs'
 import HomePageHero from '@/components/HomePage/HomePageHero'
 import ProdegreePartners from '@/components/HomePage/ProdegreePartners'
 import AlliancesSection from '@/components/HomePage/AlliancesSection'
+import HeroSection from '@/components/HomePage/HeroSection'
 
 function Home() {
   return (
     <>
-      <HomePageHero />
+      {/* <HomePageHero /> */}
+      <HeroSection />
       <EarlyCareerCourses />
       <ExecutiveEducationCourses />
       <SelfPacedCourses />
