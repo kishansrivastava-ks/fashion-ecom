@@ -33,7 +33,7 @@ const DomainsContainer = styled.section`
 
 const SectionHeader = styled.div`
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
   margin-bottom: 2.5rem;
   text-align: left;
 `
@@ -57,7 +57,7 @@ const DomainsGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
 `
 
 const CardBase = styled.div`

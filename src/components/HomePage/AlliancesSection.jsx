@@ -22,29 +22,13 @@ const alliances = [
     name: 'Alliance Partner D',
     logo: '/images/alliances/nse.jpg',
   },
-  //   {
-  //     name: 'Alliance Partner E',
-  //     logo: 'https://placehold.co/400x200/5bc0de/ffffff?text=ALLIANCE+E',
-  //   },
-  //   {
-  //     name: 'Alliance Partner F',
-  //     logo: 'https://placehold.co/400x200/5cb85c/ffffff?text=ALLIANCE+F',
-  //   },
-  //   {
-  //     name: 'Alliance Partner G',
-  //     logo: 'https://placehold.co/400x200/f0ad4e/ffffff?text=ALLIANCE+G',
-  //   },
-  //   {
-  //     name: 'Alliance Partner H',
-  //     logo: 'https://placehold.co/400x200/777777/ffffff?text=ALLIANCE+H',
-  //   },
 ]
 
 // --- STYLED COMPONENTS ---
 
 const AlliancesContainer = styled.section`
-  background-color: #f8f9fa;
-  padding: 6rem 2rem;
+  background-color: #f1f1f1;
+  padding: 4rem 2rem;
   font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 `
@@ -55,8 +39,9 @@ const SectionHeader = styled(motion.div)`
 `
 
 const MainHeading = styled.h2`
-  font-size: 2.5rem;
-  font-weight: 700;
+  font-size: 3rem;
+  font-weight: 600;
+  letter-spacing: 2px;
   color: #000080;
   margin: 0;
 `

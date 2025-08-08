@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 const InstitutesContainer = styled.section`
   background-color: #f8f9fa;
-  padding: 4rem 2rem;
+  padding: 2rem;
   font-family: 'Arial', sans-serif;
   display: flex;
   flex-direction: column;
@@ -14,7 +14,7 @@ const InstitutesContainer = styled.section`
 
 const SectionHeader = styled.div`
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
   margin-bottom: 2.5rem;
   text-align: left;
 `
@@ -38,7 +38,7 @@ const InstitutesGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
 `
 
 const CardBase = styled.div`

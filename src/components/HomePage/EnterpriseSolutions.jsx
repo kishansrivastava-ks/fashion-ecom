@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 const SolutionsContainer = styled.section`
   background-color: #f0f2f5;
-  padding: 4rem 2rem;
+  padding: 3rem 2rem;
   font-family: 'Arial', sans-serif;
   display: flex;
   flex-direction: column;
@@ -17,7 +17,7 @@ const SolutionsContainer = styled.section`
 
 const SectionHeader = styled.div`
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
   margin-bottom: 2.5rem;
   text-align: left;
   @media (max-width: 600px) {
@@ -62,7 +62,7 @@ const SolutionsGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
   gap: 1.5rem;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;

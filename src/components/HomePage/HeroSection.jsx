@@ -6,13 +6,15 @@ import styled from 'styled-components'
 const HeroContainer = styled.section`
   display: flex;
   align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  min-height: 80vh;
+  min-height: 70vh;
   background-color: #ffffff;
+  background-color: #ebe9e9;
   padding-left: 6rem;
-  margin-bottom: 2rem;
   gap: 2rem;
   overflow: hidden;
+  /* border: 2px solid red; */
 
   @media (max-width: 992px) {
     flex-direction: column;
@@ -37,6 +39,9 @@ const LeftContent = styled.div`
   flex-direction: column;
   justify-content: center;
   padding-right: 2rem;
+  height: 100%;
+  margin-top: auto;
+  /* border: 2px solid blue; */
 
   @media (max-width: 992px) {
     padding-right: 0;
@@ -45,8 +50,9 @@ const LeftContent = styled.div`
 `
 
 const Title = styled.h1`
-  font-size: 3.2rem;
-  font-weight: 600;
+  font-size: 3rem;
+  font-weight: 400;
+  letter-spacing: 1px;
   color: #002366; /* A dark blue color */
   line-height: 1.2;
   margin-bottom: 1rem;

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 // --- STYLED COMPONENTS (RESPONSIVE) ---
 const CoursesContainer = styled.section`
   background-color: #f9f9f9;
-  padding: 4rem 2rem;
+  padding: 3rem 2rem;
   font-family: 'Arial', sans-serif;
   display: flex;
   flex-direction: column;
@@ -15,7 +15,7 @@ const CoursesContainer = styled.section`
 `
 const SectionHeader = styled.div`
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
   margin-bottom: 2rem;
   position: relative;
   display: flex;
@@ -73,7 +73,7 @@ const TabsContainer = styled.div`
   gap: 0.75rem;
   margin-bottom: 2.5rem;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
 
   @media (max-width: 1024px) {
     flex-wrap: nowrap;
@@ -121,7 +121,7 @@ const CoursesGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
   @media (max-width: 600px) {
     gap: 1.25rem;
   }

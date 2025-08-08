@@ -84,7 +84,7 @@ const ShieldIcon = () => (
 // --- STYLED COMPONENTS ---
 const ExcellenceContainer = styled.section`
   background-color: #ffffff;
-  padding: 6rem 2rem;
+  padding: 3rem 2rem;
   font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 `
@@ -102,7 +102,7 @@ const MainHeading = styled.h2`
 `
 
 const Grid = styled.div`
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

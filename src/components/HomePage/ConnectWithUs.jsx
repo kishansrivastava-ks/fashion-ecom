@@ -6,7 +6,7 @@ import RequestCallbackModal from '../modals/RequestCallbackModal'
 // --- STYLED COMPONENTS ---
 
 const ConnectSectionContainer = styled.section`
-  padding: 4rem 2rem;
+  padding: 2rem;
 
   @media (max-width: 768px) {
     padding: 0;
@@ -14,7 +14,7 @@ const ConnectSectionContainer = styled.section`
 `
 
 const CtaBanner = styled.div`
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   background: linear-gradient(135deg, #001f5a, #003380); // Rich blue gradient
   border-radius: 20px;

@@ -27,11 +27,12 @@ const HeartIcon = () => (
 
 const CoursesContainer = styled.section`
   background-color: #ffffff;
-  padding: 4rem 2rem;
+  padding: 3rem 0;
   font-family: 'Arial', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* border: 2px solid red; */
 
   @media (max-width: 768px) {
     padding: 3rem 1rem;
@@ -40,7 +41,7 @@ const CoursesContainer = styled.section`
 
 const SectionHeader = styled.div`
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
   margin-bottom: 2rem;
 
   @media (max-width: 768px) {
@@ -91,7 +92,7 @@ const TabsContainer = styled.div`
   border-bottom: 1px solid #e0e0e0;
   margin-bottom: 2.5rem;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
 
   @media (max-width: 768px) {
     // Make the container scrollable horizontally on mobile
@@ -142,7 +143,7 @@ const CoursesGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
 `
 
 const CourseCard = styled.div`

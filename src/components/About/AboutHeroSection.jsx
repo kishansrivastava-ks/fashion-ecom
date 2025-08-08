@@ -59,7 +59,7 @@ const UsersIcon = () => (
 
 const HeroSectionContainer = styled.section`
   background-color: #f8f9fa;
-  padding: 6rem 2rem;
+  padding: 4rem 2rem;
   font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   position: relative;
@@ -93,7 +93,7 @@ const HeroSectionContainer = styled.section`
 `
 
 const ContentWrapper = styled.div`
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr; // Give slightly more space to text

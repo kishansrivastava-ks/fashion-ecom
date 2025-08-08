@@ -87,7 +87,7 @@ const LinkIcon = () => (
 // --- STYLED COMPONENTS ---
 const VisionValuesContainer = styled.section`
   background-color: #f8f9fa;
-  padding: 6rem 2rem;
+  padding: 2rem 2rem;
   font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   position: relative;
@@ -95,13 +95,13 @@ const VisionValuesContainer = styled.section`
 `
 
 const ContentWrapper = styled.div`
-  max-width: 1100px;
+  max-width: 1300px;
   margin: 0 auto;
   text-align: center;
 `
 
 const SectionHeader = styled(motion.div)`
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 `
 
 const MainHeading = styled.h2`

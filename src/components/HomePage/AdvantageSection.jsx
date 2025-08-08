@@ -13,7 +13,7 @@ const AdvantageSectionContainer = styled.section`
 `
 
 const ContentWrapper = styled.div`
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); // Give slightly more space to text

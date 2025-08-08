@@ -31,7 +31,7 @@ const scrollAnimation = keyframes`
 
 const ScrollerContainer = styled.section`
   background-color: #ffffff;
-  padding: 6rem 0;
+  padding: 4rem 0;
   font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   text-align: center;
@@ -58,8 +58,9 @@ const SectionHeader = styled(motion.div)`
 `
 
 const MainHeading = styled.h2`
-  font-size: 2.5rem;
-  font-weight: 700;
+  font-size: 3rem;
+  font-weight: 600;
+  letter-spacing: 2px;
   color: #000080;
   margin: 0;
 
@@ -73,7 +74,7 @@ const MainHeading = styled.h2`
 `
 
 const Scroller = styled.div`
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   overflow: hidden;
   position: relative;
@@ -110,11 +111,12 @@ const Logo = styled.a`
   align-items: center;
   justify-content: center;
   width: 250px;
-  padding: 0 2rem;
+  padding: 0 1rem;
   flex-shrink: 0;
 
   img {
-    height: 100px;
+    height: 150px;
+    aspect-ratio: 2/1;
     max-width: 100%;
     opacity: 0.85;
     transition: all 0.3s ease;

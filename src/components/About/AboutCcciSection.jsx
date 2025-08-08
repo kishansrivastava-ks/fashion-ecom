@@ -5,13 +5,13 @@ import { motion } from 'framer-motion'
 // --- STYLED COMPONENTS ---
 const AboutGroupContainer = styled.section`
   background-color: #f8f9fa;
-  padding: 6rem 2rem;
+  padding: 4rem 2rem;
   font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 `
 
 const ContentWrapper = styled.div`
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
 `
 
@@ -28,10 +28,10 @@ const MainHeading = styled.h2`
 `
 
 const Description = styled(motion.p)`
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: #4a5568;
-  max-width: 800px;
-  margin: 1rem auto 4rem auto;
+  max-width: 1000px;
+  margin: 1rem auto 0 auto;
   line-height: 1.7;
   text-align: center;
 `
@@ -74,26 +74,6 @@ const PartnerLogo = styled(motion.div)`
 `
 
 // --- MOCK DATA & CONFIG ---
-const partners = [
-  { name: 'Partner 1', logo: 'https://placehold.co/300x100/f0f0f0/999?text=Partner+A' },
-  { name: 'Partner 2', logo: 'https://placehold.co/300x100/f0f0f0/999?text=Partner+B' },
-  { name: 'Partner 3', logo: 'https://placehold.co/300x100/f0f0f0/999?text=Partner+C' },
-  { name: 'Partner 4', logo: 'https://placehold.co/300x100/f0f0f0/999?text=Partner+D' },
-  { name: 'Partner 5', logo: 'https://placehold.co/300x100/f0f0f0/999?text=Partner+E' },
-]
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-  },
-}
-
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: 'easeOut' } },
-}
 
 // --- MAIN COMPONENT ---
 const AboutCcciSection = () => {
