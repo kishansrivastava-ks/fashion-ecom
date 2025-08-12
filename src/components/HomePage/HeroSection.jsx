@@ -55,7 +55,7 @@ const LeftContent = styled.div`
 
 const Title = styled.h1`
   font-size: 3rem;
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 1px;
   color: #002366; /* A dark blue color */
   line-height: 1.2;
