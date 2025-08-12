@@ -33,7 +33,7 @@ export const jobData = [
     ageLimit: '21-32',
     salary: '₹ 2,08,000 - 3,00,000/-',
     location: 'Pan India',
-    trainingFee: 'plication Fee: ₹ 68,000/-',
+    trainingFee: 'Aplication Fee: ₹ 68,000/-',
     selectionProcess:
       '1. Online Application, 2. Online Exam, 3. Online Interview, 4. Get Offer Letter',
     trainingPeriod: '7 Days',
@@ -46,7 +46,7 @@ export const jobData = [
     ageLimit: '21-32',
     salary: '₹ 2,08,000 - 2,80,000/-',
     location: 'Pan India',
-    trainingFee: 'plication Fee: ₹ 49,000/-',
+    trainingFee: 'Aplication Fee: ₹ 49,000/-',
     selectionProcess:
       '1. Online Application, 2. Online Exam, 3. Online Interview, 4. Get Offer Letter',
     trainingPeriod: '7 Days',
