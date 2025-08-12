@@ -12,8 +12,37 @@ import ProdegreePartners from '@/components/HomePage/ProdegreePartners'
 import AlliancesSection from '@/components/HomePage/AlliancesSection'
 import HeroSection from '@/components/HomePage/HeroSection'
 import JobPlacements from '@/components/HomePage/JobPlacements'
+import { useEffect, useRef, useState } from 'react'
+import RegisterModal from '@/components/modals/RegisterModal'
 
 function Home() {
+  const [showModal, setShowModal] = useState(false)
+  const modalShownRef = useRef(false)
+
+  useEffect(() => {
+    const handleLoad = () => {
+      if (!modalShownRef.current) {
+        setShowModal(true)
+        modalShownRef.current = true
+      }
+    }
+
+    if (document.readyState == 'complete') {
+      handleLoad()
+    } else {
+      window.addEventListener('load', handleLoad)
+    }
+
+    return () => {
+      window.removeEventListener('load', handleLoad)
+    }
+  })
+
+  const handleCloseModal = () => {
+    setShowModal(false)
+    modalShownRef.current = true
+  }
+
   return (
     <>
       {/* <HomePageHero /> */}
@@ -30,6 +59,7 @@ function Home() {
       <ProdegreePartners />
       <AlliancesSection />
       <ConnectWithUs />
+      {showModal && <RegisterModal setOpen={setShowModal} onClose={handleCloseModal} />}
     </>
   )
 }

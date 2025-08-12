@@ -310,17 +310,17 @@ const AppLayout = () => {
 
           {/* --- Desktop Navigation --- */}
           <NavItems>
-            <NavItem
+            <StyledLink
               onMouseEnter={() => setDropdownOpen(true)}
               onMouseLeave={() => setDropdownOpen(false)}
             >
-              <StyledLink>Courses</StyledLink>
+              <p>Courses</p>
               <AnimatePresence>
                 {isDropdownOpen && (
                   <MegaMenu activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
                 )}
               </AnimatePresence>
-            </NavItem>
+            </StyledLink>
             <StyledLink to="/training-and-placements">Training & Placements</StyledLink>
             <StyledLink to="/about">About Us</StyledLink>
             <StyledLink to="/recommendations">Recommendations</StyledLink>
@@ -761,6 +761,7 @@ const FooterBottom = styled.div`
 // For the Dropdown Menu (Desktop)
 const NavItem = styled.div`
   position: relative;
+  /* border: 1px solid red; */
 `
 
 const MegaMenuContainer = styled(motion.div)`

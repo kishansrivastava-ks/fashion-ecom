@@ -1,6 +1,7 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useRef, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { motion, AnimatePresence } from 'framer-motion'
+import RegisterModal from '@/components/modals/RegisterModal'
 
 // --- MOCK DATA ---
 
@@ -801,6 +802,33 @@ const TrainingAndPlacements = () => {
   const [selectedQualifications, setSelectedQualifications] = useState([])
   const [isFilterOpen, setIsFilterOpen] = useState(false) // State for mobile filter dropdown
 
+  const [showModal, setShowModal] = useState(false)
+  const modalShownRef = useRef(false)
+
+  useEffect(() => {
+    const handleLoad = () => {
+      if (!modalShownRef.current) {
+        setShowModal(true)
+        modalShownRef.current = true
+      }
+    }
+
+    if (document.readyState == 'complete') {
+      handleLoad()
+    } else {
+      window.addEventListener('load', handleLoad)
+    }
+
+    return () => {
+      window.removeEventListener('load', handleLoad)
+    }
+  })
+
+  const handleCloseModal = () => {
+    setShowModal(false)
+    modalShownRef.current = true
+  }
+
   const categories = useMemo(
     () => [...new Set(jobData.map((j) => j.company.split(',')[0].split(' ')[0]))],
     []
@@ -864,105 +892,110 @@ const TrainingAndPlacements = () => {
   }, [searchTerm, selectedCategories, selectedQualifications])
 
   return (
-    <PageWrapper>
-      <Header>
-        <MainHeading>Find Your Next Career</MainHeading>
-        <SubHeading>
-          Explore our curated list of job openings and find your perfect match.
-        </SubHeading>
-      </Header>
+    <>
+      <PageWrapper>
+        <Header>
+          <MainHeading>Find Your Next Career</MainHeading>
+          <SubHeading>
+            Explore our curated list of job openings and find your perfect match.
+          </SubHeading>
+        </Header>
 
-      <MainContent>
-        <FilterSidebar>
-          <MobileFilterHeader onClick={() => setIsFilterOpen(!isFilterOpen)}>
-            <MobileFilterHeaderContent>
-              <FilterIcon />
-              <span>Filters</span>
-              {activeFilterCount > 0 && <ActiveFilterBadge>{activeFilterCount}</ActiveFilterBadge>}
-            </MobileFilterHeaderContent>
-            <motion.div animate={{ rotate: isFilterOpen ? 180 : 0 }}>
-              <ChevronDownIcon />
-            </motion.div>
-          </MobileFilterHeader>
+        <MainContent>
+          <FilterSidebar>
+            <MobileFilterHeader onClick={() => setIsFilterOpen(!isFilterOpen)}>
+              <MobileFilterHeaderContent>
+                <FilterIcon />
+                <span>Filters</span>
+                {activeFilterCount > 0 && (
+                  <ActiveFilterBadge>{activeFilterCount}</ActiveFilterBadge>
+                )}
+              </MobileFilterHeaderContent>
+              <motion.div animate={{ rotate: isFilterOpen ? 180 : 0 }}>
+                <ChevronDownIcon />
+              </motion.div>
+            </MobileFilterHeader>
 
-          <FilterContentWrapper isOpen={isFilterOpen}>
-            <FilterGroup>
-              <FilterLabel>Search</FilterLabel>
-              <InputWrapper>
-                <InputIcon>
-                  <SearchIcon />
-                </InputIcon>
-                <StyledInput
-                  type="text"
-                  placeholder="Job title or company..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </InputWrapper>
-            </FilterGroup>
-            <FilterGroup>
-              <FilterLabel>Industry</FilterLabel>
-              <CheckboxContainer>
-                {categories.map((cat) => (
-                  <CheckboxLabel key={cat}>
-                    {' '}
-                    <StyledCheckbox
-                      type="checkbox"
-                      value={cat}
-                      checked={selectedCategories.includes(cat)}
-                      onChange={handleCategoryChange}
-                    />{' '}
-                    {cat}{' '}
-                  </CheckboxLabel>
+            <FilterContentWrapper isOpen={isFilterOpen}>
+              <FilterGroup>
+                <FilterLabel>Search</FilterLabel>
+                <InputWrapper>
+                  <InputIcon>
+                    <SearchIcon />
+                  </InputIcon>
+                  <StyledInput
+                    type="text"
+                    placeholder="Job title or company..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </InputWrapper>
+              </FilterGroup>
+              <FilterGroup>
+                <FilterLabel>Industry</FilterLabel>
+                <CheckboxContainer>
+                  {categories.map((cat) => (
+                    <CheckboxLabel key={cat}>
+                      {' '}
+                      <StyledCheckbox
+                        type="checkbox"
+                        value={cat}
+                        checked={selectedCategories.includes(cat)}
+                        onChange={handleCategoryChange}
+                      />{' '}
+                      {cat}{' '}
+                    </CheckboxLabel>
+                  ))}
+                </CheckboxContainer>
+              </FilterGroup>
+              <FilterGroup>
+                <FilterLabel>Qualification</FilterLabel>
+                <CheckboxContainer>
+                  {qualifications.map((qual) => (
+                    <CheckboxLabel key={qual}>
+                      {' '}
+                      <StyledCheckbox
+                        type="checkbox"
+                        value={qual}
+                        checked={selectedQualifications.includes(qual)}
+                        onChange={handleQualificationChange}
+                      />{' '}
+                      {qual}{' '}
+                    </CheckboxLabel>
+                  ))}
+                </CheckboxContainer>
+              </FilterGroup>
+              <ResetButton onClick={resetFilters}>Reset All Filters</ResetButton>
+            </FilterContentWrapper>
+
+            {activeFilterCount > 0 && (
+              <ActiveFiltersDisplay>
+                {selectedCategories.map((cat) => (
+                  <FilterPill key={cat} onClick={() => removeCategory(cat)}>
+                    {cat} <XIcon />
+                  </FilterPill>
                 ))}
-              </CheckboxContainer>
-            </FilterGroup>
-            <FilterGroup>
-              <FilterLabel>Qualification</FilterLabel>
-              <CheckboxContainer>
-                {qualifications.map((qual) => (
-                  <CheckboxLabel key={qual}>
-                    {' '}
-                    <StyledCheckbox
-                      type="checkbox"
-                      value={qual}
-                      checked={selectedQualifications.includes(qual)}
-                      onChange={handleQualificationChange}
-                    />{' '}
-                    {qual}{' '}
-                  </CheckboxLabel>
+                {selectedQualifications.map((qual) => (
+                  <FilterPill key={qual} onClick={() => removeQualification(qual)}>
+                    {qual} <XIcon />
+                  </FilterPill>
                 ))}
-              </CheckboxContainer>
-            </FilterGroup>
-            <ResetButton onClick={resetFilters}>Reset All Filters</ResetButton>
-          </FilterContentWrapper>
+              </ActiveFiltersDisplay>
+            )}
+          </FilterSidebar>
 
-          {activeFilterCount > 0 && (
-            <ActiveFiltersDisplay>
-              {selectedCategories.map((cat) => (
-                <FilterPill key={cat} onClick={() => removeCategory(cat)}>
-                  {cat} <XIcon />
-                </FilterPill>
-              ))}
-              {selectedQualifications.map((qual) => (
-                <FilterPill key={qual} onClick={() => removeQualification(qual)}>
-                  {qual} <XIcon />
-                </FilterPill>
-              ))}
-            </ActiveFiltersDisplay>
-          )}
-        </FilterSidebar>
-
-        <JobListingsContainer>
-          <ResultsHeader>{filteredJobs.length} Jobs Found</ResultsHeader>
-          {filteredJobs.length > 0 ? (
-            filteredJobs.map((job) => <JobCard key={job.id} job={job} />)
-          ) : (
-            <NoResults>No job openings match your criteria.</NoResults>
-          )}
-        </JobListingsContainer>
-      </MainContent>
-    </PageWrapper>
+          <JobListingsContainer>
+            <ResultsHeader>{filteredJobs.length} Jobs Found</ResultsHeader>
+            {filteredJobs.length > 0 ? (
+              filteredJobs.map((job) => <JobCard key={job.id} job={job} />)
+            ) : (
+              <NoResults>No job openings match your criteria.</NoResults>
+            )}
+          </JobListingsContainer>
+        </MainContent>
+      </PageWrapper>
+      {showModal && <RegisterModal setOpen={setShowModal} onClose={handleCloseModal} />}
+    </>
   )
 }
 
