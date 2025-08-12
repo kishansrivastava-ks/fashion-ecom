@@ -8,12 +8,15 @@ const HeroContainer = styled.section`
   align-items: center;
   align-items: flex-start;
   justify-content: center;
-  min-height: 70vh;
-  background-color: #ffffff;
-  background-color: #ebe9e9;
+  min-height: 65vh;
+  /* background-color: #ffffff; */
+  background-color: #f7f6f6;
   padding-left: 6rem;
+  /* padding-top: 1rem; */
+  padding-bottom: 1rem;
   gap: 2rem;
   overflow: hidden;
+  /* border: 2px solid red; */
   /* border: 2px solid red; */
 
   @media (max-width: 992px) {
@@ -40,7 +43,8 @@ const LeftContent = styled.div`
   justify-content: center;
   padding-right: 2rem;
   height: 100%;
-  margin-top: auto;
+  /* margin-top: auto; */
+  padding-top: 2rem;
   /* border: 2px solid blue; */
 
   @media (max-width: 992px) {
@@ -71,7 +75,7 @@ const Subtitle = styled.p`
   font-size: 1.1rem;
   color: #555;
   line-height: 1.6;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   max-width: 500px;
 
   @media (max-width: 992px) {
@@ -82,7 +86,7 @@ const Subtitle = styled.p`
 const TabsContainer = styled.div`
   display: flex;
   gap: 1rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -156,11 +160,11 @@ const HeroImage = styled.img`
 
 // The main component
 const HeroSection = () => {
-  const [activeTab, setActiveTab] = useState('Counseling')
+  const [activeTab, setActiveTab] = useState('Counselling')
   //   const tabs = ['Counseling', 'Training', 'Job Placement']
   const tabs = [
     {
-      name: 'Counseling',
+      name: 'Counselling',
       to: '/',
     },
     {

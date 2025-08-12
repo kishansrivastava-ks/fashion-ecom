@@ -56,7 +56,7 @@ const CalendarIcon = () => (
 // Main container and section header
 const CoursesContainer = styled.section`
   background-color: #ffffff;
-  padding: 3rem 2rem;
+  padding: 2rem 2rem;
   font-family: 'Arial', sans-serif;
   display: flex;
   flex-direction: column;

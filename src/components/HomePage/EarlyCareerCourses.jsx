@@ -27,7 +27,7 @@ const HeartIcon = () => (
 
 const CoursesContainer = styled.section`
   background-color: #ffffff;
-  padding: 3rem 0;
+  padding: 2rem 0;
   font-family: 'Arial', sans-serif;
   display: flex;
   flex-direction: column;
@@ -42,7 +42,7 @@ const CoursesContainer = styled.section`
 const SectionHeader = styled.div`
   width: 100%;
   max-width: 1300px;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 
   @media (max-width: 768px) {
     text-align: center;
@@ -54,6 +54,7 @@ const SectionTitle = styled.h2`
   color: #333;
   margin: 0;
   font-weight: normal;
+  color: #e55c20;
 
   strong {
     font-size: 2rem;
@@ -90,7 +91,7 @@ const TopLink = styled.a`
 const TabsContainer = styled.div`
   display: flex;
   border-bottom: 1px solid #e0e0e0;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   width: 100%;
   max-width: 1300px;
 
@@ -138,8 +139,6 @@ const TabButton = styled.button`
 
 const CoursesGrid = styled.div`
   display: grid;
-  /* This is already responsive! It will create as many columns as fit that are at least 320px wide. */
-  /* On mobile, this results in a single column layout automatically. */
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
   width: 100%;

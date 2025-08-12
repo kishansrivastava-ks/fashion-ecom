@@ -4,7 +4,7 @@ import styled from 'styled-components'
 // --- STYLED COMPONENTS (RESPONSIVE) ---
 const CoursesContainer = styled.section`
   background-color: #f9f9f9;
-  padding: 3rem 2rem;
+  padding: 2rem 2rem;
   font-family: 'Arial', sans-serif;
   display: flex;
   flex-direction: column;
@@ -16,7 +16,7 @@ const CoursesContainer = styled.section`
 const SectionHeader = styled.div`
   width: 100%;
   max-width: 1300px;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -49,9 +49,9 @@ const TopLink = styled.a`
 `
 const SectionTitle = styled.h2`
   font-size: 1.25rem;
-  color: #333;
   margin: 0;
   font-weight: normal;
+  color: #e55c20;
 
   strong {
     font-size: 2rem;
@@ -71,7 +71,7 @@ const TabsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   width: 100%;
   max-width: 1300px;
 

@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components'
 import { motion, AnimatePresence } from 'framer-motion'
 
 // --- MOCK DATA ---
+
 const jobData = [
   {
     id: 1,

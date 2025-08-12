@@ -28,7 +28,7 @@ const alliances = [
 
 const AlliancesContainer = styled.section`
   background-color: #f1f1f1;
-  padding: 4rem 2rem;
+  padding: 2rem 2rem;
   font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 `

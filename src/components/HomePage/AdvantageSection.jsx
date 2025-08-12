@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 const AdvantageSectionContainer = styled.section`
   background-color: #ffffff;
-  padding: 5rem 2rem;
+  padding: 3rem 2rem;
   font-family: 'Arial', sans-serif;
   position: relative;
   overflow: hidden;

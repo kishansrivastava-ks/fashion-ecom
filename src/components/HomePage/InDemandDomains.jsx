@@ -24,7 +24,7 @@ const PlaceholderIcon = () => (
 
 const DomainsContainer = styled.section`
   background-color: #f8f9fa;
-  padding: 4rem 2rem;
+  padding: 2rem 2rem;
   font-family: 'Arial', sans-serif;
   display: flex;
   flex-direction: column;
@@ -34,7 +34,7 @@ const DomainsContainer = styled.section`
 const SectionHeader = styled.div`
   width: 100%;
   max-width: 1300px;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   text-align: left;
 `
 

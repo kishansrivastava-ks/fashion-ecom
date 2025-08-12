@@ -31,7 +31,7 @@ const scrollAnimation = keyframes`
 
 const ScrollerContainer = styled.section`
   background-color: #ffffff;
-  padding: 4rem 0;
+  padding: 2.5rem 0;
   font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   text-align: center;

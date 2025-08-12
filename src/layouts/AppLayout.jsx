@@ -487,7 +487,7 @@ const LogoImage = styled.img.attrs({
 `
 
 const Logo = styled(Link)`
-  font-size: 1.3dvw;
+  font-size: 1.25dvw;
   font-weight: 400;
   color: #000080;
   text-decoration: none;
@@ -513,9 +513,8 @@ const NavItems = styled.div`
 `
 
 const StyledLink = styled(Link)`
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: #333;
-  font-weight: 500;
   text-decoration: none;
   position: relative;
   padding-bottom: 5px;

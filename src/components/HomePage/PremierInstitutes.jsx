@@ -15,7 +15,7 @@ const InstitutesContainer = styled.section`
 const SectionHeader = styled.div`
   width: 100%;
   max-width: 1300px;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
   text-align: left;
 `
 
