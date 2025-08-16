@@ -505,81 +505,6 @@ const JobPlacements = () => {
       </SectionTitle>
 
       <SubSection>
-        <SubSectionTitle>For Graduates</SubSectionTitle>
-        <JobsGrid>
-          {jobData.slice(0, 6).map((job) => (
-            <JobCard key={job.id}>
-              <JobContent>
-                <JobImage image={job.jobImage}>
-                  <LikeButton>
-                    <Heart />
-                  </LikeButton>
-                </JobImage>
-
-                <JobInfo>
-                  <TitleCompanyRow>
-                    <TitleCompanyLeft>
-                      <JobTitle>{job.title}</JobTitle>
-                      <CompanyInfo>
-                        <CompanyLogo src={job.companyLogo} alt={job.company} />
-                        <span style={{ fontSize: '0.9rem', color: '#6b7280' }}>{job.company}</span>
-                      </CompanyInfo>
-                    </TitleCompanyLeft>
-                    <CategoryBadge>{job.category}</CategoryBadge>
-                  </TitleCompanyRow>
-
-                  <Divider />
-
-                  <BottomRow>
-                    <TrainingFee>{job.trainingFee.split('(')[0].trim()}</TrainingFee>
-                    <StarRating>
-                      <Star />
-                      <Star />
-                      <Star />
-                      <Star />
-                      <Star />
-                      <span>4.5</span>
-                    </StarRating>
-                  </BottomRow>
-                </JobInfo>
-              </JobContent>
-
-              <HoverOverlay className="overlay">
-                <OverlayHeader>
-                  <OverlayTitle>{job.title}</OverlayTitle>
-                  <OverlayCompany>
-                    <Building2 />
-                    {job.company}
-                  </OverlayCompany>
-                </OverlayHeader>
-
-                <OverlayContent>
-                  <OverlayDetail>
-                    {/* <OverlayLabel>Category</OverlayLabel> */}
-                    <OverlayValue>{job.category}</OverlayValue>
-                  </OverlayDetail>
-
-                  <OverlayDescription>{job.description}</OverlayDescription>
-
-                  <OverlayDetail>
-                    <OverlayLabel>Training Fee</OverlayLabel>
-                    <OverlayValue>{job.trainingFee}</OverlayValue>
-                  </OverlayDetail>
-
-                  <OverlayDetail>
-                    <OverlayLabel>Salary</OverlayLabel>
-                    <OverlayValue>{job.salary}</OverlayValue>
-                  </OverlayDetail>
-
-                  <KnowMoreButton>Know More</KnowMoreButton>
-                </OverlayContent>
-              </HoverOverlay>
-            </JobCard>
-          ))}
-        </JobsGrid>
-      </SubSection>
-
-      <SubSection>
         <SubSectionTitle>For 12th Pass</SubSectionTitle>
         <JobsGrid>
           {jobData.slice(6, 12).map((job) => (
@@ -646,7 +571,82 @@ const JobPlacements = () => {
                     <OverlayValue>{job.salary}</OverlayValue>
                   </OverlayDetail>
 
-                  <KnowMoreButton>Know More</KnowMoreButton>
+                  <KnowMoreButton>Apply Now</KnowMoreButton>
+                </OverlayContent>
+              </HoverOverlay>
+            </JobCard>
+          ))}
+        </JobsGrid>
+      </SubSection>
+
+      <SubSection>
+        <SubSectionTitle>For Graduates</SubSectionTitle>
+        <JobsGrid>
+          {jobData.slice(0, 6).map((job) => (
+            <JobCard key={job.id}>
+              <JobContent>
+                <JobImage image={job.jobImage}>
+                  <LikeButton>
+                    <Heart />
+                  </LikeButton>
+                </JobImage>
+
+                <JobInfo>
+                  <TitleCompanyRow>
+                    <TitleCompanyLeft>
+                      <JobTitle>{job.title}</JobTitle>
+                      <CompanyInfo>
+                        <CompanyLogo src={job.companyLogo} alt={job.company} />
+                        <span style={{ fontSize: '0.9rem', color: '#6b7280' }}>{job.company}</span>
+                      </CompanyInfo>
+                    </TitleCompanyLeft>
+                    <CategoryBadge>{job.category}</CategoryBadge>
+                  </TitleCompanyRow>
+
+                  <Divider />
+
+                  <BottomRow>
+                    <TrainingFee>{job.trainingFee.split('(')[0].trim()}</TrainingFee>
+                    <StarRating>
+                      <Star />
+                      <Star />
+                      <Star />
+                      <Star />
+                      <Star />
+                      <span>4.5</span>
+                    </StarRating>
+                  </BottomRow>
+                </JobInfo>
+              </JobContent>
+
+              <HoverOverlay className="overlay">
+                <OverlayHeader>
+                  <OverlayTitle>{job.title}</OverlayTitle>
+                  <OverlayCompany>
+                    <Building2 />
+                    {job.company}
+                  </OverlayCompany>
+                </OverlayHeader>
+
+                <OverlayContent>
+                  <OverlayDetail>
+                    {/* <OverlayLabel>Category</OverlayLabel> */}
+                    <OverlayValue>{job.category}</OverlayValue>
+                  </OverlayDetail>
+
+                  <OverlayDescription>{job.description}</OverlayDescription>
+
+                  <OverlayDetail>
+                    <OverlayLabel>Training Fee</OverlayLabel>
+                    <OverlayValue>{job.trainingFee}</OverlayValue>
+                  </OverlayDetail>
+
+                  <OverlayDetail>
+                    <OverlayLabel>Salary</OverlayLabel>
+                    <OverlayValue>{job.salary}</OverlayValue>
+                  </OverlayDetail>
+
+                  <KnowMoreButton>Apply Now</KnowMoreButton>
                 </OverlayContent>
               </HoverOverlay>
             </JobCard>
