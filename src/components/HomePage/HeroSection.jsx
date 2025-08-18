@@ -9,8 +9,8 @@ const HeroContainer = styled.section`
   align-items: flex-start;
   justify-content: center;
   min-height: 65vh;
-  /* background-color: #ffffff; */
-  background-color: #f7f6f6;
+  background-color: #ffffff;
+  /* background-color: #f7f6f6; */
   padding-left: 6rem;
   /* padding-top: 1rem; */
   /* padding-bottom: 1rem; */
@@ -24,6 +24,10 @@ const HeroContainer = styled.section`
     text-align: center;
     padding: 2rem 1.5rem;
   }
+  /* border: 2px solid red; */
+  /* border-bottom: 5px solid blue; */
+  /* box-sizing: border-box; */
+  box-shadow: inset 0 -10px 0 #18009c;
 `
 
 const ContentWrapper = styled.div`
@@ -54,15 +58,15 @@ const LeftContent = styled.div`
 `
 
 const Title = styled.h1`
-  font-size: 3rem;
-  font-weight: 500;
+  font-size: 2.6rem;
+  font-weight: 400;
   letter-spacing: 1px;
   color: #002366; /* A dark blue color */
   line-height: 1.1;
   margin-bottom: 1rem;
 
   span {
-    color: #d32f2f; /* A red color */
+    color: #da3b3b; /* A red color */
   }
 
   @media (max-width: 768px) {
@@ -144,6 +148,7 @@ const RightContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  /* border: 2px solid red; */
 
   @media (max-width: 992px) {
     display: none; // Hides the image on smaller screens for better layout
@@ -154,8 +159,9 @@ const HeroImage = styled.img`
   width: 100%;
   height: 100%;
   max-height: 500px;
-  object-fit: cover;
-  border-radius: 12px;
+  object-fit: contain;
+  margin-left: 3rem;
+  scale: 0.95;
 `
 
 // The main component
@@ -184,8 +190,10 @@ const HeroSection = () => {
         <ContentWrapper>
           <LeftContent>
             <Title>
-              Unlock your Potential with Expert <br />
-              <span>Career Counseling</span>
+              Unlock your Potential with&nbsp;
+              <span>
+                Expert <br /> Career Counseling
+              </span>
             </Title>
             <Subtitle>
               Discover your passion, build your career with India’s leading learning and career
@@ -213,7 +221,7 @@ const HeroSection = () => {
             {/* As requested, a dummy image. Replace the src with your actual image path. */}
             <HeroImage
               //   src="https://placehold.co/600x500/E0E0E0/333?text=Your+Image+Here"
-              src="/hero1.png"
+              src="/hero1.jpg"
               alt="Career counseling visual"
               onerror="this.onerror=null;this.src='https://placehold.co/600x400/E0E0E0/333?text=Image+Not+Found';"
             />
