@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import RegisterModal from '../modals/RegisterModal'
 
 // --- STYLED COMPONENTS ---
 
@@ -159,6 +160,8 @@ const KnowMoreButton = styled.a`
 
   &:hover {
     background-color: #c9302c;
+    color: #ffffff;
+    cursor: pointer;
   }
 
   @media (max-width: 600px) {
@@ -209,30 +212,34 @@ const solutions = [
 
 // --- MAIN COMPONENT ---
 const EnterpriseSolutions = () => {
+  const [showModal, setShowModal] = useState(false)
   return (
-    <SolutionsContainer>
-      <SectionHeader>
-        <SectionTitle>
-          Achieve organisational growth with
-          <strong>Enterprise Solutions</strong>
-        </SectionTitle>
-        <SectionSubTitle>
-          Customised learning solutions to empower talent and drive business objectives
-        </SectionSubTitle>
-      </SectionHeader>
-      <SolutionsGrid>
-        {solutions.map((solution, index) => (
-          <SolutionCard key={index}>
-            <CardImage src={solution.imageUrl} />
-            <CardContent>
-              <CardTitle>{solution.title}</CardTitle>
-              <CardDescription>{solution.description}</CardDescription>
-              <KnowMoreButton href="#">Apply Now →</KnowMoreButton>
-            </CardContent>
-          </SolutionCard>
-        ))}
-      </SolutionsGrid>
-    </SolutionsContainer>
+    <>
+      <SolutionsContainer>
+        <SectionHeader>
+          <SectionTitle>
+            Achieve organisational growth with
+            <strong>Enterprise Solutions</strong>
+          </SectionTitle>
+          <SectionSubTitle>
+            Customised learning solutions to empower talent and drive business objectives
+          </SectionSubTitle>
+        </SectionHeader>
+        <SolutionsGrid>
+          {solutions.map((solution, index) => (
+            <SolutionCard key={index}>
+              <CardImage src={solution.imageUrl} />
+              <CardContent>
+                <CardTitle>{solution.title}</CardTitle>
+                <CardDescription>{solution.description}</CardDescription>
+                <KnowMoreButton onClick={() => setShowModal(true)}>Apply Now →</KnowMoreButton>
+              </CardContent>
+            </SolutionCard>
+          ))}
+        </SolutionsGrid>
+      </SolutionsContainer>
+      {showModal && <RegisterModal setOpen={setShowModal} onClose={() => setShowModal(false)} />}
+    </>
   )
 }
 
