@@ -12,21 +12,16 @@ const HeroContainer = styled.section`
   background-color: #ffffff;
   /* background-color: #f7f6f6; */
   padding-left: 6rem;
-  /* padding-top: 1rem; */
-  /* padding-bottom: 1rem; */
+
   gap: 2rem;
   overflow: hidden;
-  /* border: 2px solid red; */
-  /* border: 2px solid red; */
 
   @media (max-width: 992px) {
     flex-direction: column;
     text-align: center;
     padding: 2rem 1.5rem;
   }
-  /* border: 2px solid red; */
-  /* border-bottom: 5px solid blue; */
-  /* box-sizing: border-box; */
+
   box-shadow: inset 0 -10px 0 #18009c;
 `
 

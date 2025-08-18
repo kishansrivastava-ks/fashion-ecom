@@ -440,6 +440,8 @@ const NavbarWrapper = styled(motion.nav)`
   backdrop-filter: blur(10px);
   border-bottom: 1px solid transparent;
   transition: border-color 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #e0e0e0;
 
   &[style*='background-color: rgb(255, 255, 255)'] {
     border-bottom-color: #e0e0e0;
