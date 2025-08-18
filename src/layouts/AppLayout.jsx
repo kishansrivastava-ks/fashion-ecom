@@ -321,12 +321,12 @@ const AppLayout = () => {
                 )}
               </AnimatePresence>
             </StyledLink>
+            <StyledLink to="/recommendations">Recommendations</StyledLink>
+            <SearchBar type="text" placeholder="Search..." />
             <StyledLink to="/training-and-placements">Training & Placements</StyledLink>
             <StyledLink to="/about">About Us</StyledLink>
-            <StyledLink to="/recommendations">Recommendations</StyledLink>
           </NavItems>
           <AuthContainer>
-            <SearchBar type="text" placeholder="Search..." />
             <AuthButton as="button" onClick={() => setModalOpen(true)}>
               Login / Register
             </AuthButton>
@@ -450,9 +450,10 @@ const NavbarContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.2rem 2rem;
+  padding: 1rem 1rem;
   max-width: 1500px;
   margin: 0 auto;
+  /* border: 2px solid red; */
 
   @media (max-width: 1024px) {
     padding: 1rem 1.5rem;
@@ -469,8 +470,8 @@ const LogoImage = styled.img.attrs({
   src: '/logo.png',
   alt: 'Logo',
 })`
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   margin-right: 0.5rem;
   border-radius: 50%;
   object-fit: cover;
@@ -487,7 +488,7 @@ const LogoImage = styled.img.attrs({
 `
 
 const Logo = styled(Link)`
-  font-size: 1.25dvw;
+  font-size: 1.2dvw;
   font-weight: 400;
   color: #000080;
   text-decoration: none;
@@ -504,8 +505,11 @@ const Logo = styled(Link)`
 const NavItems = styled.div`
   display: flex;
   align-items: center;
-  gap: 1.5vw;
+  gap: 1vw;
   /* border: 1px solid red; */
+  margin-right: auto;
+  margin-left: 1rem;
+  padding-top: 0.5rem;
 
   @media (max-width: 1024px) {
     display: none;
@@ -539,25 +543,26 @@ const StyledLink = styled(Link)`
 const AuthContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;
+  /* gap: 1rem; */
   @media (max-width: 1024px) {
     display: none;
   }
 `
 
 const SearchBar = styled.input`
-  padding: 0.6rem 1rem;
+  padding: 0.5rem 1rem;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  /* border-radius: 8px; */
   font-size: 0.9rem;
   transition: all 0.3s ease;
-  width: ${({ mobile }) => (mobile ? '100%' : '180px')};
+  width: ${({ mobile }) => (mobile ? '100%' : '350px')};
+  margin-top: -0.5rem;
 
   &:focus {
     border-color: #000080;
     outline: none;
     box-shadow: 0 0 0 3px rgba(0, 0, 128, 0.1);
-    width: ${({ mobile }) => (mobile ? '100%' : '220px')};
+    width: ${({ mobile }) => (mobile ? '100%' : '360px')};
   }
 `
 
@@ -565,11 +570,12 @@ const AuthButton = styled(Link)`
   padding: 0.35rem 1.5rem;
   background: #d9534f;
   color: white;
-  border-radius: 8px;
+  /* border-radius: 8px; */
   font-weight: 500;
   text-decoration: none;
   transition: all 0.3s ease;
   white-space: nowrap;
+  font-size: 1vw;
 
   width: ${({ mobile }) => (mobile ? '100%' : 'auto')};
   padding: ${({ mobile }) => (mobile ? '0.8rem 1.5rem' : '0.35rem 1.5rem')};
@@ -767,7 +773,7 @@ const NavItem = styled.div`
 const MegaMenuContainer = styled(motion.div)`
   position: absolute;
   top: 150%;
-  left: -30rem;
+  left: -20rem;
   transform: translateX(-50%);
   width: 90vw;
   max-width: 1300px;

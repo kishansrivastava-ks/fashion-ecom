@@ -70,61 +70,68 @@ const XIcon = () => (
 const JobCard = ({ job }) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const getLogoInitial = (company) => company.charAt(0)
+  const [showRegisterModal, setShowRegisterModal] = useState(false)
+
   return (
-    <JobCardWrapper layout>
-      <JobCardStyled>
-        <CardHeader onClick={() => setIsExpanded(!isExpanded)}>
-          <CompanyLogo>{getLogoInitial(job.company)}</CompanyLogo>
-          <HeaderContent>
-            <JobTitle>{job.title}</JobTitle>
-            <CompanyName>
-              {job.company} &bull; {job.location}
-            </CompanyName>
-          </HeaderContent>
-          <ExpandButton animate={{ rotate: isExpanded ? 180 : 0 }}>
-            <ChevronDownIcon />
-          </ExpandButton>
-        </CardHeader>
-        <AnimatePresence>
-          {isExpanded && (
-            <CardBody
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
-            >
-              <DetailsGrid>
-                <DetailItem>
-                  <DetailLabel>Salary</DetailLabel>
-                  {job.salary}
-                </DetailItem>
-                <DetailItem>
-                  <DetailLabel>Qualification</DetailLabel>
-                  {job.qualification}
-                </DetailItem>
-                <DetailItem>
-                  <DetailLabel>Age Limit</DetailLabel>
-                  {job.ageLimit}
-                </DetailItem>
-                <DetailItem>
-                  <DetailLabel>Training Period</DetailLabel>
-                  {job.trainingPeriod}
-                </DetailItem>
-                <DetailItem style={{ gridColumn: '1 / -1' }}>
-                  <DetailLabel>Training Fee</DetailLabel>
-                  {job.trainingFee}
-                </DetailItem>
-                <DetailItem style={{ gridColumn: '1 / -1' }}>
-                  <DetailLabel>Selection Process</DetailLabel>
-                  {job.selectionProcess}
-                </DetailItem>
-              </DetailsGrid>
-              <ApplyButton href="#">Apply Now</ApplyButton>
-            </CardBody>
-          )}
-        </AnimatePresence>
-      </JobCardStyled>
-    </JobCardWrapper>
+    <>
+      <JobCardWrapper layout>
+        <JobCardStyled>
+          <CardHeader onClick={() => setIsExpanded(!isExpanded)}>
+            <CompanyLogo>{getLogoInitial(job.company)}</CompanyLogo>
+            <HeaderContent>
+              <JobTitle>{job.title}</JobTitle>
+              <CompanyName>
+                {job.company} &bull; {job.location}
+              </CompanyName>
+            </HeaderContent>
+            <ExpandButton animate={{ rotate: isExpanded ? 180 : 0 }}>
+              <ChevronDownIcon />
+            </ExpandButton>
+          </CardHeader>
+          <AnimatePresence>
+            {isExpanded && (
+              <CardBody
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+              >
+                <DetailsGrid>
+                  <DetailItem>
+                    <DetailLabel>Salary</DetailLabel>
+                    {job.salary}
+                  </DetailItem>
+                  <DetailItem>
+                    <DetailLabel>Qualification</DetailLabel>
+                    {job.qualification}
+                  </DetailItem>
+                  <DetailItem>
+                    <DetailLabel>Age Limit</DetailLabel>
+                    {job.ageLimit}
+                  </DetailItem>
+                  <DetailItem>
+                    <DetailLabel>Training Period</DetailLabel>
+                    {job.trainingPeriod}
+                  </DetailItem>
+                  <DetailItem style={{ gridColumn: '1 / -1' }}>
+                    <DetailLabel>Training Fee</DetailLabel>
+                    {job.trainingFee}
+                  </DetailItem>
+                  <DetailItem style={{ gridColumn: '1 / -1' }}>
+                    <DetailLabel>Selection Process</DetailLabel>
+                    {job.selectionProcess}
+                  </DetailItem>
+                </DetailsGrid>
+                <ApplyButton onClick={() => setShowRegisterModal(true)}>Apply Now</ApplyButton>
+              </CardBody>
+            )}
+          </AnimatePresence>
+        </JobCardStyled>
+      </JobCardWrapper>
+      {showRegisterModal && (
+        <RegisterModal setOpen={setShowRegisterModal} onClose={() => setShowRegisterModal(false)} />
+      )}
+    </>
   )
 }
 
@@ -692,8 +699,10 @@ const ApplyButton = styled.a`
   border-radius: 8px;
   transition: all 0.3s ease;
   &:hover {
+    cursor: pointer;
     background-color: #001f5a;
     transform: translateY(-2px);
+    color: #ffffff;
     box-shadow: 0 4px 15px rgba(0, 51, 128, 0.2);
   }
 `

@@ -227,7 +227,7 @@ const EnterpriseSolutions = () => {
             <CardContent>
               <CardTitle>{solution.title}</CardTitle>
               <CardDescription>{solution.description}</CardDescription>
-              <KnowMoreButton href="#">Know More →</KnowMoreButton>
+              <KnowMoreButton href="#">Apply Now →</KnowMoreButton>
             </CardContent>
           </SolutionCard>
         ))}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import {
   Building2,
@@ -13,6 +13,7 @@ import {
   Star,
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import RegisterModal from '../modals/RegisterModal'
 
 const jobData = [
   // For Graduates (first 6)
@@ -491,6 +492,7 @@ const SeeMoreButton = styled.button`
 // Main Component
 const JobPlacements = () => {
   const navigate = useNavigate()
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const handleSeeMore = () => {
     navigate('/training-and-placements')
@@ -498,167 +500,176 @@ const JobPlacements = () => {
   }
 
   return (
-    <JobsContainer>
-      <SectionTitle>
-        Launch Your Career With
-        <strong>Training & Placement Opportunities</strong>
-      </SectionTitle>
+    <>
+      <JobsContainer>
+        <SectionTitle>
+          Launch Your Career With
+          <strong>Training & Placement Opportunities</strong>
+        </SectionTitle>
 
-      <SubSection>
-        <SubSectionTitle>For 12th Pass</SubSectionTitle>
-        <JobsGrid>
-          {jobData.slice(6, 12).map((job) => (
-            <JobCard key={job.id}>
-              <JobContent>
-                <JobImage image={job.jobImage}>
-                  <LikeButton>
-                    <Heart />
-                  </LikeButton>
-                </JobImage>
+        <SubSection>
+          <SubSectionTitle>For 12th Pass</SubSectionTitle>
+          <JobsGrid>
+            {jobData.slice(6, 12).map((job) => (
+              <JobCard key={job.id}>
+                <JobContent>
+                  <JobImage image={job.jobImage}>
+                    <LikeButton>
+                      <Heart />
+                    </LikeButton>
+                  </JobImage>
 
-                <JobInfo>
-                  <TitleCompanyRow>
-                    <TitleCompanyLeft>
-                      <JobTitle>{job.title}</JobTitle>
-                      <CompanyInfo>
-                        <CompanyLogo src={job.companyLogo} alt={job.company} />
-                        <span style={{ fontSize: '0.9rem', color: '#6b7280' }}>{job.company}</span>
-                      </CompanyInfo>
-                    </TitleCompanyLeft>
-                    <CategoryBadge>{job.category}</CategoryBadge>
-                  </TitleCompanyRow>
+                  <JobInfo>
+                    <TitleCompanyRow>
+                      <TitleCompanyLeft>
+                        <JobTitle>{job.title}</JobTitle>
+                        <CompanyInfo>
+                          <CompanyLogo src={job.companyLogo} alt={job.company} />
+                          <span style={{ fontSize: '0.9rem', color: '#6b7280' }}>
+                            {job.company}
+                          </span>
+                        </CompanyInfo>
+                      </TitleCompanyLeft>
+                      <CategoryBadge>{job.category}</CategoryBadge>
+                    </TitleCompanyRow>
 
-                  <Divider />
+                    <Divider />
 
-                  <BottomRow>
-                    <TrainingFee>{job.trainingFee.split('(')[0].trim()}</TrainingFee>
-                    <StarRating>
-                      <Star />
-                      <Star />
-                      <Star />
-                      <Star />
-                      <Star />
-                      <span>4.5</span>
-                    </StarRating>
-                  </BottomRow>
-                </JobInfo>
-              </JobContent>
+                    <BottomRow>
+                      <TrainingFee>{job.trainingFee.split('(')[0].trim()}</TrainingFee>
+                      <StarRating>
+                        <Star />
+                        <Star />
+                        <Star />
+                        <Star />
+                        <Star />
+                        <span>4.5</span>
+                      </StarRating>
+                    </BottomRow>
+                  </JobInfo>
+                </JobContent>
 
-              <HoverOverlay className="overlay">
-                <OverlayHeader>
-                  <OverlayTitle>{job.title}</OverlayTitle>
-                  <OverlayCompany>
-                    <Building2 />
-                    {job.company}
-                  </OverlayCompany>
-                </OverlayHeader>
+                <HoverOverlay className="overlay">
+                  <OverlayHeader>
+                    <OverlayTitle>{job.title}</OverlayTitle>
+                    <OverlayCompany>
+                      <Building2 />
+                      {job.company}
+                    </OverlayCompany>
+                  </OverlayHeader>
 
-                <OverlayContent>
-                  <OverlayDetail>
-                    <OverlayLabel>Category</OverlayLabel>
-                    <OverlayValue>{job.category}</OverlayValue>
-                  </OverlayDetail>
+                  <OverlayContent>
+                    <OverlayDetail>
+                      <OverlayLabel>Category</OverlayLabel>
+                      <OverlayValue>{job.category}</OverlayValue>
+                    </OverlayDetail>
 
-                  <OverlayDescription>{job.description}</OverlayDescription>
+                    <OverlayDescription>{job.description}</OverlayDescription>
 
-                  <OverlayDetail>
-                    <OverlayLabel>Training Fee</OverlayLabel>
-                    <OverlayValue>{job.trainingFee}</OverlayValue>
-                  </OverlayDetail>
+                    <OverlayDetail>
+                      <OverlayLabel>Training Fee</OverlayLabel>
+                      <OverlayValue>{job.trainingFee}</OverlayValue>
+                    </OverlayDetail>
 
-                  <OverlayDetail>
-                    <OverlayLabel>Salary</OverlayLabel>
-                    <OverlayValue>{job.salary}</OverlayValue>
-                  </OverlayDetail>
+                    <OverlayDetail>
+                      <OverlayLabel>Salary</OverlayLabel>
+                      <OverlayValue>{job.salary}</OverlayValue>
+                    </OverlayDetail>
 
-                  <KnowMoreButton>Apply Now</KnowMoreButton>
-                </OverlayContent>
-              </HoverOverlay>
-            </JobCard>
-          ))}
-        </JobsGrid>
-      </SubSection>
+                    <KnowMoreButton onClick={() => setIsModalOpen(true)}>Apply Now</KnowMoreButton>
+                  </OverlayContent>
+                </HoverOverlay>
+              </JobCard>
+            ))}
+          </JobsGrid>
+        </SubSection>
 
-      <SubSection>
-        <SubSectionTitle>For Graduates</SubSectionTitle>
-        <JobsGrid>
-          {jobData.slice(0, 6).map((job) => (
-            <JobCard key={job.id}>
-              <JobContent>
-                <JobImage image={job.jobImage}>
-                  <LikeButton>
-                    <Heart />
-                  </LikeButton>
-                </JobImage>
+        <SubSection>
+          <SubSectionTitle>For Graduates</SubSectionTitle>
+          <JobsGrid>
+            {jobData.slice(0, 6).map((job) => (
+              <JobCard key={job.id}>
+                <JobContent>
+                  <JobImage image={job.jobImage}>
+                    <LikeButton>
+                      <Heart />
+                    </LikeButton>
+                  </JobImage>
 
-                <JobInfo>
-                  <TitleCompanyRow>
-                    <TitleCompanyLeft>
-                      <JobTitle>{job.title}</JobTitle>
-                      <CompanyInfo>
-                        <CompanyLogo src={job.companyLogo} alt={job.company} />
-                        <span style={{ fontSize: '0.9rem', color: '#6b7280' }}>{job.company}</span>
-                      </CompanyInfo>
-                    </TitleCompanyLeft>
-                    <CategoryBadge>{job.category}</CategoryBadge>
-                  </TitleCompanyRow>
+                  <JobInfo>
+                    <TitleCompanyRow>
+                      <TitleCompanyLeft>
+                        <JobTitle>{job.title}</JobTitle>
+                        <CompanyInfo>
+                          <CompanyLogo src={job.companyLogo} alt={job.company} />
+                          <span style={{ fontSize: '0.9rem', color: '#6b7280' }}>
+                            {job.company}
+                          </span>
+                        </CompanyInfo>
+                      </TitleCompanyLeft>
+                      <CategoryBadge>{job.category}</CategoryBadge>
+                    </TitleCompanyRow>
 
-                  <Divider />
+                    <Divider />
 
-                  <BottomRow>
-                    <TrainingFee>{job.trainingFee.split('(')[0].trim()}</TrainingFee>
-                    <StarRating>
-                      <Star />
-                      <Star />
-                      <Star />
-                      <Star />
-                      <Star />
-                      <span>4.5</span>
-                    </StarRating>
-                  </BottomRow>
-                </JobInfo>
-              </JobContent>
+                    <BottomRow>
+                      <TrainingFee>{job.trainingFee.split('(')[0].trim()}</TrainingFee>
+                      <StarRating>
+                        <Star />
+                        <Star />
+                        <Star />
+                        <Star />
+                        <Star />
+                        <span>4.5</span>
+                      </StarRating>
+                    </BottomRow>
+                  </JobInfo>
+                </JobContent>
 
-              <HoverOverlay className="overlay">
-                <OverlayHeader>
-                  <OverlayTitle>{job.title}</OverlayTitle>
-                  <OverlayCompany>
-                    <Building2 />
-                    {job.company}
-                  </OverlayCompany>
-                </OverlayHeader>
+                <HoverOverlay className="overlay">
+                  <OverlayHeader>
+                    <OverlayTitle>{job.title}</OverlayTitle>
+                    <OverlayCompany>
+                      <Building2 />
+                      {job.company}
+                    </OverlayCompany>
+                  </OverlayHeader>
 
-                <OverlayContent>
-                  <OverlayDetail>
-                    {/* <OverlayLabel>Category</OverlayLabel> */}
-                    <OverlayValue>{job.category}</OverlayValue>
-                  </OverlayDetail>
+                  <OverlayContent>
+                    <OverlayDetail>
+                      {/* <OverlayLabel>Category</OverlayLabel> */}
+                      <OverlayValue>{job.category}</OverlayValue>
+                    </OverlayDetail>
 
-                  <OverlayDescription>{job.description}</OverlayDescription>
+                    <OverlayDescription>{job.description}</OverlayDescription>
 
-                  <OverlayDetail>
-                    <OverlayLabel>Training Fee</OverlayLabel>
-                    <OverlayValue>{job.trainingFee}</OverlayValue>
-                  </OverlayDetail>
+                    <OverlayDetail>
+                      <OverlayLabel>Training Fee</OverlayLabel>
+                      <OverlayValue>{job.trainingFee}</OverlayValue>
+                    </OverlayDetail>
 
-                  <OverlayDetail>
-                    <OverlayLabel>Salary</OverlayLabel>
-                    <OverlayValue>{job.salary}</OverlayValue>
-                  </OverlayDetail>
+                    <OverlayDetail>
+                      <OverlayLabel>Salary</OverlayLabel>
+                      <OverlayValue>{job.salary}</OverlayValue>
+                    </OverlayDetail>
 
-                  <KnowMoreButton>Apply Now</KnowMoreButton>
-                </OverlayContent>
-              </HoverOverlay>
-            </JobCard>
-          ))}
-        </JobsGrid>
-      </SubSection>
+                    <KnowMoreButton onClick={() => setIsModalOpen(true)}>Apply Now</KnowMoreButton>
+                  </OverlayContent>
+                </HoverOverlay>
+              </JobCard>
+            ))}
+          </JobsGrid>
+        </SubSection>
 
-      <SeeMoreButton onClick={handleSeeMore}>
-        See More
-        <ChevronRight />
-      </SeeMoreButton>
-    </JobsContainer>
+        <SeeMoreButton onClick={handleSeeMore}>
+          See More
+          <ChevronRight />
+        </SeeMoreButton>
+      </JobsContainer>
+      {isModalOpen && (
+        <RegisterModal setOpen={setIsModalOpen} onClose={() => setIsModalOpen(false)} />
+      )}
+    </>
   )
 }
 

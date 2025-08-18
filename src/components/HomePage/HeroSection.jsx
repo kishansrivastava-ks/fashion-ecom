@@ -13,7 +13,7 @@ const HeroContainer = styled.section`
   background-color: #f7f6f6;
   padding-left: 6rem;
   /* padding-top: 1rem; */
-  padding-bottom: 1rem;
+  /* padding-bottom: 1rem; */
   gap: 2rem;
   overflow: hidden;
   /* border: 2px solid red; */
@@ -58,7 +58,7 @@ const Title = styled.h1`
   font-weight: 500;
   letter-spacing: 1px;
   color: #002366; /* A dark blue color */
-  line-height: 1.2;
+  line-height: 1.1;
   margin-bottom: 1rem;
 
   span {
@@ -75,7 +75,7 @@ const Subtitle = styled.p`
   font-size: 1.1rem;
   color: #555;
   line-height: 1.6;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   max-width: 500px;
 
   @media (max-width: 992px) {
@@ -86,7 +86,7 @@ const Subtitle = styled.p`
 const TabsContainer = styled.div`
   display: flex;
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 
   @media (max-width: 768px) {
     flex-direction: column;
