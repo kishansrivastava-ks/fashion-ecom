@@ -519,7 +519,7 @@ const NavItems = styled.div`
 `
 
 const StyledLink = styled(Link)`
-  font-size: 0.95rem;
+  font-size: 1vw;
   color: #333;
   text-decoration: none;
   position: relative;
@@ -557,14 +557,14 @@ const SearchBar = styled.input`
   /* border-radius: 8px; */
   font-size: 0.9rem;
   transition: all 0.3s ease;
-  width: ${({ mobile }) => (mobile ? '100%' : '350px')};
+  width: ${({ mobile }) => (mobile ? '100%' : '22vw')};
   margin-top: -0.5rem;
 
   &:focus {
     border-color: #000080;
     outline: none;
     box-shadow: 0 0 0 3px rgba(0, 0, 128, 0.1);
-    width: ${({ mobile }) => (mobile ? '100%' : '360px')};
+    width: ${({ mobile }) => (mobile ? '100%' : '23vw')};
   }
 `
 
