@@ -2,6 +2,247 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { motion, AnimatePresence } from 'framer-motion'
 
+// --- MAIN MODAL COMPONENT ---
+const RequestCallbackModal = ({ setOpen }) => {
+  const [formData, setFormData] = useState({ fullName: '', mobileNumber: '', email: '' })
+  const [checkboxes, setCheckboxes] = useState({ terms: false, updates: false })
+  const [resumeFile, setResumeFile] = useState(null)
+  const [errors, setErrors] = useState({})
+  const [status, setStatus] = useState('idle') // idle, submitting, success
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: '' }))
+    }
+  }
+
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target
+    setCheckboxes((prev) => ({ ...prev, [name]: checked }))
+    // Clear error when user checks the box
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: '' }))
+    }
+  }
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      // Validate file type and size
+      const allowedTypes = [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      ]
+      const maxSize = 5 * 1024 * 1024 // 5MB
+
+      if (!allowedTypes.includes(file.type)) {
+        setErrors((prev) => ({ ...prev, resume: 'Please upload a PDF or Word document.' }))
+        return
+      }
+
+      if (file.size > maxSize) {
+        setErrors((prev) => ({ ...prev, resume: 'File size must be less than 5MB.' }))
+        return
+      }
+
+      setResumeFile(file)
+      // Clear error when valid file is selected
+      if (errors.resume) {
+        setErrors((prev) => ({ ...prev, resume: '' }))
+      }
+    }
+  }
+
+  const removeFile = () => {
+    setResumeFile(null)
+    // Reset the file input
+    const fileInput = document.getElementById('resume')
+    if (fileInput) fileInput.value = ''
+  }
+
+  const validate = () => {
+    let tempErrors = {}
+    if (!formData.fullName.trim()) tempErrors.fullName = 'Full name is required.'
+    if (!formData.mobileNumber.trim()) tempErrors.mobileNumber = 'Mobile number is required.'
+    else if (!/^\d{10}$/.test(formData.mobileNumber.trim()))
+      tempErrors.mobileNumber = 'Please enter a valid 10-digit number.'
+    if (!formData.email.trim()) tempErrors.email = 'Email is required.'
+    else if (!/\S+@\S+\.\S+/.test(formData.email.trim())) tempErrors.email = 'Email is not valid.'
+    if (!checkboxes.terms) tempErrors.terms = 'You must agree to the terms.'
+    // Resume is optional, so no validation required
+    setErrors(tempErrors)
+    return Object.keys(tempErrors).length === 0
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (validate()) {
+      setStatus('submitting')
+      // Mock API call - in real implementation, you'd handle file upload here
+      console.log('Form Data:', formData)
+      console.log('Resume File:', resumeFile)
+      setTimeout(() => {
+        setStatus('success')
+      }, 1500)
+    }
+  }
+
+  const handleBackdropClick = (e) => {
+    if (e.target === e.currentTarget) {
+      setOpen(false)
+    }
+  }
+
+  return (
+    <ModalBackdrop
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={handleBackdropClick}
+    >
+      <ModalContainer
+        initial={{ y: -50, opacity: 0, scale: 0.95 }}
+        animate={{ y: 0, opacity: 1, scale: 1 }}
+        exit={{ y: 50, opacity: 0, scale: 0.95 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <InfoPanel>
+          <h3>Request a Callback</h3>
+          <p>Just share your details and we will call you back at your convenience.</p>
+        </InfoPanel>
+        <FormPanel>
+          <CloseButton onClick={() => setOpen(false)}>&times;</CloseButton>
+          {status === 'success' ? (
+            <SuccessMessage>
+              <CheckCircleIcon />
+              <h4>Thank You!</h4>
+              <p>Your request has been received. We will contact you shortly.</p>
+            </SuccessMessage>
+          ) : (
+            <form onSubmit={handleSubmit}>
+              <FormGroup>
+                <FormLabel htmlFor="fullName">Full Name</FormLabel>
+                <Input
+                  type="text"
+                  id="fullName"
+                  name="fullName"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  autoComplete="name"
+                />
+                {errors.fullName && <ErrorMessage>{errors.fullName}</ErrorMessage>}
+              </FormGroup>
+
+              <FormGroup>
+                <FormLabel htmlFor="mobileNumber">Mobile Number</FormLabel>
+                <PhoneInputGroup>
+                  <CountryCodeSelect>
+                    <option>+91</option>
+                  </CountryCodeSelect>
+                  <Input
+                    type="tel"
+                    id="mobileNumber"
+                    name="mobileNumber"
+                    value={formData.mobileNumber}
+                    onChange={handleChange}
+                    style={{ borderRadius: '0 8px 8px 0' }}
+                    autoComplete="tel"
+                  />
+                </PhoneInputGroup>
+                {errors.mobileNumber && <ErrorMessage>{errors.mobileNumber}</ErrorMessage>}
+              </FormGroup>
+
+              <FormGroup>
+                <FormLabel htmlFor="email">Email ID</FormLabel>
+                <Input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  autoComplete="email"
+                />
+                {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
+              </FormGroup>
+
+              {/* Resume Upload Field */}
+              <FormGroup>
+                <FormLabel htmlFor="resume">Resume (Optional)</FormLabel>
+                <FileUploadContainer>
+                  <FileInput
+                    type="file"
+                    id="resume"
+                    name="resume"
+                    accept=".pdf,.doc,.docx"
+                    onChange={handleFileChange}
+                  />
+                  <FileUploadLabel htmlFor="resume">
+                    <UploadIcon />
+                    {resumeFile ? resumeFile.name : 'Choose file or drag here'}
+                  </FileUploadLabel>
+                  {resumeFile && (
+                    <FilePreview>
+                      <FileInfo>
+                        <FileName>{resumeFile.name}</FileName>
+                        <FileSize>{(resumeFile.size / 1024 / 1024).toFixed(2)} MB</FileSize>
+                      </FileInfo>
+                      <RemoveFileButton type="button" onClick={removeFile}>
+                        &times;
+                      </RemoveFileButton>
+                    </FilePreview>
+                  )}
+                </FileUploadContainer>
+                <FileHint>Supported formats: PDF, DOC, DOCX (Max 5MB)</FileHint>
+                {errors.resume && <ErrorMessage>{errors.resume}</ErrorMessage>}
+              </FormGroup>
+
+              <FormGroup>
+                <CheckboxGroup>
+                  <input
+                    type="checkbox"
+                    name="terms"
+                    checked={checkboxes.terms}
+                    onChange={handleCheckboxChange}
+                  />
+                  <span>
+                    By registering I agree to the{' '}
+                    <a href="#" onClick={(e) => e.preventDefault()}>
+                      Terms of Service
+                    </a>{' '}
+                    and{' '}
+                    <a href="#" onClick={(e) => e.preventDefault()}>
+                      Privacy Policy
+                    </a>
+                    .
+                  </span>
+                </CheckboxGroup>
+                {errors.terms && <ErrorMessage>{errors.terms}</ErrorMessage>}
+                <CheckboxGroup>
+                  <input
+                    type="checkbox"
+                    name="updates"
+                    checked={checkboxes.updates}
+                    onChange={handleCheckboxChange}
+                  />
+                  <span>Yes, I would like to receive updates via email.</span>
+                </CheckboxGroup>
+              </FormGroup>
+
+              <SubmitButton type="submit" disabled={status === 'submitting'}>
+                {status === 'submitting' ? 'Submitting...' : 'Submit'}
+              </SubmitButton>
+            </form>
+          )}
+        </FormPanel>
+      </ModalContainer>
+    </ModalBackdrop>
+  )
+}
 // --- ICONS ---
 const CheckCircleIcon = () => (
   <svg
@@ -370,171 +611,101 @@ const SuccessMessage = styled.div`
   }
 `
 
-// --- MAIN MODAL COMPONENT ---
-const RequestCallbackModal = ({ setOpen }) => {
-  const [formData, setFormData] = useState({ fullName: '', mobileNumber: '', email: '' })
-  const [checkboxes, setCheckboxes] = useState({ terms: false, updates: false })
-  const [errors, setErrors] = useState({})
-  const [status, setStatus] = useState('idle') // idle, submitting, success
+// --- NEW STYLED COMPONENTS FOR FILE UPLOAD ---
+const FileUploadContainer = styled.div`
+  position: relative;
+`
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: '' }))
-    }
+const FileInput = styled.input`
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 2;
+`
+
+const FileUploadLabel = styled.label`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 16px;
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  background-color: #fafafa;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+
+  &:hover {
+    border-color: #007bff;
+    background-color: #f8f9ff;
+    color: #007bff;
   }
+`
 
-  const handleCheckboxChange = (e) => {
-    const { name, checked } = e.target
-    setCheckboxes((prev) => ({ ...prev, [name]: checked }))
-    // Clear error when user checks the box
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: '' }))
-    }
+const UploadIcon = styled.div`
+  &::before {
+    content: '📎';
+    font-size: 16px;
   }
+`
 
-  const validate = () => {
-    let tempErrors = {}
-    if (!formData.fullName.trim()) tempErrors.fullName = 'Full name is required.'
-    if (!formData.mobileNumber.trim()) tempErrors.mobileNumber = 'Mobile number is required.'
-    else if (!/^\d{10}$/.test(formData.mobileNumber.trim()))
-      tempErrors.mobileNumber = 'Please enter a valid 10-digit number.'
-    if (!formData.email.trim()) tempErrors.email = 'Email is required.'
-    else if (!/\S+@\S+\.\S+/.test(formData.email.trim())) tempErrors.email = 'Email is not valid.'
-    if (!checkboxes.terms) tempErrors.terms = 'You must agree to the terms.'
-    setErrors(tempErrors)
-    return Object.keys(tempErrors).length === 0
+const FilePreview = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+`
+
+const FileInfo = styled.div`
+  flex: 1;
+`
+
+const FileName = styled.div`
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 2px;
+`
+
+const FileSize = styled.div`
+  font-size: 11px;
+  color: #666;
+`
+
+const RemoveFileButton = styled.button`
+  background: none;
+  border: none;
+  color: #dc3545;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #f8d7da;
   }
+`
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (validate()) {
-      setStatus('submitting')
-      // Mock API call
-      setTimeout(() => {
-        setStatus('success')
-      }, 1500)
-    }
-  }
-
-  const handleBackdropClick = (e) => {
-    if (e.target === e.currentTarget) {
-      setOpen(false)
-    }
-  }
-
-  return (
-    <ModalBackdrop
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={handleBackdropClick}
-    >
-      <ModalContainer
-        initial={{ y: -50, opacity: 0, scale: 0.95 }}
-        animate={{ y: 0, opacity: 1, scale: 1 }}
-        exit={{ y: 50, opacity: 0, scale: 0.95 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
-      >
-        <InfoPanel>
-          <h3>Request a Callback</h3>
-          <p>Just share your details and we will call you back at your convenience.</p>
-        </InfoPanel>
-        <FormPanel>
-          <CloseButton onClick={() => setOpen(false)}>&times;</CloseButton>
-          {status === 'success' ? (
-            <SuccessMessage>
-              <CheckCircleIcon />
-              <h4>Thank You!</h4>
-              <p>Your request has been received. We will contact you shortly.</p>
-            </SuccessMessage>
-          ) : (
-            <form onSubmit={handleSubmit}>
-              <FormGroup>
-                <FormLabel htmlFor="fullName">Full Name</FormLabel>
-                <Input
-                  type="text"
-                  id="fullName"
-                  name="fullName"
-                  value={formData.fullName}
-                  onChange={handleChange}
-                  autoComplete="name"
-                />
-                {errors.fullName && <ErrorMessage>{errors.fullName}</ErrorMessage>}
-              </FormGroup>
-              <FormGroup>
-                <FormLabel htmlFor="mobileNumber">Mobile Number</FormLabel>
-                <PhoneInputGroup>
-                  <CountryCodeSelect>
-                    <option>+91</option>
-                  </CountryCodeSelect>
-                  <Input
-                    type="tel"
-                    id="mobileNumber"
-                    name="mobileNumber"
-                    value={formData.mobileNumber}
-                    onChange={handleChange}
-                    style={{ borderRadius: '0 8px 8px 0' }}
-                    autoComplete="tel"
-                  />
-                </PhoneInputGroup>
-                {errors.mobileNumber && <ErrorMessage>{errors.mobileNumber}</ErrorMessage>}
-              </FormGroup>
-              <FormGroup>
-                <FormLabel htmlFor="email">Email ID</FormLabel>
-                <Input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  autoComplete="email"
-                />
-                {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
-              </FormGroup>
-              <FormGroup>
-                <CheckboxGroup>
-                  <input
-                    type="checkbox"
-                    name="terms"
-                    checked={checkboxes.terms}
-                    onChange={handleCheckboxChange}
-                  />
-                  <span>
-                    By registering I agree to the{' '}
-                    <a href="#" onClick={(e) => e.preventDefault()}>
-                      Terms of Service
-                    </a>{' '}
-                    and{' '}
-                    <a href="#" onClick={(e) => e.preventDefault()}>
-                      Privacy Policy
-                    </a>
-                    .
-                  </span>
-                </CheckboxGroup>
-                {errors.terms && <ErrorMessage>{errors.terms}</ErrorMessage>}
-                <CheckboxGroup>
-                  <input
-                    type="checkbox"
-                    name="updates"
-                    checked={checkboxes.updates}
-                    onChange={handleCheckboxChange}
-                  />
-                  <span>Yes, I would like to receive updates via email.</span>
-                </CheckboxGroup>
-              </FormGroup>
-              <SubmitButton type="submit" disabled={status === 'submitting'}>
-                {status === 'submitting' ? 'Submitting...' : 'Submit'}
-              </SubmitButton>
-            </form>
-          )}
-        </FormPanel>
-      </ModalContainer>
-    </ModalBackdrop>
-  )
-}
+const FileHint = styled.div`
+  font-size: 11px;
+  color: #666;
+  margin-top: 4px;
+`
 
 export default RequestCallbackModal

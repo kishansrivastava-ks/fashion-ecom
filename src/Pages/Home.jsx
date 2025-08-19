@@ -14,6 +14,7 @@ import HeroSection from '@/components/HomePage/HeroSection'
 import JobPlacements from '@/components/HomePage/JobPlacements'
 import { useEffect, useRef, useState } from 'react'
 import RegisterModal from '@/components/modals/RegisterModal'
+import ReviewsSection from '@/components/HomePage/ReviewsSection'
 
 function Home() {
   const [showModal, setShowModal] = useState(false)
@@ -58,6 +59,7 @@ function Home() {
       {/* <SuccessStories /> */}
       <ProdegreePartners />
       <AlliancesSection />
+      <ReviewsSection />
       <ConnectWithUs />
       {showModal && <RegisterModal setOpen={setShowModal} onClose={handleCloseModal} />}
     </>
