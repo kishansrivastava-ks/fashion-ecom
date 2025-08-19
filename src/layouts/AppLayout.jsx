@@ -305,7 +305,11 @@ const AppLayout = () => {
         <NavbarContainer>
           <LogoContainer>
             <LogoImage />
-            <Logo to="/">Career Counseling Corporation of India</Logo>
+            <Logo to="/">
+              Career Counseling Corporation of India <br />
+              <span>A Learning Center</span>
+            </Logo>
+            {/* <div>A Learning Center</div> */}
           </LogoContainer>
 
           {/* --- Desktop Navigation --- */}
@@ -379,13 +383,13 @@ const AppLayout = () => {
             </SocialIcons>
           </FooterColumn>
 
-          <FooterColumn>
+          {/* <FooterColumn>
             <FooterHeading>Explore</FooterHeading>
             <FooterLink to="/courses">Early Career Courses</FooterLink>
             <FooterLink to="/courses">Executive Education</FooterLink>
             <FooterLink to="/courses">Self-Paced Courses</FooterLink>
             <FooterLink to="/enterprise">Enterprise Solutions</FooterLink>
-          </FooterColumn>
+          </FooterColumn> */}
 
           <FooterColumn>
             <FooterHeading>Support</FooterHeading>
@@ -403,8 +407,7 @@ const AppLayout = () => {
           </FooterColumn>
         </FooterContainer>
         <FooterBottom>
-          © {new Date().getFullYear()} Career Counselling Corporation of India. All Rights
-          Reserved.
+          © {new Date().getFullYear()} Career Counseling Corporation of India. All Rights Reserved.
         </FooterBottom>
       </Footer>
 
@@ -495,12 +498,18 @@ const Logo = styled(Link)`
   color: #000080;
   text-decoration: none;
   white-space: nowrap;
+  line-height: 1.2;
 
   @media (max-width: 768px) {
     font-size: 1rem;
     white-space: normal;
     max-width: 250px;
     line-height: 1.2;
+  }
+  & > span {
+    font-size: 0.8rem;
+    color: #000000;
+    letter-spacing: 1px;
   }
 `
 

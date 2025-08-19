@@ -223,11 +223,13 @@ const AdvantageSection = () => {
       <ContentWrapper>
         <TextContent>
           <SubHeading>Why us?</SubHeading>
-          <MainHeading>The Career Counselling Corporation of India Advantage</MainHeading>
+          <MainHeading>The Career Counseling Corporation of India Advantage</MainHeading>
           <Description>
-            Because we are focused on you, your learning outcomes, and your career development. No
-            matter what stage of career you are at, you can choose from our wide range of learning
-            and career development solutions that will equip you to rise in a competitive world.
+            With deep expertise in organisational development, executive education, and L&D
+            solutions, we bring a holistic approach to transforming people and businesses. Our
+            advantage lies in combining proven methodologies, innovative technology, and real-world
+            insights to deliver measurable growth. Partnering with us means gaining a trusted ally
+            committed to unlocking potential and driving sustainable success.
           </Description>
           <StatsContainer>
             {stats.map((stat, index) => (

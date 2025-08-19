@@ -175,37 +175,37 @@ const solutions = [
   {
     title: 'Organisational Development Consulting',
     description:
-      'A bouquet of services to help organisations reinvent their people, processes, and organisational goals to rema...',
+      'We help businesses transform from within by aligning people, processes, and culture with long-term goals. Our consulting empowers leaders to build agile, high-performing teams, strengthen organizational culture, and drive sustainable growth.',
     imageUrl: '/images/consulting.jpg',
   },
   {
     title: 'Executive Education @ Work',
     description:
-      'Executive Education @ Work by TimesPro offers customised corporate training solutions to organisations to enge...',
+      'Unlock leadership potential without stepping away from your workplace. Our executive education programs bring real-time learning, practical insights, and strategic skills directly to your professional environment—so you grow while you work.',
     imageUrl: '/images/education.png',
   },
   {
     title: 'Learning Experience Platform (LXP)',
     description:
-      'Our LXP’s help you engage your workforce with learning interventions based on compelling content designed to be...',
+      'Our LXP is designed to make learning personal, engaging, and continuous. With AI-driven recommendations, interactive content, and real-time progress tracking, it empowers learners to upskill anytime, anywhere—at their own pace.',
     imageUrl: '/images/lxp.jpg',
   },
   {
     title: 'Content Solutions',
     description:
-      'TimesPro’s content creation services leverage its expertise and experience in developing over 18,000 hours of...',
+      'We design impactful, learner-centric content tailored to your business goals. From bite-sized microlearning to in-depth training modules, our solutions ensure knowledge is practical, engaging, and results-driven.',
     imageUrl: '/images/online-learning.jpg',
   },
   {
     title: 'Technology Programmes',
     description:
-      'TimesPro’s technology training programmes service specific needs of corporates to train their teams on emergin...',
+      'Stay ahead in the digital age with technology programmes built to upskill your workforce. Covering emerging tools, platforms, and digital transformation skills, our programmes prepare teams to thrive in a tech-first world.',
     imageUrl: '/images/technology.png',
   },
   {
     title: 'L&D Solutions',
     description:
-      'Our range of process-driven and outcome-based Learning and Development interventions are carefully crafted to...',
+      'We provide end-to-end Learning & Development solutions that align with your organizational strategy. From capability building to leadership development, our approach strengthens people and performance together.',
     imageUrl: '/images/solutions.jpg',
   },
 ]

@@ -86,7 +86,7 @@ const AboutCcciSection = () => {
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.6 }}
         >
-          <MainHeading>About Career Counselling Corporation of India</MainHeading>
+          <MainHeading>About Career Counseling Corporation of India</MainHeading>
         </SectionHeader>
 
         <Description
