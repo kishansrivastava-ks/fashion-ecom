@@ -22,7 +22,7 @@ const HeroContainer = styled.section`
     padding: 2rem 1.5rem;
   }
 
-  box-shadow: inset 0 -10px 0 #18009c;
+  box-shadow: inset 0 -8px 0 #18009c;
 `
 
 const ContentWrapper = styled.div`

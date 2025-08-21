@@ -384,9 +384,10 @@ const InfoPanel = styled.div`
 `
 
 const FormPanel = styled.div`
-  padding: 3rem;
+  padding: 2rem 3rem;
   width: 60%;
   position: relative;
+  /* border: 2px solid red; */
 
   @media (max-width: 768px) {
     width: 100%;
@@ -434,7 +435,7 @@ const CloseButton = styled.button`
 `
 
 const FormGroup = styled.div`
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 
   @media (max-width: 768px) {
     margin-bottom: 1rem;
@@ -443,9 +444,9 @@ const FormGroup = styled.div`
 
 const FormLabel = styled.label`
   display: block;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 500;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
   color: #2d3748;
 
   @media (max-width: 768px) {
@@ -456,10 +457,10 @@ const FormLabel = styled.label`
 
 const Input = styled.input`
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   transition: all 0.2s ease;
   box-sizing: border-box;
 
@@ -480,7 +481,7 @@ const PhoneInputGroup = styled.div`
 `
 
 const CountryCodeSelect = styled.select`
-  padding: 0.75rem;
+  padding: 0.5rem;
   border: 1px solid #e2e8f0;
   border-right: none;
   border-radius: 8px 0 0 8px;
@@ -497,9 +498,9 @@ const CheckboxGroup = styled.label`
   display: flex;
   align-items: flex-start;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: #4a5568;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
   line-height: 1.4;
 
   input {
@@ -538,7 +539,7 @@ const CheckboxGroup = styled.label`
 
 const ErrorMessage = styled.p`
   color: #d9534f;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   margin: 0.25rem 0 0 0;
 
   @media (max-width: 768px) {
@@ -548,7 +549,7 @@ const ErrorMessage = styled.p`
 
 const SubmitButton = styled.button`
   width: 100%;
-  padding: 0.9rem;
+  padding: 0.8rem;
   border-radius: 8px;
   background-color: #003380;
   color: white;

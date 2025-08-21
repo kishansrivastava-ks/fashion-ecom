@@ -215,7 +215,7 @@ const jobData = [
     description:
       'Become a key part of our retail operations as a Store Executive & Dispensing Optician and ensure efficient store management and customer satisfaction.',
     companyLogo: '/images/lenskart.jpg',
-    jobImage: '/images/people/person5.jpg',
+    jobImage: '/images/optician.jpg',
   },
   {
     id: 12,
@@ -232,7 +232,7 @@ const jobData = [
     category: 'Banking',
     description: 'Join our expert team as a Store Executive and ensure efficient store management.',
     companyLogo: '/images/radisson.png',
-    jobImage: '/images/people/person6.jpg',
+    jobImage: '/images/store-executive.jpg',
   },
 ]
 
