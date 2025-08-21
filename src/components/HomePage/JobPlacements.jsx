@@ -25,7 +25,7 @@ const jobData = [
     ageLimit: '21-28',
     salary: '₹ 5,59,000/-',
     location: 'Pan India',
-    trainingFee: '₹ 3,50,000/- (Finance Facilities available for ₹ 2,57,000/-)',
+    trainingFee: 'Finance Facilities available for ₹ 2,57,000/-',
     selectionProcess:
       '1. Online Application, 2. Online Exam, 3. Online Interview, 4. Get Offer Letter',
     trainingPeriod: '4 Months',
@@ -37,16 +37,16 @@ const jobData = [
   },
   {
     id: 2,
-    company: 'HDFC Bank',
-    title: 'Assistant Manager Operational',
+    company: 'AXIS BANK',
+    title: 'Assistant Manager PO',
     qualification: 'Graduation Any Stream 50%',
-    ageLimit: '21-28',
-    salary: '₹ 4,40,000/-',
+    ageLimit: '21-35',
+    salary: '₹ 4,46,000/-',
     location: 'Pan India',
-    trainingFee: '₹ 2,50,000/- (Finance Facilities available for ₹ 1,50,000/-)',
+    trainingFee: 'Finance Facilities available for ₹ 2,80,000/-',
     selectionProcess:
       '1. Online Application, 2. Online Exam, 3. Online Interview, 4. Get Offer Letter',
-    trainingPeriod: '45 Days',
+    trainingPeriod: '4 Months',
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
@@ -55,16 +55,16 @@ const jobData = [
   },
   {
     id: 3,
-    company: 'HDFC Bank',
-    title: 'Relationship Manager',
+    company: 'SBI General Insurance',
+    title: 'Relationship Manager Branch Chanel',
     qualification: 'Graduation Any Stream 50%',
-    ageLimit: '21-32',
-    salary: '₹ 2,08,000 - 3,00,000/-',
+    ageLimit: '21-27',
+    salary: '₹ 3,50,000/-',
     location: 'Pan India',
-    trainingFee: '₹ 59,000/- (Application Fee: ₹ 68,000/-)',
+    trainingFee: 'Application Fee: ₹ 99,000/-',
     selectionProcess:
       '1. Online Application, 2. Online Exam, 3. Online Interview, 4. Get Offer Letter',
-    trainingPeriod: '7 Days',
+    trainingPeriod: '1 Month',
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
@@ -73,16 +73,16 @@ const jobData = [
   },
   {
     id: 4,
-    company: 'SBI Bank',
-    title: 'Credit Manager',
-    qualification: 'MBA/PGDM in Finance 60%',
-    ageLimit: '22-30',
-    salary: '₹ 6,50,000/-',
-    location: 'Major Cities',
-    trainingFee: '₹ 4,00,000/- (Finance Facilities available for ₹ 3,00,000/-)',
+    company: 'Mahindra Finance',
+    title: 'Business Executive Female Only',
+    qualification: 'Graduation Any Stream 50%',
+    ageLimit: '19-28',
+    salary: '₹ 4,70,000/-',
+    location: 'Pan India',
+    trainingFee: 'Application Fee: ₹ 42,000/- + GST',
     selectionProcess:
-      '1. Online Application, 2. Aptitude Test, 3. Group Discussion, 4. Personal Interview',
-    trainingPeriod: '6 Months',
+      '1. Online Application, 2. Online Exam, 3. Online Interview, 4. Get Offer Letter',
+    trainingPeriod: '1 Month Online',
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
@@ -91,15 +91,16 @@ const jobData = [
   },
   {
     id: 5,
-    company: 'ICICI Bank',
-    title: 'Branch Manager',
-    qualification: 'Graduation Any Stream 55%',
-    ageLimit: '23-35',
-    salary: '₹ 7,20,000/-',
+    company: 'AU Small Finance Bank',
+    title: 'Bank Officer',
+    qualification: 'Graduation Any Stream 50%',
+    ageLimit: '21-32',
+    salary: '₹ 3,50,000 - 7,00,000/-',
     location: 'Pan India',
-    trainingFee: '₹ 5,50,000/- (Finance Facilities available for ₹ 4,00,000/-)',
-    selectionProcess: '1. Online Application, 2. Written Test, 3. Case Study, 4. Final Interview',
-    trainingPeriod: '5 Months',
+    trainingFee: 'Application Fee: ₹ 2,00,000/- + GST Loan',
+    selectionProcess:
+      '1. Online Application, 2. Online Exam, 3. Online Interview, 4. Get Offer Letter',
+    trainingPeriod: '3 Months',
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
@@ -108,34 +109,36 @@ const jobData = [
   },
   {
     id: 6,
-    company: 'Axis Bank',
-    title: 'Sales Manager',
+    company: 'ICICI Bank',
+    title: 'Deputy Manager',
     qualification: 'Graduation Any Stream 50%',
-    ageLimit: '21-30',
-    salary: '₹ 4,80,000/-',
-    location: 'Metro Cities',
-    trainingFee: '₹ 3,20,000/- (Finance Facilities available for ₹ 2,40,000/-)',
-    selectionProcess: '1. Online Application, 2. Online Test, 3. Video Interview, 4. Offer Letter',
-    trainingPeriod: '3 Months',
+    ageLimit: '19-27',
+    salary: '₹ 5,02,000 - 5,50,000/- (Tab Free)',
+    location: 'Pan India',
+    trainingFee: 'Application Fee: ₹ 2,55,000/- + GST Loan',
+    selectionProcess:
+      '1. Online Application, 2. Online Exam, 3. Online Interview, 4. Get Offer Letter',
+    trainingPeriod: '4 Months',
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
     companyLogo: '/images/hdfc-logo.png',
     jobImage: '/images/people/person6.jpg',
   },
+
   // For 12th Pass (next 6)
   {
     id: 7,
-    company: 'Indian Railways',
-    title: 'Assistant Loco Pilot',
-    qualification: '12th Pass with Science 50%',
-    ageLimit: '18-28',
-    salary: '₹ 2,40,000/-',
-    location: 'All India',
-    trainingFee: '₹ 85,000/- (Application Fee: ₹ 12,000/-)',
+    company: 'Utkarsh Bank',
+    title: 'TCO & PCO',
+    qualification: '12th Pass',
+    ageLimit: '18-32',
+    salary: '₹ 2,50,000 - 3,00,000/-',
+    location: 'Pan India',
+    trainingFee: '₹ 90,000/-',
     selectionProcess:
-      '1. Online Application, 2. CBT Exam, 3. Medical Test, 4. Document Verification',
-    trainingPeriod: '60 Days',
+      '1. Online Application, 2. Online Exam, 3. Online Interview, 4. Get Offer Letter',
+    trainingPeriod: '1 Month (Lodging & Fooding included)',
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
@@ -144,15 +147,16 @@ const jobData = [
   },
   {
     id: 8,
-    company: 'Indian Army',
-    title: 'Technical Entry Scheme',
-    qualification: '12th Pass PCM 50%',
-    ageLimit: '16.5-19.5',
-    salary: '₹ 3,20,000/-',
-    location: 'Defense Locations',
-    trainingFee: '₹ 1,20,000/- (Scholarship available)',
-    selectionProcess: '1. Online Application, 2. JEE Main Score, 3. SSB Interview, 4. Medical Test',
-    trainingPeriod: '4 Years',
+    company: 'SAFEXPRESS Logistic',
+    title: 'Office Assistant',
+    qualification: '12th Pass',
+    ageLimit: '18-32',
+    salary: '₹ 2,00,000 - 2,50,000/-',
+    location: 'Pan India',
+    trainingFee: 'Application Fee: ₹ 40,000/-',
+    selectionProcess:
+      '1. Online Application, 2. Online Exam, 3. Online Interview, 4. Get Offer Letter',
+    trainingPeriod: '7-10 Days',
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
@@ -161,16 +165,16 @@ const jobData = [
   },
   {
     id: 9,
-    company: 'Air India',
-    title: 'Cabin Crew',
-    qualification: '12th Pass Any Stream 50%',
-    ageLimit: '18-27',
-    salary: '₹ 1,80,000 - 2,50,000/-',
-    location: 'Mumbai, Delhi, Bangalore',
-    trainingFee: '₹ 2,80,000/- (EMI available)',
+    company: 'Max Hospital',
+    title: 'Frontline Billing Operational',
+    qualification: '12th Pass',
+    ageLimit: '18-32',
+    salary: '₹ 2,40,000 - 3,00,000/-',
+    location: 'Pan India',
+    trainingFee: 'Application Fee: ₹ 40,000/-',
     selectionProcess:
-      '1. Online Application, 2. Physical Test, 3. Group Discussion, 4. Personal Interview',
-    trainingPeriod: '90 Days',
+      '1. Online Application, 2. Online Exam, 3. Online Interview, 4. Get Offer Letter',
+    trainingPeriod: '2-4 Months',
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
@@ -179,15 +183,16 @@ const jobData = [
   },
   {
     id: 10,
-    company: 'CRPF',
-    title: 'Assistant Sub Inspector',
-    qualification: '12th Pass Any Stream 45%',
-    ageLimit: '20-25',
-    salary: '₹ 2,90,000/-',
+    company: 'Medanta Hospital',
+    title: 'Frontline Billing Operational',
+    qualification: '12th Pass',
+    ageLimit: '18-32',
+    salary: '₹ 2,40,000 - 3,00,000/-',
     location: 'Pan India',
-    trainingFee: '₹ 75,000/- (Government Subsidy available)',
-    selectionProcess: '1. Online Application, 2. Physical Test, 3. Written Exam, 4. Medical Test',
-    trainingPeriod: '44 Weeks',
+    trainingFee: 'Application Fee: ₹ 40,000/-',
+    selectionProcess:
+      '1. Online Application, 2. Online Exam, 3. Online Interview, 4. Get Offer Letter',
+    trainingPeriod: '2-4 Months',
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
@@ -196,16 +201,16 @@ const jobData = [
   },
   {
     id: 11,
-    company: 'Delhi Metro',
-    title: 'Train Operator',
-    qualification: '12th Pass Any Stream 50%',
-    ageLimit: '18-28',
-    salary: '₹ 2,10,000/-',
-    location: 'Delhi NCR',
-    trainingFee: '₹ 1,50,000/- (Finance Facilities available)',
+    company: 'Lenskart (Non-Sales)',
+    title: 'Dispensing Optician, Store Executive',
+    qualification: '12th Pass',
+    ageLimit: '18-40',
+    salary: '₹ 2,50,000 - 3,00,000/-',
+    location: 'Pan India',
+    trainingFee: 'Application Fee: ₹ 1,50,000/- ',
     selectionProcess:
-      '1. Online Application, 2. Computer Based Test, 3. Psycho Test, 4. Medical Exam',
-    trainingPeriod: '6 Months',
+      '1. Online Application, 2. Online Exam, 3. Online Interview, 4. Get Offer Letter',
+    trainingPeriod: '3-6 Months',
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
@@ -214,16 +219,16 @@ const jobData = [
   },
   {
     id: 12,
-    company: 'Indian Coast Guard',
-    title: 'Navik (General Duty)',
-    qualification: '12th Pass Any Stream 50%',
-    ageLimit: '18-22',
-    salary: '₹ 2,60,000/-',
-    location: 'Coastal Areas',
-    trainingFee: '₹ 95,000/- (Government Support available)',
+    company: 'Radisson Blu Hotel',
+    title: 'Store Executive',
+    qualification: '12th Pass',
+    ageLimit: '18-40',
+    salary: '₹ 2,50,000 - 3,00,000/-',
+    location: 'Pan India',
+    trainingFee: 'Application Fee: ₹ 1,50,000/- ',
     selectionProcess:
-      '1. Online Application, 2. Written Test, 3. Physical Fitness, 4. Medical Examination',
-    trainingPeriod: '52 Weeks',
+      '1. Online Application, 2. Online Exam, 3. Online Interview, 4. Get Offer Letter',
+    trainingPeriod: '3-6 Months',
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
@@ -231,6 +236,192 @@ const jobData = [
     jobImage: '/images/people/person6.jpg',
   },
 ]
+
+// Main Component
+const JobPlacements = () => {
+  const navigate = useNavigate()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const handleSeeMore = () => {
+    navigate('/training-and-placements')
+    console.log('Navigate to /training-and-placements')
+  }
+
+  return (
+    <>
+      <JobsContainer>
+        <SectionTitle>
+          Launch Your Career With
+          <strong>Training & Placement Opportunities</strong>
+        </SectionTitle>
+
+        <SubSection>
+          <SubSectionTitle>For 12th Pass</SubSectionTitle>
+          <JobsGrid>
+            {jobData.slice(6, 12).map((job) => (
+              <JobCard key={job.id}>
+                <JobContent>
+                  <JobImage image={job.jobImage}>
+                    <LikeButton>
+                      <Heart />
+                    </LikeButton>
+                  </JobImage>
+
+                  <JobInfo>
+                    <TitleCompanyRow>
+                      <TitleCompanyLeft>
+                        <JobTitle>{job.title}</JobTitle>
+                        <CompanyInfo>
+                          <CompanyLogo src={job.companyLogo} alt={job.company} />
+                          <span style={{ fontSize: '0.9rem', color: '#6b7280' }}>
+                            {job.company}
+                          </span>
+                        </CompanyInfo>
+                      </TitleCompanyLeft>
+                      <CategoryBadge>{job.category}</CategoryBadge>
+                    </TitleCompanyRow>
+
+                    <Divider />
+
+                    <BottomRow>
+                      <TrainingFee>Salary : {job.salary.split('(')[0].trim()}</TrainingFee>
+                      <StarRating>
+                        <Star />
+                        <Star />
+                        <Star />
+                        <Star />
+                        <Star />
+                        <span>4.5</span>
+                      </StarRating>
+                    </BottomRow>
+                  </JobInfo>
+                </JobContent>
+
+                <HoverOverlay className="overlay">
+                  <OverlayHeader>
+                    <OverlayTitle>{job.title}</OverlayTitle>
+                    <OverlayCompany>
+                      <Building2 />
+                      {job.company}
+                    </OverlayCompany>
+                  </OverlayHeader>
+
+                  <OverlayContent>
+                    <OverlayDetail>
+                      <OverlayLabel>Category</OverlayLabel>
+                      <OverlayValue>{job.category}</OverlayValue>
+                    </OverlayDetail>
+
+                    <OverlayDescription>{job.description}</OverlayDescription>
+
+                    <OverlayDetail>
+                      <OverlayLabel>Training Fee</OverlayLabel>
+                      <OverlayValue>{job.trainingFee}</OverlayValue>
+                    </OverlayDetail>
+
+                    <OverlayDetail>
+                      <OverlayLabel>Salary</OverlayLabel>
+                      <OverlayValue>{job.salary}</OverlayValue>
+                    </OverlayDetail>
+
+                    <KnowMoreButton onClick={() => setIsModalOpen(true)}>Apply Now</KnowMoreButton>
+                  </OverlayContent>
+                </HoverOverlay>
+              </JobCard>
+            ))}
+          </JobsGrid>
+        </SubSection>
+
+        <SubSection>
+          <SubSectionTitle>For Graduates</SubSectionTitle>
+          <JobsGrid>
+            {jobData.slice(0, 6).map((job) => (
+              <JobCard key={job.id}>
+                <JobContent>
+                  <JobImage image={job.jobImage}>
+                    <LikeButton>
+                      <Heart />
+                    </LikeButton>
+                  </JobImage>
+
+                  <JobInfo>
+                    <TitleCompanyRow>
+                      <TitleCompanyLeft>
+                        <JobTitle>{job.title}</JobTitle>
+                        <CompanyInfo>
+                          <CompanyLogo src={job.companyLogo} alt={job.company} />
+                          <span style={{ fontSize: '0.9rem', color: '#6b7280' }}>
+                            {job.company}
+                          </span>
+                        </CompanyInfo>
+                      </TitleCompanyLeft>
+                      <CategoryBadge>{job.category}</CategoryBadge>
+                    </TitleCompanyRow>
+
+                    <Divider />
+
+                    <BottomRow>
+                      <TrainingFee>Salary : {job.salary.split('(')[0].trim()}</TrainingFee>
+                      <StarRating>
+                        <Star />
+                        <Star />
+                        <Star />
+                        <Star />
+                        <Star />
+                        <span>4.5</span>
+                      </StarRating>
+                    </BottomRow>
+                  </JobInfo>
+                </JobContent>
+
+                <HoverOverlay className="overlay">
+                  <OverlayHeader>
+                    <OverlayTitle>{job.title}</OverlayTitle>
+                    <OverlayCompany>
+                      <Building2 />
+                      {job.company}
+                    </OverlayCompany>
+                  </OverlayHeader>
+
+                  <OverlayContent>
+                    <OverlayDetail>
+                      {/* <OverlayLabel>Category</OverlayLabel> */}
+                      <OverlayValue>{job.category}</OverlayValue>
+                    </OverlayDetail>
+
+                    <OverlayDescription>{job.description}</OverlayDescription>
+
+                    <OverlayDetail>
+                      <OverlayLabel>Training Fee</OverlayLabel>
+                      <OverlayValue>{job.trainingFee}</OverlayValue>
+                    </OverlayDetail>
+
+                    <OverlayDetail>
+                      <OverlayLabel>Salary</OverlayLabel>
+                      <OverlayValue>{job.salary}</OverlayValue>
+                    </OverlayDetail>
+
+                    <KnowMoreButton onClick={() => setIsModalOpen(true)}>Apply Now</KnowMoreButton>
+                  </OverlayContent>
+                </HoverOverlay>
+              </JobCard>
+            ))}
+          </JobsGrid>
+        </SubSection>
+
+        <SeeMoreButton onClick={handleSeeMore}>
+          See More
+          <ChevronRight />
+        </SeeMoreButton>
+      </JobsContainer>
+      {isModalOpen && (
+        <RegisterModal setOpen={setIsModalOpen} onClose={() => setIsModalOpen(false)} />
+      )}
+    </>
+  )
+}
+
+export default JobPlacements
 
 // Styled components
 const JobsContainer = styled.section`
@@ -489,192 +680,6 @@ const SeeMoreButton = styled.button`
   }
 `
 
-// Main Component
-const JobPlacements = () => {
-  const navigate = useNavigate()
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
-  const handleSeeMore = () => {
-    navigate('/training-and-placements')
-    console.log('Navigate to /training-and-placements')
-  }
-
-  return (
-    <>
-      <JobsContainer>
-        <SectionTitle>
-          Launch Your Career With
-          <strong>Training & Placement Opportunities</strong>
-        </SectionTitle>
-
-        <SubSection>
-          <SubSectionTitle>For 12th Pass</SubSectionTitle>
-          <JobsGrid>
-            {jobData.slice(6, 12).map((job) => (
-              <JobCard key={job.id}>
-                <JobContent>
-                  <JobImage image={job.jobImage}>
-                    <LikeButton>
-                      <Heart />
-                    </LikeButton>
-                  </JobImage>
-
-                  <JobInfo>
-                    <TitleCompanyRow>
-                      <TitleCompanyLeft>
-                        <JobTitle>{job.title}</JobTitle>
-                        <CompanyInfo>
-                          <CompanyLogo src={job.companyLogo} alt={job.company} />
-                          <span style={{ fontSize: '0.9rem', color: '#6b7280' }}>
-                            {job.company}
-                          </span>
-                        </CompanyInfo>
-                      </TitleCompanyLeft>
-                      <CategoryBadge>{job.category}</CategoryBadge>
-                    </TitleCompanyRow>
-
-                    <Divider />
-
-                    <BottomRow>
-                      <TrainingFee>{job.trainingFee.split('(')[0].trim()}</TrainingFee>
-                      <StarRating>
-                        <Star />
-                        <Star />
-                        <Star />
-                        <Star />
-                        <Star />
-                        <span>4.5</span>
-                      </StarRating>
-                    </BottomRow>
-                  </JobInfo>
-                </JobContent>
-
-                <HoverOverlay className="overlay">
-                  <OverlayHeader>
-                    <OverlayTitle>{job.title}</OverlayTitle>
-                    <OverlayCompany>
-                      <Building2 />
-                      {job.company}
-                    </OverlayCompany>
-                  </OverlayHeader>
-
-                  <OverlayContent>
-                    <OverlayDetail>
-                      <OverlayLabel>Category</OverlayLabel>
-                      <OverlayValue>{job.category}</OverlayValue>
-                    </OverlayDetail>
-
-                    <OverlayDescription>{job.description}</OverlayDescription>
-
-                    <OverlayDetail>
-                      <OverlayLabel>Training Fee</OverlayLabel>
-                      <OverlayValue>{job.trainingFee}</OverlayValue>
-                    </OverlayDetail>
-
-                    <OverlayDetail>
-                      <OverlayLabel>Salary</OverlayLabel>
-                      <OverlayValue>{job.salary}</OverlayValue>
-                    </OverlayDetail>
-
-                    <KnowMoreButton onClick={() => setIsModalOpen(true)}>Apply Now</KnowMoreButton>
-                  </OverlayContent>
-                </HoverOverlay>
-              </JobCard>
-            ))}
-          </JobsGrid>
-        </SubSection>
-
-        <SubSection>
-          <SubSectionTitle>For Graduates</SubSectionTitle>
-          <JobsGrid>
-            {jobData.slice(0, 6).map((job) => (
-              <JobCard key={job.id}>
-                <JobContent>
-                  <JobImage image={job.jobImage}>
-                    <LikeButton>
-                      <Heart />
-                    </LikeButton>
-                  </JobImage>
-
-                  <JobInfo>
-                    <TitleCompanyRow>
-                      <TitleCompanyLeft>
-                        <JobTitle>{job.title}</JobTitle>
-                        <CompanyInfo>
-                          <CompanyLogo src={job.companyLogo} alt={job.company} />
-                          <span style={{ fontSize: '0.9rem', color: '#6b7280' }}>
-                            {job.company}
-                          </span>
-                        </CompanyInfo>
-                      </TitleCompanyLeft>
-                      <CategoryBadge>{job.category}</CategoryBadge>
-                    </TitleCompanyRow>
-
-                    <Divider />
-
-                    <BottomRow>
-                      <TrainingFee>{job.trainingFee.split('(')[0].trim()}</TrainingFee>
-                      <StarRating>
-                        <Star />
-                        <Star />
-                        <Star />
-                        <Star />
-                        <Star />
-                        <span>4.5</span>
-                      </StarRating>
-                    </BottomRow>
-                  </JobInfo>
-                </JobContent>
-
-                <HoverOverlay className="overlay">
-                  <OverlayHeader>
-                    <OverlayTitle>{job.title}</OverlayTitle>
-                    <OverlayCompany>
-                      <Building2 />
-                      {job.company}
-                    </OverlayCompany>
-                  </OverlayHeader>
-
-                  <OverlayContent>
-                    <OverlayDetail>
-                      {/* <OverlayLabel>Category</OverlayLabel> */}
-                      <OverlayValue>{job.category}</OverlayValue>
-                    </OverlayDetail>
-
-                    <OverlayDescription>{job.description}</OverlayDescription>
-
-                    <OverlayDetail>
-                      <OverlayLabel>Training Fee</OverlayLabel>
-                      <OverlayValue>{job.trainingFee}</OverlayValue>
-                    </OverlayDetail>
-
-                    <OverlayDetail>
-                      <OverlayLabel>Salary</OverlayLabel>
-                      <OverlayValue>{job.salary}</OverlayValue>
-                    </OverlayDetail>
-
-                    <KnowMoreButton onClick={() => setIsModalOpen(true)}>Apply Now</KnowMoreButton>
-                  </OverlayContent>
-                </HoverOverlay>
-              </JobCard>
-            ))}
-          </JobsGrid>
-        </SubSection>
-
-        <SeeMoreButton onClick={handleSeeMore}>
-          See More
-          <ChevronRight />
-        </SeeMoreButton>
-      </JobsContainer>
-      {isModalOpen && (
-        <RegisterModal setOpen={setIsModalOpen} onClose={() => setIsModalOpen(false)} />
-      )}
-    </>
-  )
-}
-
-export default JobPlacements
-
 const SubSection = styled.div`
   width: 100%;
   max-width: 1200px;
@@ -797,7 +802,7 @@ const BottomRow = styled.div`
 `
 
 const TrainingFee = styled.div`
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #059669;
   font-weight: 600;
 `

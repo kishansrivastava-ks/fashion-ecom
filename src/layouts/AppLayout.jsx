@@ -307,7 +307,7 @@ const AppLayout = () => {
             <LogoImage />
             <Logo to="/">
               Career Counseling Corporation of India <br />
-              <span>A Learning Center</span>
+              <span style={{ color: '#da3b3b' }}>A Learning Center</span>
             </Logo>
             {/* <div>A Learning Center</div> */}
           </LogoContainer>
