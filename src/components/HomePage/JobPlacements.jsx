@@ -50,7 +50,7 @@ const jobData = [
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
-    companyLogo: '/images/hdfc-logo.png',
+    companyLogo: '/images/axis.png',
     jobImage: '/images/people/person2.jpg',
   },
   {
@@ -68,7 +68,7 @@ const jobData = [
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
-    companyLogo: '/images/hdfc-logo.png',
+    companyLogo: '/images/sbi-logo.webp',
     jobImage: '/images/people/person3.jpg',
   },
   {
@@ -86,7 +86,7 @@ const jobData = [
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
-    companyLogo: '/images/sbi-logo.webp',
+    companyLogo: '/images/mfinance.png',
     jobImage: '/images/people/person4.jpg',
   },
   {
@@ -104,7 +104,7 @@ const jobData = [
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
-    companyLogo: '/images/icici-logo.jpg',
+    companyLogo: '/images/au.png',
     jobImage: '/images/people/person5.jpg',
   },
   {
@@ -122,7 +122,7 @@ const jobData = [
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
-    companyLogo: '/images/hdfc-logo.png',
+    companyLogo: '/images/icici-logo.jpg',
     jobImage: '/images/people/person6.jpg',
   },
 
@@ -142,7 +142,7 @@ const jobData = [
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
-    companyLogo: '/images/hdfc-logo.png',
+    companyLogo: '/images/utkarsh.png',
     jobImage: '/images/people/person1.jpg',
   },
   {
@@ -160,7 +160,7 @@ const jobData = [
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
-    companyLogo: '/images/hdfc-logo.png',
+    companyLogo: '/images/safeexpress.png',
     jobImage: '/images/people/person2.jpg',
   },
   {
@@ -178,7 +178,7 @@ const jobData = [
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
-    companyLogo: '/images/hdfc-logo.png',
+    companyLogo: '/images/max-hospital.png',
     jobImage: '/images/people/person3.jpg',
   },
   {
@@ -196,7 +196,7 @@ const jobData = [
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
-    companyLogo: '/images/hdfc-logo.png',
+    companyLogo: '/images/medanta.png',
     jobImage: '/images/people/person4.jpg',
   },
   {
@@ -214,7 +214,7 @@ const jobData = [
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
-    companyLogo: '/images/hdfc-logo.png',
+    companyLogo: '/images/lenskart.jpg',
     jobImage: '/images/people/person5.jpg',
   },
   {
@@ -232,7 +232,7 @@ const jobData = [
     category: 'Banking',
     description:
       'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
-    companyLogo: '/images/hdfc-logo.png',
+    companyLogo: '/images/radisson.png',
     jobImage: '/images/people/person6.jpg',
   },
 ]
