@@ -49,7 +49,7 @@ const jobData = [
     trainingPeriod: '4 Months',
     category: 'Banking',
     description:
-      'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
+      'Step into a leadership journey as an Assistant Manager (PO) and drive excellence in banking operations and customer service.',
     companyLogo: '/images/axis.png',
     jobImage: '/images/people/person2.jpg',
   },
@@ -67,7 +67,7 @@ const jobData = [
     trainingPeriod: '1 Month',
     category: 'Banking',
     description:
-      'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
+      'Excel in customer engagement as a Relationship Manager (Branch Channel) and strengthen lasting client relationships in branch banking.',
     companyLogo: '/images/sbi-logo.webp',
     jobImage: '/images/people/person3.jpg',
   },
@@ -85,7 +85,7 @@ const jobData = [
     trainingPeriod: '1 Month Online',
     category: 'Banking',
     description:
-      'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
+      'Empower growth as a Business Executive (Female Only) and drive client engagement with strategic business solutions.',
     companyLogo: '/images/mfinance.png',
     jobImage: '/images/people/person4.jpg',
   },
@@ -103,7 +103,7 @@ const jobData = [
     trainingPeriod: '3 Months',
     category: 'Banking',
     description:
-      'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
+      'Advance your career as a Bank Officer and deliver excellence in banking services and customer support.',
     companyLogo: '/images/au.png',
     jobImage: '/images/people/person5.jpg',
   },
@@ -141,9 +141,9 @@ const jobData = [
     trainingPeriod: '1 Month (Lodging & Fooding included)',
     category: 'Banking',
     description:
-      'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
+      'Join our dynamic team as a TCO & PCO and drive seamless telecommunication operations.',
     companyLogo: '/images/utkarsh.png',
-    jobImage: '/images/people/person1.jpg',
+    jobImage: '/images/tco-pco.jpg',
   },
   {
     id: 8,
@@ -159,7 +159,7 @@ const jobData = [
     trainingPeriod: '7-10 Days',
     category: 'Banking',
     description:
-      'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
+      'Join our supportive team as an Office Assistant and ensure smooth day-to-day administrative operations.',
     companyLogo: '/images/safeexpress.png',
     jobImage: '/images/people/person2.jpg',
   },
@@ -177,9 +177,9 @@ const jobData = [
     trainingPeriod: '2-4 Months',
     category: 'Banking',
     description:
-      'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
+      'Join Max Hospital as a Frontline Billing Executive and handle patient billing, payments, and smooth financial operations in healthcare.',
     companyLogo: '/images/max-hospital.png',
-    jobImage: '/images/people/person3.jpg',
+    jobImage: '/images/billing2.webp',
   },
   {
     id: 10,
@@ -195,9 +195,9 @@ const jobData = [
     trainingPeriod: '2-4 Months',
     category: 'Banking',
     description:
-      'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
+      'Be a part of Medanta Hospital as a Frontline Billing Executive, managing patient billing and payment processes for smooth hospital operations.',
     companyLogo: '/images/medanta.png',
-    jobImage: '/images/people/person4.jpg',
+    jobImage: '/images/billing.jpg',
   },
   {
     id: 11,
@@ -213,7 +213,7 @@ const jobData = [
     trainingPeriod: '3-6 Months',
     category: 'Banking',
     description:
-      'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
+      'Become a key part of our retail operations as a Store Executive & Dispensing Optician and ensure efficient store management and customer satisfaction.',
     companyLogo: '/images/lenskart.jpg',
     jobImage: '/images/people/person5.jpg',
   },
@@ -230,8 +230,7 @@ const jobData = [
       '1. Online Application, 2. Online Exam, 3. Online Interview, 4. Get Offer Letter',
     trainingPeriod: '3-6 Months',
     category: 'Banking',
-    description:
-      'Join our dynamic team as a Deputy Manager and lead operational excellence in banking services.',
+    description: 'Join our expert team as a Store Executive and ensure efficient store management.',
     companyLogo: '/images/radisson.png',
     jobImage: '/images/people/person6.jpg',
   },
