@@ -94,7 +94,7 @@ const CollectionImage = styled.div`
       rgba(0, 0, 0, 0.1) 50%,
       rgba(0, 0, 0, 0.4) 100%
     );
-    transition: opacity 0.3s ease;
+    transition: opacity 0.2s ease;
   }
 
   ${CollectionCard}:hover & {
@@ -258,7 +258,7 @@ const FeaturedCollection = () => {
             initial={{ y: 100, opacity: 0 }}
             animate={cardsInView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.8, delay: index * 0.3 }}
-            whileHover={{ y: -5 }}
+            // whileHover={{ y: -5 }}
           >
             <CollectionImage style={{ backgroundImage: `url(${collection.image})` }} />
             <CollectionContent>

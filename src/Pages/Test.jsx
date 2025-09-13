@@ -656,42 +656,42 @@ const ProductsGallery = () => {
     {
       id: 1,
       name: 'Minimalist Blazer',
-      price: '$299',
+      price: '₹299',
       category: 'outerwear',
       image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=500&fit=crop',
     },
     {
       id: 2,
       name: 'Classic White Shirt',
-      price: '$129',
+      price: '₹129',
       category: 'tops',
       image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&h=500&fit=crop',
     },
     {
       id: 3,
       name: 'Tailored Trousers',
-      price: '$199',
+      price: '₹199',
       category: 'bottoms',
       image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=500&fit=crop',
     },
     {
       id: 4,
       name: 'Silk Blouse',
-      price: '$179',
+      price: '₹179',
       category: 'tops',
       image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=500&fit=crop',
     },
     {
       id: 5,
       name: 'Wool Coat',
-      price: '$449',
+      price: '₹449',
       category: 'outerwear',
       image: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=400&h=500&fit=crop',
     },
     {
       id: 6,
       name: 'Pencil Skirt',
-      price: '$149',
+      price: '₹149',
       category: 'bottoms',
       image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=500&fit=crop',
     },
@@ -745,15 +745,15 @@ const ProductsGallery = () => {
           <FilterLabel>PRICE RANGE</FilterLabel>
           <FilterOption>
             <input type="checkbox" />
-            Under $150
+            Under ₹150
           </FilterOption>
           <FilterOption>
             <input type="checkbox" />
-            $150 - $300
+            ₹150 - ₹300
           </FilterOption>
           <FilterOption>
             <input type="checkbox" />
-            Over $300
+            Over ₹300
           </FilterOption>
         </FilterGroup>
       </FilterSidebar>
