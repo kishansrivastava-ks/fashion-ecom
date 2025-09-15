@@ -272,10 +272,10 @@ const FloatingNavbar = () => {
 
   // Navigation items
   const navItems = [
-    { name: 'Home', href: '#home' },
+    { name: 'Home', href: '/home' },
     { name: 'Collections', href: '#collections', hasDropdown: true },
-    { name: 'About', href: '#about' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' },
   ]
 
   const collectionItems = [
@@ -286,12 +286,12 @@ const FloatingNavbar = () => {
   ]
 
   const mobileMenuItems = [
-    { name: 'Home', href: '#home' },
+    { name: 'Home', href: '/home' },
     { name: 'Western Collection', href: '#western' },
     { name: 'Ethnic Collection', href: '#ethnic' },
     { name: 'Custom Orders', href: '#custom' },
-    { name: 'About', href: '#about' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' },
   ]
 
   return (
