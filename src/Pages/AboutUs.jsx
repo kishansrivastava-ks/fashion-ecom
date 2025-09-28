@@ -3,6 +3,8 @@ import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import styled from 'styled-components'
 import FloatingNavbar from '@/components/FloatingNavbar'
 import { Eye, Target, Leaf, Sparkles, Palette } from 'lucide-react'
+import Footer from '@/components/Footer'
+import PageTransition from '@/utils/PageTransition'
 
 // Hero Section Styles
 const HeroContainer = styled.section`
@@ -799,7 +801,7 @@ const CallToAction = () => {
 // Main About Us Component
 const AboutUs = () => {
   return (
-    <div>
+    <PageTransition>
       <FloatingNavbar />
       <HeroSection />
       <FounderStory />
@@ -807,7 +809,8 @@ const AboutUs = () => {
       <JourneyTimeline />
       <OurValues />
       <CallToAction />
-    </div>
+      <Footer />
+    </PageTransition>
   )
 }
 

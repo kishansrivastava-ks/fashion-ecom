@@ -3,6 +3,8 @@ import { motion, useInView } from 'framer-motion'
 import { Mail, Phone, MapPin, MessageCircle, Send, Clock } from 'lucide-react'
 import styled from 'styled-components'
 import FloatingNavbar from '@/components/FloatingNavbar'
+import Footer from '@/components/Footer'
+import PageTransition from '@/utils/PageTransition'
 
 // Hero Section Styles
 const HeroContainer = styled.section`
@@ -600,12 +602,13 @@ const WhatsAppCTA = () => {
 // Main Contact Component
 const ContactUs = () => {
   return (
-    <div>
+    <PageTransition>
       <FloatingNavbar />
       <HeroSection />
       <ContactFormSection />
       <WhatsAppCTA />
-    </div>
+      <Footer />
+    </PageTransition>
   )
 }
 

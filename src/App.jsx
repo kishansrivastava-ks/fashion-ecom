@@ -5,18 +5,27 @@ import { GlobalStyles } from './styles/globalStyles'
 import { theme } from './styles/theme'
 import AboutUs from './Pages/AboutUs'
 import ContactUs from './Pages/ContactUs'
+import TermsConditions from './Pages/TermsConditions'
+import PrivacyPolicy from './Pages/PrivacyPolicy'
+import ReturnPolicy from './Pages/ReturnPolicy'
+import { AnimatePresence } from 'framer-motion'
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Test />} />
-          <Route path="/home" element={<Test />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/contact" element={<ContactUs />} />
-        </Routes>
+        <AnimatePresence mode="wait">
+          <Routes>
+            <Route path="/" element={<Test />} />
+            <Route path="/home" element={<Test />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="terms-conditions" element={<TermsConditions />} />
+            <Route path="privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="return-policy" element={<ReturnPolicy />} />
+          </Routes>
+        </AnimatePresence>
       </BrowserRouter>
       {/* <Test /> */}
     </ThemeProvider>

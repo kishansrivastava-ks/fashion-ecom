@@ -3,6 +3,8 @@ import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import styled from 'styled-components'
 import FeaturedCollection from '@/components/FeaturedCollection'
 import FloatingNavbar from '@/components/FloatingNavbar'
+import Footer from '@/components/Footer'
+import PageTransition from '@/utils/PageTransition'
 
 // Hero Section Styles
 const HeroContainer = styled.section`
@@ -878,14 +880,15 @@ const Newsletter = () => {
 // Main Landing Page Component
 const Test = () => {
   return (
-    <div>
+    <PageTransition>
       <FloatingNavbar />
       <HeroSection />
       <FeaturedCollection />
       <BrandStory />
       <ProductsGallery />
-      <Newsletter />
-    </div>
+      {/* <Newsletter /> */}
+      <Footer />
+    </PageTransition>
   )
 }
 
