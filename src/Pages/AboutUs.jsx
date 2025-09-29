@@ -5,6 +5,7 @@ import FloatingNavbar from '@/components/FloatingNavbar'
 import { Eye, Target, Leaf, Sparkles, Palette } from 'lucide-react'
 import Footer from '@/components/Footer'
 import PageTransition from '@/utils/PageTransition'
+import { useNavigate } from 'react-router-dom'
 
 // Hero Section Styles
 const HeroContainer = styled.section`
@@ -762,6 +763,7 @@ const OurValues = () => {
 const CallToAction = () => {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const navigate = useNavigate()
 
   return (
     <CTASection ref={ref}>
@@ -789,7 +791,11 @@ const CallToAction = () => {
           <CTAButton primary whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             EXPLORE COLLECTION
           </CTAButton>
-          <CTAButton whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <CTAButton
+            onClick={() => navigate('/appointment')}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             BOOK CONSULTATION
           </CTAButton>
         </CTAButtons>

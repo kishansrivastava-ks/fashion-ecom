@@ -9,6 +9,9 @@ import TermsConditions from './Pages/TermsConditions'
 import PrivacyPolicy from './Pages/PrivacyPolicy'
 import ReturnPolicy from './Pages/ReturnPolicy'
 import { AnimatePresence } from 'framer-motion'
+import BookConsultation from './Pages/BookConsultation'
+import ScrollToTop from './utils/ScrollToTop'
+import ProductDetail from './Pages/ProductDetail'
 
 function App() {
   return (
@@ -16,6 +19,7 @@ function App() {
       <GlobalStyles />
       <BrowserRouter>
         <AnimatePresence mode="wait">
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Test />} />
             <Route path="/home" element={<Test />} />
@@ -24,6 +28,8 @@ function App() {
             <Route path="terms-conditions" element={<TermsConditions />} />
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="return-policy" element={<ReturnPolicy />} />
+            <Route path="appointment" element={<BookConsultation />} />
+            <Route path="product" element={<ProductDetail />} />
           </Routes>
         </AnimatePresence>
       </BrowserRouter>

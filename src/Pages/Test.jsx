@@ -5,6 +5,7 @@ import FeaturedCollection from '@/components/FeaturedCollection'
 import FloatingNavbar from '@/components/FloatingNavbar'
 import Footer from '@/components/Footer'
 import PageTransition from '@/utils/PageTransition'
+import { useNavigate } from 'react-router-dom'
 
 // Hero Section Styles
 const HeroContainer = styled.section`
@@ -653,6 +654,8 @@ const ProductsGallery = () => {
   const ref = React.useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-50px' })
 
+  const navigate = useNavigate()
+
   // Sample product data
   const products = [
     {
@@ -792,6 +795,7 @@ const ProductsGallery = () => {
               animate={isInView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
               whileHover={{ y: -5 }}
+              onClick={() => navigate('/product')}
             >
               <ProductImageContainer>
                 <ProductImage style={{ backgroundImage: `url(${product.image})` }} />
