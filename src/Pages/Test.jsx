@@ -1,11 +1,449 @@
 import React, { useState, useEffect } from 'react'
-import { motion, useScroll, useTransform, useInView } from 'framer-motion'
+import { motion, AnimatePresence, useScroll, useTransform, useInView } from 'framer-motion'
 import styled from 'styled-components'
 import FeaturedCollection from '@/components/FeaturedCollection'
 import FloatingNavbar from '@/components/FloatingNavbar'
 import Footer from '@/components/Footer'
 import PageTransition from '@/utils/PageTransition'
 import { useNavigate } from 'react-router-dom'
+
+// Component Functions
+const HeroSection = () => {
+  return (
+    <HeroContainer>
+      {/* <HeroImage
+        initial={{ scale: 1.1 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 1.5, ease: 'easeOut' }}
+      /> */}
+      <HeroVideo
+        autoPlay
+        loop
+        muted
+        playsInline
+        initial={{ scale: 1.1 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 1.5, ease: 'easeOut' }}
+        poster="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1920&h=1080&fit=crop&crop=center"
+      >
+        <source src="/videos/hero.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </HeroVideo>
+      <HeroOverlay />
+      <HeroContent>
+        <HeroTitle
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1, delay: 0.5 }}
+        >
+          LUXE
+        </HeroTitle>
+        <HeroSubtitle
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1, delay: 0.8 }}
+        >
+          REDEFINING MODERN FASHION
+        </HeroSubtitle>
+        <HeroButton
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1, delay: 1.1 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          EXPLORE COLLECTION
+        </HeroButton>
+      </HeroContent>
+    </HeroContainer>
+  )
+}
+
+// const FeaturedCollection = () => {
+//   const ref = React.useRef(null)
+//   const isInView = useInView(ref, { once: true, margin: '-100px' })
+
+//   return (
+//     <CollectionContainer ref={ref}>
+//       <CollectionContent>
+//         <CollectionTitle
+//           initial={{ x: -100, opacity: 0 }}
+//           animate={isInView ? { x: 0, opacity: 1 } : {}}
+//           transition={{ duration: 0.8 }}
+//         >
+//           SPRING
+//           <br />
+//           COLLECTION
+//         </CollectionTitle>
+//         <CollectionDescription
+//           initial={{ x: -50, opacity: 0 }}
+//           animate={isInView ? { x: 0, opacity: 1 } : {}}
+//           transition={{ duration: 0.8, delay: 0.2 }}
+//         >
+//           Discover our latest collection where contemporary design meets timeless elegance. Each
+//           piece is carefully crafted to embody the perfect balance between comfort and
+//           sophistication.
+//         </CollectionDescription>
+//         <CollectionButton
+//           initial={{ x: -30, opacity: 0 }}
+//           animate={isInView ? { x: 0, opacity: 1 } : {}}
+//           transition={{ duration: 0.8, delay: 0.4 }}
+//           whileHover={{ scale: 1.02 }}
+//           whileTap={{ scale: 0.98 }}
+//         >
+//           SHOP NOW
+//         </CollectionButton>
+//       </CollectionContent>
+
+//       <CollectionImageContainer
+//         initial={{ x: 100, opacity: 0 }}
+//         animate={isInView ? { x: 0, opacity: 1 } : {}}
+//         transition={{ duration: 1 }}
+//       >
+//         <CollectionImage />
+//       </CollectionImageContainer>
+//     </CollectionContainer>
+//   )
+// }
+
+const BrandStory = () => {
+  const ref = React.useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-100px' })
+
+  return (
+    <StoryContainer ref={ref}>
+      <StoryWrapper>
+        <StoryImageSection
+          initial={{ x: -100, opacity: 0 }}
+          animate={isInView ? { x: 0, opacity: 1 } : {}}
+          transition={{ duration: 1 }}
+        >
+          <StoryImage />
+        </StoryImageSection>
+
+        <StoryContent>
+          <StoryTitle
+            initial={{ y: 50, opacity: 0 }}
+            animate={isInView ? { y: 0, opacity: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            OUR STORY
+          </StoryTitle>
+          <StoryText
+            initial={{ y: 30, opacity: 0 }}
+            animate={isInView ? { y: 0, opacity: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
+            Founded with a vision to revolutionize contemporary fashion, we believe in creating
+            pieces that transcend seasons and trends. Our commitment to quality and innovation
+            drives every decision we make.
+          </StoryText>
+          <StoryText
+            initial={{ y: 30, opacity: 0 }}
+            animate={isInView ? { y: 0, opacity: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.7 }}
+          >
+            From our sustainable sourcing practices to our meticulous attention to detail, we're
+            dedicated to building a brand that respects both our customers and our planet.
+          </StoryText>
+          <StoryQuote
+            initial={{ y: 30, opacity: 0 }}
+            animate={isInView ? { y: 0, opacity: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.9 }}
+          >
+            "Fashion is not just about clothing—it's about expressing your authentic self."
+          </StoryQuote>
+        </StoryContent>
+      </StoryWrapper>
+    </StoryContainer>
+  )
+}
+
+const ProductsGallery = () => {
+  const [searchTerm, setSearchTerm] = useState('')
+  const [selectedCategories, setSelectedCategories] = useState([])
+  const [sortBy, setSortBy] = useState('name')
+  const [isFilterOpen, setIsFilterOpen] = useState(false)
+
+  const ref = React.useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-50px' })
+
+  const navigate = useNavigate()
+
+  // Sample product data
+  const products = [
+    {
+      id: 1,
+      name: 'Minimalist Blazer',
+      price: '₹299',
+      category: 'outerwear',
+      image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=500&fit=crop',
+    },
+    {
+      id: 2,
+      name: 'Classic White Shirt',
+      price: '₹129',
+      category: 'tops',
+      image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&h=500&fit=crop',
+    },
+    {
+      id: 3,
+      name: 'Tailored Trousers',
+      price: '₹199',
+      category: 'bottoms',
+      image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=500&fit=crop',
+    },
+    {
+      id: 4,
+      name: 'Silk Blouse',
+      price: '₹179',
+      category: 'tops',
+      image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=500&fit=crop',
+    },
+    {
+      id: 5,
+      name: 'Wool Coat',
+      price: '₹449',
+      category: 'outerwear',
+      image: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=400&h=500&fit=crop',
+    },
+    {
+      id: 6,
+      name: 'Pencil Skirt',
+      price: '₹149',
+      category: 'bottoms',
+      image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=500&fit=crop',
+    },
+  ]
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category]
+    )
+  }
+
+  const filteredProducts = products.filter((product) => {
+    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesCategory =
+      selectedCategories.length === 0 || selectedCategories.includes(product.category)
+    return matchesSearch && matchesCategory
+  })
+
+  return (
+    <ProductsContainer ref={ref}>
+      <FilterSidebar
+        isOpen={isFilterOpen}
+        initial={{ x: -50, opacity: 0 }}
+        animate={isInView ? { x: 0, opacity: 1 } : {}}
+        transition={{ duration: 0.8 }}
+      >
+        <FilterTitle>FILTER & SEARCH</FilterTitle>
+
+        <SearchInput
+          type="text"
+          placeholder="Search products..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+
+        <FilterGroup>
+          <FilterLabel>CATEGORIES</FilterLabel>
+          {['tops', 'bottoms', 'outerwear'].map((category) => (
+            <FilterOption key={category}>
+              <input
+                type="checkbox"
+                checked={selectedCategories.includes(category)}
+                onChange={() => handleCategoryChange(category)}
+              />
+              {category.charAt(0).toUpperCase() + category.slice(1)}
+            </FilterOption>
+          ))}
+        </FilterGroup>
+
+        <FilterGroup>
+          <FilterLabel>PRICE RANGE</FilterLabel>
+          <FilterOption>
+            <input type="checkbox" />
+            Under ₹150
+          </FilterOption>
+          <FilterOption>
+            <input type="checkbox" />
+            ₹150 - ₹300
+          </FilterOption>
+          <FilterOption>
+            <input type="checkbox" />
+            Over ₹300
+          </FilterOption>
+        </FilterGroup>
+      </FilterSidebar>
+
+      <ProductsMain>
+        <ProductsHeader>
+          <ProductsTitle
+            initial={{ y: 30, opacity: 0 }}
+            animate={isInView ? { y: 0, opacity: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            COLLECTIONS
+          </ProductsTitle>
+
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            <FilterToggle onClick={() => setIsFilterOpen(!isFilterOpen)}>FILTERS</FilterToggle>
+            <SortSelect value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+              <option value="name">Sort by Name</option>
+              <option value="price">Sort by Price</option>
+              <option value="newest">Newest First</option>
+            </SortSelect>
+          </div>
+        </ProductsHeader>
+
+        <ProductGrid
+          initial={{ y: 50, opacity: 0 }}
+          animate={isInView ? { y: 0, opacity: 1 } : {}}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          {filteredProducts.map((product, index) => (
+            <ProductCard
+              key={product.id}
+              initial={{ y: 30, opacity: 0 }}
+              animate={isInView ? { y: 0, opacity: 1 } : {}}
+              transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
+              whileHover={{ y: -5 }}
+              onClick={() => navigate('/product')}
+            >
+              <ProductImageContainer>
+                <ProductImage style={{ backgroundImage: `url(${product.image})` }} />
+              </ProductImageContainer>
+              <ProductInfo>
+                <ProductName>{product.name}</ProductName>
+                <ProductPrice>{product.price}</ProductPrice>
+              </ProductInfo>
+            </ProductCard>
+          ))}
+        </ProductGrid>
+      </ProductsMain>
+    </ProductsContainer>
+  )
+}
+
+const Newsletter = () => {
+  const [email, setEmail] = useState('')
+  const ref = React.useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-100px' })
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // Handle newsletter signup
+    console.log('Newsletter signup:', email)
+    setEmail('')
+  }
+
+  return (
+    <NewsletterContainer ref={ref}>
+      <NewsletterContent>
+        <NewsletterTitle
+          initial={{ y: 50, opacity: 0 }}
+          animate={isInView ? { y: 0, opacity: 1 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          STAY IN TOUCH
+        </NewsletterTitle>
+        <NewsletterSubtitle
+          initial={{ y: 30, opacity: 0 }}
+          animate={isInView ? { y: 0, opacity: 1 } : {}}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          Be the first to know about new collections, exclusive offers, and fashion insights.
+        </NewsletterSubtitle>
+
+        <NewsletterForm
+          onSubmit={handleSubmit}
+          initial={{ y: 30, opacity: 0 }}
+          animate={isInView ? { y: 0, opacity: 1 } : {}}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <EmailInput
+            type="email"
+            placeholder="Enter your email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <SubmitButton type="submit">SUBSCRIBE</SubmitButton>
+        </NewsletterForm>
+
+        <SocialLinks
+          initial={{ y: 30, opacity: 0 }}
+          animate={isInView ? { y: 0, opacity: 1 } : {}}
+          transition={{ duration: 0.8, delay: 0.6 }}
+        >
+          <SocialLink href="#" aria-label="Instagram">
+            📷
+          </SocialLink>
+          <SocialLink href="#" aria-label="Facebook">
+            📘
+          </SocialLink>
+          <SocialLink href="#" aria-label="Twitter">
+            🐦
+          </SocialLink>
+          <SocialLink href="#" aria-label="Pinterest">
+            📌
+          </SocialLink>
+        </SocialLinks>
+      </NewsletterContent>
+    </NewsletterContainer>
+  )
+}
+
+const FloatingNavbarWrapper = () => {
+  const [showNavbar, setShowNavbar] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 200) {
+        // adjust threshold as needed
+        setShowNavbar(true)
+      } else {
+        setShowNavbar(false)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  return (
+    <AnimatePresence>
+      {showNavbar && (
+        <motion.div
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -50 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+          style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 999 }}
+        >
+          <FloatingNavbar />
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
+// Main Landing Page Component
+const Test = () => {
+  return (
+    <PageTransition>
+      {/* <FloatingNavbar /> */}
+      <FloatingNavbarWrapper />
+      <HeroSection />
+      <FeaturedCollection />
+      <BrandStory />
+      <ProductsGallery />
+      {/* <Newsletter /> */}
+      <Footer />
+    </PageTransition>
+  )
+}
 
 // Hero Section Styles
 const HeroContainer = styled.section`
@@ -17,16 +455,26 @@ const HeroContainer = styled.section`
   justify-content: center;
 `
 
-const HeroImage = styled(motion.div)`
+// const HeroImage = styled(motion.div)`
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   background: linear-gradient(45deg, #000 0%, #333 100%);
+//   background-image: url('https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1920&h=1080&fit=crop&crop=center');
+//   background-size: cover;
+//   background-position: center;
+//   z-index: 1;
+// `
+
+const HeroVideo = styled(motion.video)`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, #000 0%, #333 100%);
-  background-image: url('https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1920&h=1080&fit=crop&crop=center');
-  background-size: cover;
-  background-position: center;
+  object-fit: cover; /* makes video behave like background-size: cover */
   z-index: 1;
 `
 
@@ -505,395 +953,5 @@ const SocialLink = styled.a`
     opacity: 0.7;
   }
 `
-
-// Component Functions
-const HeroSection = () => {
-  return (
-    <HeroContainer>
-      <HeroImage
-        initial={{ scale: 1.1 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 1.5, ease: 'easeOut' }}
-      />
-      <HeroOverlay />
-      <HeroContent>
-        <HeroTitle
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1, delay: 0.5 }}
-        >
-          LUXE
-        </HeroTitle>
-        <HeroSubtitle
-          initial={{ y: 50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
-        >
-          REDEFINING MODERN FASHION
-        </HeroSubtitle>
-        <HeroButton
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1, delay: 1.1 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          EXPLORE COLLECTION
-        </HeroButton>
-      </HeroContent>
-    </HeroContainer>
-  )
-}
-
-// const FeaturedCollection = () => {
-//   const ref = React.useRef(null)
-//   const isInView = useInView(ref, { once: true, margin: '-100px' })
-
-//   return (
-//     <CollectionContainer ref={ref}>
-//       <CollectionContent>
-//         <CollectionTitle
-//           initial={{ x: -100, opacity: 0 }}
-//           animate={isInView ? { x: 0, opacity: 1 } : {}}
-//           transition={{ duration: 0.8 }}
-//         >
-//           SPRING
-//           <br />
-//           COLLECTION
-//         </CollectionTitle>
-//         <CollectionDescription
-//           initial={{ x: -50, opacity: 0 }}
-//           animate={isInView ? { x: 0, opacity: 1 } : {}}
-//           transition={{ duration: 0.8, delay: 0.2 }}
-//         >
-//           Discover our latest collection where contemporary design meets timeless elegance. Each
-//           piece is carefully crafted to embody the perfect balance between comfort and
-//           sophistication.
-//         </CollectionDescription>
-//         <CollectionButton
-//           initial={{ x: -30, opacity: 0 }}
-//           animate={isInView ? { x: 0, opacity: 1 } : {}}
-//           transition={{ duration: 0.8, delay: 0.4 }}
-//           whileHover={{ scale: 1.02 }}
-//           whileTap={{ scale: 0.98 }}
-//         >
-//           SHOP NOW
-//         </CollectionButton>
-//       </CollectionContent>
-
-//       <CollectionImageContainer
-//         initial={{ x: 100, opacity: 0 }}
-//         animate={isInView ? { x: 0, opacity: 1 } : {}}
-//         transition={{ duration: 1 }}
-//       >
-//         <CollectionImage />
-//       </CollectionImageContainer>
-//     </CollectionContainer>
-//   )
-// }
-
-const BrandStory = () => {
-  const ref = React.useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
-
-  return (
-    <StoryContainer ref={ref}>
-      <StoryWrapper>
-        <StoryImageSection
-          initial={{ x: -100, opacity: 0 }}
-          animate={isInView ? { x: 0, opacity: 1 } : {}}
-          transition={{ duration: 1 }}
-        >
-          <StoryImage />
-        </StoryImageSection>
-
-        <StoryContent>
-          <StoryTitle
-            initial={{ y: 50, opacity: 0 }}
-            animate={isInView ? { y: 0, opacity: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            OUR STORY
-          </StoryTitle>
-          <StoryText
-            initial={{ y: 30, opacity: 0 }}
-            animate={isInView ? { y: 0, opacity: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.5 }}
-          >
-            Founded with a vision to revolutionize contemporary fashion, we believe in creating
-            pieces that transcend seasons and trends. Our commitment to quality and innovation
-            drives every decision we make.
-          </StoryText>
-          <StoryText
-            initial={{ y: 30, opacity: 0 }}
-            animate={isInView ? { y: 0, opacity: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.7 }}
-          >
-            From our sustainable sourcing practices to our meticulous attention to detail, we're
-            dedicated to building a brand that respects both our customers and our planet.
-          </StoryText>
-          <StoryQuote
-            initial={{ y: 30, opacity: 0 }}
-            animate={isInView ? { y: 0, opacity: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.9 }}
-          >
-            "Fashion is not just about clothing—it's about expressing your authentic self."
-          </StoryQuote>
-        </StoryContent>
-      </StoryWrapper>
-    </StoryContainer>
-  )
-}
-
-const ProductsGallery = () => {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [selectedCategories, setSelectedCategories] = useState([])
-  const [sortBy, setSortBy] = useState('name')
-  const [isFilterOpen, setIsFilterOpen] = useState(false)
-
-  const ref = React.useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-50px' })
-
-  const navigate = useNavigate()
-
-  // Sample product data
-  const products = [
-    {
-      id: 1,
-      name: 'Minimalist Blazer',
-      price: '₹299',
-      category: 'outerwear',
-      image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=500&fit=crop',
-    },
-    {
-      id: 2,
-      name: 'Classic White Shirt',
-      price: '₹129',
-      category: 'tops',
-      image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&h=500&fit=crop',
-    },
-    {
-      id: 3,
-      name: 'Tailored Trousers',
-      price: '₹199',
-      category: 'bottoms',
-      image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=500&fit=crop',
-    },
-    {
-      id: 4,
-      name: 'Silk Blouse',
-      price: '₹179',
-      category: 'tops',
-      image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=500&fit=crop',
-    },
-    {
-      id: 5,
-      name: 'Wool Coat',
-      price: '₹449',
-      category: 'outerwear',
-      image: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=400&h=500&fit=crop',
-    },
-    {
-      id: 6,
-      name: 'Pencil Skirt',
-      price: '₹149',
-      category: 'bottoms',
-      image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=500&fit=crop',
-    },
-  ]
-
-  const handleCategoryChange = (category) => {
-    setSelectedCategories((prev) =>
-      prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category]
-    )
-  }
-
-  const filteredProducts = products.filter((product) => {
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesCategory =
-      selectedCategories.length === 0 || selectedCategories.includes(product.category)
-    return matchesSearch && matchesCategory
-  })
-
-  return (
-    <ProductsContainer ref={ref}>
-      <FilterSidebar
-        isOpen={isFilterOpen}
-        initial={{ x: -50, opacity: 0 }}
-        animate={isInView ? { x: 0, opacity: 1 } : {}}
-        transition={{ duration: 0.8 }}
-      >
-        <FilterTitle>FILTER & SEARCH</FilterTitle>
-
-        <SearchInput
-          type="text"
-          placeholder="Search products..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-
-        <FilterGroup>
-          <FilterLabel>CATEGORIES</FilterLabel>
-          {['tops', 'bottoms', 'outerwear'].map((category) => (
-            <FilterOption key={category}>
-              <input
-                type="checkbox"
-                checked={selectedCategories.includes(category)}
-                onChange={() => handleCategoryChange(category)}
-              />
-              {category.charAt(0).toUpperCase() + category.slice(1)}
-            </FilterOption>
-          ))}
-        </FilterGroup>
-
-        <FilterGroup>
-          <FilterLabel>PRICE RANGE</FilterLabel>
-          <FilterOption>
-            <input type="checkbox" />
-            Under ₹150
-          </FilterOption>
-          <FilterOption>
-            <input type="checkbox" />
-            ₹150 - ₹300
-          </FilterOption>
-          <FilterOption>
-            <input type="checkbox" />
-            Over ₹300
-          </FilterOption>
-        </FilterGroup>
-      </FilterSidebar>
-
-      <ProductsMain>
-        <ProductsHeader>
-          <ProductsTitle
-            initial={{ y: 30, opacity: 0 }}
-            animate={isInView ? { y: 0, opacity: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            COLLECTIONS
-          </ProductsTitle>
-
-          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-            <FilterToggle onClick={() => setIsFilterOpen(!isFilterOpen)}>FILTERS</FilterToggle>
-            <SortSelect value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-              <option value="name">Sort by Name</option>
-              <option value="price">Sort by Price</option>
-              <option value="newest">Newest First</option>
-            </SortSelect>
-          </div>
-        </ProductsHeader>
-
-        <ProductGrid
-          initial={{ y: 50, opacity: 0 }}
-          animate={isInView ? { y: 0, opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          {filteredProducts.map((product, index) => (
-            <ProductCard
-              key={product.id}
-              initial={{ y: 30, opacity: 0 }}
-              animate={isInView ? { y: 0, opacity: 1 } : {}}
-              transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
-              whileHover={{ y: -5 }}
-              onClick={() => navigate('/product')}
-            >
-              <ProductImageContainer>
-                <ProductImage style={{ backgroundImage: `url(${product.image})` }} />
-              </ProductImageContainer>
-              <ProductInfo>
-                <ProductName>{product.name}</ProductName>
-                <ProductPrice>{product.price}</ProductPrice>
-              </ProductInfo>
-            </ProductCard>
-          ))}
-        </ProductGrid>
-      </ProductsMain>
-    </ProductsContainer>
-  )
-}
-
-const Newsletter = () => {
-  const [email, setEmail] = useState('')
-  const ref = React.useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // Handle newsletter signup
-    console.log('Newsletter signup:', email)
-    setEmail('')
-  }
-
-  return (
-    <NewsletterContainer ref={ref}>
-      <NewsletterContent>
-        <NewsletterTitle
-          initial={{ y: 50, opacity: 0 }}
-          animate={isInView ? { y: 0, opacity: 1 } : {}}
-          transition={{ duration: 0.8 }}
-        >
-          STAY IN TOUCH
-        </NewsletterTitle>
-        <NewsletterSubtitle
-          initial={{ y: 30, opacity: 0 }}
-          animate={isInView ? { y: 0, opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          Be the first to know about new collections, exclusive offers, and fashion insights.
-        </NewsletterSubtitle>
-
-        <NewsletterForm
-          onSubmit={handleSubmit}
-          initial={{ y: 30, opacity: 0 }}
-          animate={isInView ? { y: 0, opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          <EmailInput
-            type="email"
-            placeholder="Enter your email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <SubmitButton type="submit">SUBSCRIBE</SubmitButton>
-        </NewsletterForm>
-
-        <SocialLinks
-          initial={{ y: 30, opacity: 0 }}
-          animate={isInView ? { y: 0, opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.6 }}
-        >
-          <SocialLink href="#" aria-label="Instagram">
-            📷
-          </SocialLink>
-          <SocialLink href="#" aria-label="Facebook">
-            📘
-          </SocialLink>
-          <SocialLink href="#" aria-label="Twitter">
-            🐦
-          </SocialLink>
-          <SocialLink href="#" aria-label="Pinterest">
-            📌
-          </SocialLink>
-        </SocialLinks>
-      </NewsletterContent>
-    </NewsletterContainer>
-  )
-}
-
-// Main Landing Page Component
-const Test = () => {
-  return (
-    <PageTransition>
-      <FloatingNavbar />
-      <HeroSection />
-      <FeaturedCollection />
-      <BrandStory />
-      <ProductsGallery />
-      {/* <Newsletter /> */}
-      <Footer />
-    </PageTransition>
-  )
-}
 
 export default Test
