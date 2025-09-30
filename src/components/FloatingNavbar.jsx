@@ -371,6 +371,7 @@ const FloatingNavbar = () => {
               </IconButton>
 
               <IconButton
+                onClick={() => navigate('/my-cart')}
                 style={{ position: 'relative' }}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}

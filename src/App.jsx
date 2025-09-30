@@ -13,6 +13,8 @@ import BookConsultation from './Pages/BookConsultation'
 import ScrollToTop from './utils/ScrollToTop'
 import ProductDetail from './Pages/ProductDetail'
 import Wishlist from './Pages/Wishlist'
+import Cart from './Pages/Cart'
+import Checkout from './Pages/Checkout'
 
 function App() {
   return (
@@ -32,6 +34,8 @@ function App() {
             <Route path="appointment" element={<BookConsultation />} />
             <Route path="product" element={<ProductDetail />} />
             <Route path="wishlist" element={<Wishlist />} />
+            <Route path="my-cart" element={<Cart />} />
+            <Route path="checkout" element={<Checkout />} />
           </Routes>
         </AnimatePresence>
       </BrowserRouter>
