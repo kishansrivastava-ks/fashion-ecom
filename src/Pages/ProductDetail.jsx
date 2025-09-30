@@ -15,6 +15,7 @@ import {
   X,
 } from 'lucide-react'
 import styled from 'styled-components'
+import PageTransition from '@/utils/PageTransition'
 
 // Main Container
 const Container = styled.div`
@@ -596,376 +597,380 @@ const ProductDetail = () => {
   }
 
   return (
-    <Container>
-      <ProductSection>
-        {/* Image Gallery */}
-        <GalleryContainer>
-          <ThumbnailList>
-            {product.images.map((image, index) => (
-              <Thumbnail
-                key={index}
-                image={image}
-                active={selectedImage === index}
-                onClick={() => setSelectedImage(index)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              />
-            ))}
-          </ThumbnailList>
-
-          <MainImageContainer onClick={() => setShowZoom(true)}>
-            <ImageBadge>NEW ARRIVAL</ImageBadge>
-            <MainImage
-              src={product.images[selectedImage]}
-              alt={product.name}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              key={selectedImage}
-            />
-          </MainImageContainer>
-        </GalleryContainer>
-
-        {/* Product Info */}
-        <ProductInfo>
-          <Breadcrumb>
-            <a href="/">Home</a> / <a href="/ethnic">Ethnic Wear</a> / <a href="/sarees">Sarees</a>
-          </Breadcrumb>
-
-          <ProductTitle>{product.name}</ProductTitle>
-
-          <Rating>
-            <Stars>
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  size={18}
-                  fill={i < Math.floor(product.rating) ? '#ffa500' : 'none'}
-                  color="#ffa500"
-                />
-              ))}
-            </Stars>
-            <RatingText>
-              {product.rating} ({product.reviews} reviews)
-            </RatingText>
-          </Rating>
-
-          <PriceContainer>
-            <CurrentPrice>₹{product.currentPrice.toLocaleString()}</CurrentPrice>
-            <OriginalPrice>₹{product.originalPrice.toLocaleString()}</OriginalPrice>
-            <Discount>{product.discount}% OFF</Discount>
-          </PriceContainer>
-
-          <Description>{product.description}</Description>
-
-          <Divider />
-
-          {/* Size Selection */}
-          <OptionGroup>
-            <OptionLabel>Select Size</OptionLabel>
-            <SizeOptions>
-              {product.sizes.map((size) => (
-                <SizeButton
-                  key={size}
-                  selected={selectedSize === size}
-                  onClick={() => setSelectedSize(size)}
+    <PageTransition>
+      <Container>
+        <ProductSection>
+          {/* Image Gallery */}
+          <GalleryContainer>
+            <ThumbnailList>
+              {product.images.map((image, index) => (
+                <Thumbnail
+                  key={index}
+                  image={image}
+                  active={selectedImage === index}
+                  onClick={() => setSelectedImage(index)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                >
-                  {size}
-                </SizeButton>
-              ))}
-            </SizeOptions>
-          </OptionGroup>
-
-          {/* Color Selection */}
-          <OptionGroup>
-            <OptionLabel>
-              Select Color: {product.colors.find((c) => c.value === selectedColor)?.name}
-            </OptionLabel>
-            <ColorOptions>
-              {product.colors.map((color) => (
-                <ColorButton
-                  key={color.value}
-                  color={color.value}
-                  selected={selectedColor === color.value}
-                  onClick={() => setSelectedColor(color.value)}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
                 />
               ))}
-            </ColorOptions>
-          </OptionGroup>
+            </ThumbnailList>
 
-          {/* Quantity */}
-          <QuantityContainer>
-            <OptionLabel>Quantity</OptionLabel>
-            <QuantitySelector>
-              <QuantityButton onClick={() => handleQuantityChange(-1)} disabled={quantity <= 1}>
-                −
-              </QuantityButton>
-              <QuantityDisplay>{quantity}</QuantityDisplay>
-              <QuantityButton onClick={() => handleQuantityChange(1)} disabled={quantity >= 10}>
-                +
-              </QuantityButton>
-            </QuantitySelector>
-          </QuantityContainer>
+            <MainImageContainer onClick={() => setShowZoom(true)}>
+              <ImageBadge>NEW ARRIVAL</ImageBadge>
+              <MainImage
+                src={product.images[selectedImage]}
+                alt={product.name}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                key={selectedImage}
+              />
+            </MainImageContainer>
+          </GalleryContainer>
 
-          {/* Action Buttons */}
-          <ActionButtons>
-            <AddToCartButton whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <ShoppingCart size={20} />
-              ADD TO CART
-            </AddToCartButton>
+          {/* Product Info */}
+          <ProductInfo>
+            <Breadcrumb>
+              <a href="/">Home</a> / <a href="/ethnic">Ethnic Wear</a> /{' '}
+              <a href="/sarees">Sarees</a>
+            </Breadcrumb>
 
-            <BuyNowButton whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              BUY NOW
-            </BuyNowButton>
+            <ProductTitle>{product.name}</ProductTitle>
 
-            <WishlistButton
-              active={isWishlisted}
-              onClick={() => setIsWishlisted(!isWishlisted)}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
+            <Rating>
+              <Stars>
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    size={18}
+                    fill={i < Math.floor(product.rating) ? '#ffa500' : 'none'}
+                    color="#ffa500"
+                  />
+                ))}
+              </Stars>
+              <RatingText>
+                {product.rating} ({product.reviews} reviews)
+              </RatingText>
+            </Rating>
+
+            <PriceContainer>
+              <CurrentPrice>₹{product.currentPrice.toLocaleString()}</CurrentPrice>
+              <OriginalPrice>₹{product.originalPrice.toLocaleString()}</OriginalPrice>
+              <Discount>{product.discount}% OFF</Discount>
+            </PriceContainer>
+
+            <Description>{product.description}</Description>
+
+            <Divider />
+
+            {/* Size Selection */}
+            <OptionGroup>
+              <OptionLabel>Select Size</OptionLabel>
+              <SizeOptions>
+                {product.sizes.map((size) => (
+                  <SizeButton
+                    key={size}
+                    selected={selectedSize === size}
+                    onClick={() => setSelectedSize(size)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {size}
+                  </SizeButton>
+                ))}
+              </SizeOptions>
+            </OptionGroup>
+
+            {/* Color Selection */}
+            <OptionGroup>
+              <OptionLabel>
+                Select Color: {product.colors.find((c) => c.value === selectedColor)?.name}
+              </OptionLabel>
+              <ColorOptions>
+                {product.colors.map((color) => (
+                  <ColorButton
+                    key={color.value}
+                    color={color.value}
+                    selected={selectedColor === color.value}
+                    onClick={() => setSelectedColor(color.value)}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                  />
+                ))}
+              </ColorOptions>
+            </OptionGroup>
+
+            {/* Quantity */}
+            <QuantityContainer>
+              <OptionLabel>Quantity</OptionLabel>
+              <QuantitySelector>
+                <QuantityButton onClick={() => handleQuantityChange(-1)} disabled={quantity <= 1}>
+                  −
+                </QuantityButton>
+                <QuantityDisplay>{quantity}</QuantityDisplay>
+                <QuantityButton onClick={() => handleQuantityChange(1)} disabled={quantity >= 10}>
+                  +
+                </QuantityButton>
+              </QuantitySelector>
+            </QuantityContainer>
+
+            {/* Action Buttons */}
+            <ActionButtons>
+              <AddToCartButton whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <ShoppingCart size={20} />
+                ADD TO CART
+              </AddToCartButton>
+
+              <BuyNowButton whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                BUY NOW
+              </BuyNowButton>
+
+              <WishlistButton
+                active={isWishlisted}
+                onClick={() => setIsWishlisted(!isWishlisted)}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Heart size={20} fill={isWishlisted ? 'currentColor' : 'none'} />
+              </WishlistButton>
+            </ActionButtons>
+
+            {/* Features */}
+            <Features>
+              <Feature>
+                <FeatureIcon>
+                  <Truck size={20} />
+                </FeatureIcon>
+                <span>Free Shipping on orders above ₹2999</span>
+              </Feature>
+              <Feature>
+                <FeatureIcon>
+                  <RotateCcw size={20} />
+                </FeatureIcon>
+                <span>15 Days Easy Returns</span>
+              </Feature>
+              <Feature>
+                <FeatureIcon>
+                  <Shield size={20} />
+                </FeatureIcon>
+                <span>100% Authentic Products</span>
+              </Feature>
+              <Feature>
+                <FeatureIcon>
+                  <Ruler size={20} />
+                </FeatureIcon>
+                <span>Custom Alterations Available</span>
+              </Feature>
+            </Features>
+          </ProductInfo>
+        </ProductSection>
+
+        {/* Tabs Section */}
+        <TabsSection>
+          <TabButtons>
+            <TabButton
+              active={activeTab === 'description'}
+              onClick={() => setActiveTab('description')}
             >
-              <Heart size={20} fill={isWishlisted ? 'currentColor' : 'none'} />
-            </WishlistButton>
-          </ActionButtons>
+              Description
+            </TabButton>
+            <TabButton active={activeTab === 'details'} onClick={() => setActiveTab('details')}>
+              Product Details
+            </TabButton>
+            <TabButton active={activeTab === 'care'} onClick={() => setActiveTab('care')}>
+              Care Instructions
+            </TabButton>
+            <TabButton active={activeTab === 'reviews'} onClick={() => setActiveTab('reviews')}>
+              Reviews ({product.reviews})
+            </TabButton>
+          </TabButtons>
 
-          {/* Features */}
-          <Features>
-            <Feature>
-              <FeatureIcon>
-                <Truck size={20} />
-              </FeatureIcon>
-              <span>Free Shipping on orders above ₹2999</span>
-            </Feature>
-            <Feature>
-              <FeatureIcon>
-                <RotateCcw size={20} />
-              </FeatureIcon>
-              <span>15 Days Easy Returns</span>
-            </Feature>
-            <Feature>
-              <FeatureIcon>
-                <Shield size={20} />
-              </FeatureIcon>
-              <span>100% Authentic Products</span>
-            </Feature>
-            <Feature>
-              <FeatureIcon>
-                <Ruler size={20} />
-              </FeatureIcon>
-              <span>Custom Alterations Available</span>
-            </Feature>
-          </Features>
-        </ProductInfo>
-      </ProductSection>
+          <AnimatePresence mode="wait">
+            {activeTab === 'description' && (
+              <TabContent
+                key="description"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+              >
+                <h3>About This Product</h3>
+                <p>
+                  Experience the epitome of traditional Indian elegance with this stunning silk
+                  saree. Handcrafted by skilled artisans, this piece represents months of dedicated
+                  work and attention to detail. The luxurious silk fabric drapes beautifully,
+                  creating an effortlessly graceful silhouette.
+                </p>
+                <p>
+                  The intricate zari work and traditional motifs are a testament to our commitment
+                  to preserving Indian textile heritage while adding contemporary touches. Each
+                  saree comes with a matching blouse piece that can be customized to your
+                  measurements.
+                </p>
+                <p>
+                  Perfect for weddings, festivals, and special celebrations, this saree is designed
+                  to make you feel confident and beautiful. The timeless design ensures it will
+                  remain a treasured piece in your wardrobe for years to come.
+                </p>
+              </TabContent>
+            )}
 
-      {/* Tabs Section */}
-      <TabsSection>
-        <TabButtons>
-          <TabButton
-            active={activeTab === 'description'}
-            onClick={() => setActiveTab('description')}
-          >
-            Description
-          </TabButton>
-          <TabButton active={activeTab === 'details'} onClick={() => setActiveTab('details')}>
-            Product Details
-          </TabButton>
-          <TabButton active={activeTab === 'care'} onClick={() => setActiveTab('care')}>
-            Care Instructions
-          </TabButton>
-          <TabButton active={activeTab === 'reviews'} onClick={() => setActiveTab('reviews')}>
-            Reviews ({product.reviews})
-          </TabButton>
-        </TabButtons>
+            {activeTab === 'details' && (
+              <TabContent
+                key="details"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+              >
+                <h3>Product Specifications</h3>
+                <ul>
+                  <li>
+                    <strong>Fabric:</strong> Pure Silk
+                  </li>
+                  <li>
+                    <strong>Work:</strong> Traditional Zari Weaving
+                  </li>
+                  <li>
+                    <strong>Length:</strong> 5.5 meters (saree) + 0.8 meters (blouse piece)
+                  </li>
+                  <li>
+                    <strong>Occasion:</strong> Wedding, Festival, Party
+                  </li>
+                  <li>
+                    <strong>Pattern:</strong> Woven Design
+                  </li>
+                  <li>
+                    <strong>Wash Care:</strong> Dry Clean Only
+                  </li>
+                  <li>
+                    <strong>Origin:</strong> Handcrafted in India
+                  </li>
+                  <li>
+                    <strong>SKU:</strong> LUXE-SAR-001
+                  </li>
+                </ul>
+              </TabContent>
+            )}
 
-        <AnimatePresence mode="wait">
-          {activeTab === 'description' && (
-            <TabContent
-              key="description"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
+            {activeTab === 'care' && (
+              <TabContent
+                key="care"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+              >
+                <h3>Care Instructions</h3>
+                <p>
+                  To maintain the beauty and longevity of your silk saree, please follow these care
+                  guidelines:
+                </p>
+                <ul>
+                  <li>Dry clean only - Do not wash at home</li>
+                  <li>Store in a cool, dry place away from direct sunlight</li>
+                  <li>Avoid contact with perfumes, deodorants, and other chemicals</li>
+                  <li>Iron on low heat with a cloth barrier</li>
+                  <li>Wrap in muslin cloth for storage</li>
+                  <li>Air out periodically to prevent moisture buildup</li>
+                  <li>Keep away from sharp objects that may snag the fabric</li>
+                </ul>
+                <p>
+                  <strong>Note:</strong> Proper care will ensure your saree remains beautiful for
+                  generations to come.
+                </p>
+              </TabContent>
+            )}
+
+            {activeTab === 'reviews' && (
+              <TabContent
+                key="reviews"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+              >
+                <h3>Customer Reviews</h3>
+                <ReviewsContainer>
+                  <ReviewCard>
+                    <ReviewHeader>
+                      <div>
+                        <ReviewerName>Priya Sharma</ReviewerName>
+                        <Stars>
+                          {[...Array(5)].map((_, i) => (
+                            <Star key={i} size={14} fill="#ffa500" color="#ffa500" />
+                          ))}
+                        </Stars>
+                      </div>
+                      <ReviewDate>2 weeks ago</ReviewDate>
+                    </ReviewHeader>
+                    <ReviewText>
+                      Absolutely stunning saree! The quality is exceptional and the colors are even
+                      more beautiful in person. Received so many compliments at my cousin's wedding.
+                      Highly recommend!
+                    </ReviewText>
+                  </ReviewCard>
+
+                  <ReviewCard>
+                    <ReviewHeader>
+                      <div>
+                        <ReviewerName>Anita Desai</ReviewerName>
+                        <Stars>
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              size={14}
+                              fill={i < 4 ? '#ffa500' : 'none'}
+                              color="#ffa500"
+                            />
+                          ))}
+                        </Stars>
+                      </div>
+                      <ReviewDate>1 month ago</ReviewDate>
+                    </ReviewHeader>
+                    <ReviewText>
+                      Beautiful craftsmanship and the silk quality is top-notch. The only reason for
+                      4 stars is the delivery took a bit longer than expected, but it was worth the
+                      wait!
+                    </ReviewText>
+                  </ReviewCard>
+
+                  <ReviewCard>
+                    <ReviewHeader>
+                      <div>
+                        <ReviewerName>Meera Reddy</ReviewerName>
+                        <Stars>
+                          {[...Array(5)].map((_, i) => (
+                            <Star key={i} size={14} fill="#ffa500" color="#ffa500" />
+                          ))}
+                        </Stars>
+                      </div>
+                      <ReviewDate>1 month ago</ReviewDate>
+                    </ReviewHeader>
+                    <ReviewText>
+                      This is my third purchase from Luxe Fashion and they never disappoint. The
+                      attention to detail is remarkable. Perfect for special occasions!
+                    </ReviewText>
+                  </ReviewCard>
+                </ReviewsContainer>
+              </TabContent>
+            )}
+          </AnimatePresence>
+        </TabsSection>
+
+        {/* Zoom Modal */}
+        <AnimatePresence>
+          {showZoom && (
+            <ZoomOverlay
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowZoom(false)}
             >
-              <h3>About This Product</h3>
-              <p>
-                Experience the epitome of traditional Indian elegance with this stunning silk saree.
-                Handcrafted by skilled artisans, this piece represents months of dedicated work and
-                attention to detail. The luxurious silk fabric drapes beautifully, creating an
-                effortlessly graceful silhouette.
-              </p>
-              <p>
-                The intricate zari work and traditional motifs are a testament to our commitment to
-                preserving Indian textile heritage while adding contemporary touches. Each saree
-                comes with a matching blouse piece that can be customized to your measurements.
-              </p>
-              <p>
-                Perfect for weddings, festivals, and special celebrations, this saree is designed to
-                make you feel confident and beautiful. The timeless design ensures it will remain a
-                treasured piece in your wardrobe for years to come.
-              </p>
-            </TabContent>
-          )}
-
-          {activeTab === 'details' && (
-            <TabContent
-              key="details"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-            >
-              <h3>Product Specifications</h3>
-              <ul>
-                <li>
-                  <strong>Fabric:</strong> Pure Silk
-                </li>
-                <li>
-                  <strong>Work:</strong> Traditional Zari Weaving
-                </li>
-                <li>
-                  <strong>Length:</strong> 5.5 meters (saree) + 0.8 meters (blouse piece)
-                </li>
-                <li>
-                  <strong>Occasion:</strong> Wedding, Festival, Party
-                </li>
-                <li>
-                  <strong>Pattern:</strong> Woven Design
-                </li>
-                <li>
-                  <strong>Wash Care:</strong> Dry Clean Only
-                </li>
-                <li>
-                  <strong>Origin:</strong> Handcrafted in India
-                </li>
-                <li>
-                  <strong>SKU:</strong> LUXE-SAR-001
-                </li>
-              </ul>
-            </TabContent>
-          )}
-
-          {activeTab === 'care' && (
-            <TabContent
-              key="care"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-            >
-              <h3>Care Instructions</h3>
-              <p>
-                To maintain the beauty and longevity of your silk saree, please follow these care
-                guidelines:
-              </p>
-              <ul>
-                <li>Dry clean only - Do not wash at home</li>
-                <li>Store in a cool, dry place away from direct sunlight</li>
-                <li>Avoid contact with perfumes, deodorants, and other chemicals</li>
-                <li>Iron on low heat with a cloth barrier</li>
-                <li>Wrap in muslin cloth for storage</li>
-                <li>Air out periodically to prevent moisture buildup</li>
-                <li>Keep away from sharp objects that may snag the fabric</li>
-              </ul>
-              <p>
-                <strong>Note:</strong> Proper care will ensure your saree remains beautiful for
-                generations to come.
-              </p>
-            </TabContent>
-          )}
-
-          {activeTab === 'reviews' && (
-            <TabContent
-              key="reviews"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-            >
-              <h3>Customer Reviews</h3>
-              <ReviewsContainer>
-                <ReviewCard>
-                  <ReviewHeader>
-                    <div>
-                      <ReviewerName>Priya Sharma</ReviewerName>
-                      <Stars>
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} size={14} fill="#ffa500" color="#ffa500" />
-                        ))}
-                      </Stars>
-                    </div>
-                    <ReviewDate>2 weeks ago</ReviewDate>
-                  </ReviewHeader>
-                  <ReviewText>
-                    Absolutely stunning saree! The quality is exceptional and the colors are even
-                    more beautiful in person. Received so many compliments at my cousin's wedding.
-                    Highly recommend!
-                  </ReviewText>
-                </ReviewCard>
-
-                <ReviewCard>
-                  <ReviewHeader>
-                    <div>
-                      <ReviewerName>Anita Desai</ReviewerName>
-                      <Stars>
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            size={14}
-                            fill={i < 4 ? '#ffa500' : 'none'}
-                            color="#ffa500"
-                          />
-                        ))}
-                      </Stars>
-                    </div>
-                    <ReviewDate>1 month ago</ReviewDate>
-                  </ReviewHeader>
-                  <ReviewText>
-                    Beautiful craftsmanship and the silk quality is top-notch. The only reason for 4
-                    stars is the delivery took a bit longer than expected, but it was worth the
-                    wait!
-                  </ReviewText>
-                </ReviewCard>
-
-                <ReviewCard>
-                  <ReviewHeader>
-                    <div>
-                      <ReviewerName>Meera Reddy</ReviewerName>
-                      <Stars>
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} size={14} fill="#ffa500" color="#ffa500" />
-                        ))}
-                      </Stars>
-                    </div>
-                    <ReviewDate>1 month ago</ReviewDate>
-                  </ReviewHeader>
-                  <ReviewText>
-                    This is my third purchase from Luxe Fashion and they never disappoint. The
-                    attention to detail is remarkable. Perfect for special occasions!
-                  </ReviewText>
-                </ReviewCard>
-              </ReviewsContainer>
-            </TabContent>
+              <CloseButton onClick={() => setShowZoom(false)}>
+                <X size={20} />
+              </CloseButton>
+              <ZoomImage src={product.images[selectedImage]} alt={product.name} />
+            </ZoomOverlay>
           )}
         </AnimatePresence>
-      </TabsSection>
-
-      {/* Zoom Modal */}
-      <AnimatePresence>
-        {showZoom && (
-          <ZoomOverlay
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setShowZoom(false)}
-          >
-            <CloseButton onClick={() => setShowZoom(false)}>
-              <X size={20} />
-            </CloseButton>
-            <ZoomImage src={product.images[selectedImage]} alt={product.name} />
-          </ZoomOverlay>
-        )}
-      </AnimatePresence>
-    </Container>
+      </Container>
+    </PageTransition>
   )
 }
 

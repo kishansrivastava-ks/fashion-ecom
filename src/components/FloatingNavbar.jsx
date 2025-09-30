@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import styled from 'styled-components'
 import { Search, Heart, ShoppingBag } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 // Main navigation container
 const NavContainer = styled(motion.nav)`
@@ -259,6 +260,7 @@ const FloatingNavbar = () => {
   const [showDropdown, setShowDropdown] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [cartCount, setCartCount] = useState(3) // Example cart count
+  const navigate = useNavigate()
 
   // Handle scroll effect
   useEffect(() => {
@@ -359,7 +361,12 @@ const FloatingNavbar = () => {
                 <Search />
               </IconButton>
 
-              <IconButton whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} title="Wishlist">
+              <IconButton
+                onClick={() => navigate('/wishlist')}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                title="Wishlist"
+              >
                 <Heart />
               </IconButton>
 
