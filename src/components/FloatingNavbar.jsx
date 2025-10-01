@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import styled from 'styled-components'
-import { Search, Heart, ShoppingBag } from 'lucide-react'
+import { Search, Heart, ShoppingBag, User } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 // Main navigation container
@@ -387,6 +387,15 @@ const FloatingNavbar = () => {
                     {cartCount}
                   </CartBadge>
                 )}
+              </IconButton>
+
+              <IconButton
+                onClick={() => navigate('/login')}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                title="login"
+              >
+                <User />
               </IconButton>
 
               {/* Mobile Menu Toggle */}

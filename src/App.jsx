@@ -15,6 +15,9 @@ import ProductDetail from './Pages/ProductDetail'
 import Wishlist from './Pages/Wishlist'
 import Cart from './Pages/Cart'
 import Checkout from './Pages/Checkout'
+import Login from './Pages/Auth/Login'
+import Signup from './Pages/Auth/Signup'
+import OTPVerification from './Pages/Auth/OTPVerification'
 
 function App() {
   return (
@@ -36,6 +39,11 @@ function App() {
             <Route path="wishlist" element={<Wishlist />} />
             <Route path="my-cart" element={<Cart />} />
             <Route path="checkout" element={<Checkout />} />
+
+            {/* auth pages */}
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
+            <Route path="verify-otp" element={<OTPVerification />} />
           </Routes>
         </AnimatePresence>
       </BrowserRouter>
