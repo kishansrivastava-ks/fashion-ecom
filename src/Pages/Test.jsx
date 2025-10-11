@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useScroll, useTransform, useInView } from 'fra
 import styled from 'styled-components'
 import FeaturedCollection from '@/components/FeaturedCollection'
 import FloatingNavbar from '@/components/FloatingNavbar'
+import ProductCarousel from '@/components/ProductCarousel'
 import Footer from '@/components/Footer'
 import PageTransition from '@/utils/PageTransition'
 import { useNavigate } from 'react-router-dom'
@@ -437,6 +438,7 @@ const Test = () => {
       <FloatingNavbarWrapper />
       <HeroSection />
       <FeaturedCollection />
+      <ProductCarousel />
       <BrandStory />
       <ProductsGallery />
       {/* <Newsletter /> */}
