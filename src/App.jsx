@@ -36,11 +36,12 @@ function App() {
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="return-policy" element={<ReturnPolicy />} />
             <Route path="appointment" element={<BookConsultation />} />
-            <Route path="product" element={<ProductDetail />} />
+            {/* <Route path="product" element={<ProductDetail />} /> */}
             <Route path="wishlist" element={<Wishlist />} />
             <Route path="my-cart" element={<Cart />} />
             <Route path="checkout" element={<Checkout />} />
 
+            <Route path="products/ethnic/:slug" element={<ProductDetail />} />
             <Route path="collections/ethnic" element={<EthnicCollections />} />
 
             {/* auth pages */}

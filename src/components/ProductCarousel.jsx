@@ -96,7 +96,7 @@ const ProductCarousel = () => {
             transition={{ duration: 0.8 }}
           >
             <CategoryTitle>ETHNIC COLLECTION</CategoryTitle>
-            <ViewAllLink href="/ethnic">
+            <ViewAllLink href="/collections/ethnic">
               View All <ChevronRight size={18} />
             </ViewAllLink>
           </SectionHeader>

@@ -428,7 +428,7 @@ const ImageContainer = styled.div`
   }
 `
 
-const ProductImage = styled.img`
+const ProductImage = styled(motion.img)`
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1056,7 +1056,14 @@ const EthnicCollections = () => {
                   whileHover={{ y: -8 }}
                 >
                   <ImageContainer>
-                    <ProductImage src={product.images[0]} alt={product.name} />
+                    <ProductImage
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.5 }}
+                      src={product.images[0]}
+                      alt={product.name}
+                      loading="lazy"
+                    />
 
                     {product.badges && product.badges.length > 0 && (
                       <Badge type={product.badges[0]}>{product.badges[0]}</Badge>
