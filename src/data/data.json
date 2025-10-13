@@ -1,0 +1,758 @@
+{
+  "products": [
+    {
+      "id": "ETH001",
+      "name": "Royal Silk Banarasi Saree",
+      "slug": "royal-silk-banarasi-saree",
+      "category": "ethnic",
+      "subCategory": "sarees",
+      "description": "Indulge in timeless elegance with our exquisite handwoven Banarasi silk saree. This masterpiece features intricate traditional zari motifs and a stunning pallu design that showcases the rich heritage of Indian craftsmanship. Perfect for weddings, festivals, and special occasions.",
+      "price": 8999,
+      "originalPrice": 12999,
+      "discount": 31,
+      "currency": "INR",
+      "inStock": true,
+      "stockQuantity": 15,
+      "sku": "LUXE-SAR-001",
+      "images": [
+        "/images/ethnic/ethnic1.jpg",
+        "/images/products/banarasi-saree-2.jpg",
+        "/images/products/banarasi-saree-3.jpg",
+        "/images/products/banarasi-saree-4.jpg"
+      ],
+      "sizes": ["Free Size"],
+      "colors": [
+        { "name": "Maroon", "value": "#800000", "inStock": true },
+        { "name": "Royal Blue", "value": "#000080", "inStock": true },
+        { "name": "Emerald Green", "value": "#50C878", "inStock": false }
+      ],
+      "fabric": "Pure Silk",
+      "work": "Traditional Zari Weaving",
+      "length": "5.5 meters (saree) + 0.8 meters (blouse piece)",
+      "occasion": "Wedding, Festival, Party",
+      "pattern": "Woven Design",
+      "careInstructions": "Dry clean only",
+      "features": [
+        "Handcrafted by skilled artisans",
+        "Premium silk fabric with zari work",
+        "Comes with unstitched blouse piece",
+        "Traditional Banarasi weaving technique"
+      ],
+      "rating": 4.5,
+      "reviews": 124,
+      "badges": ["new"],
+      "createdAt": "2024-12-01T00:00:00Z",
+      "tags": ["silk", "banarasi", "wedding", "traditional"]
+    },
+    {
+      "id": "ETH002",
+      "name": "Designer Lehenga Choli Set",
+      "slug": "designer-lehenga-choli-set",
+      "category": "ethnic",
+      "subCategory": "lehengas",
+      "description": "Make a grand statement with this stunning designer lehenga choli set. Featuring elaborate embroidery and exquisite detailing, this ensemble is perfect for bridal occasions and festive celebrations. The rich fabric and contemporary design make it a timeless addition to your wardrobe.",
+      "price": 15999,
+      "originalPrice": 22999,
+      "discount": 30,
+      "currency": "INR",
+      "inStock": true,
+      "stockQuantity": 8,
+      "sku": "LUXE-LEH-002",
+      "images": [
+        "/images/ethnic/ethnic2.jpg",
+        "/images/products/lehenga-2.jpg",
+        "/images/products/lehenga-3.jpg",
+        "/images/products/lehenga-4.jpg"
+      ],
+      "sizes": ["S", "M", "L", "XL", "XXL"],
+      "colors": [
+        { "name": "Deep Red", "value": "#8B0000", "inStock": true },
+        { "name": "Navy Blue", "value": "#000080", "inStock": true },
+        { "name": "Pink", "value": "#FF69B4", "inStock": true }
+      ],
+      "fabric": "Velvet & Silk",
+      "work": "Zari and Stone Embroidery",
+      "length": "Lehenga Length: 42 inches",
+      "occasion": "Wedding, Engagement, Festival",
+      "pattern": "Embroidered",
+      "careInstructions": "Dry clean only",
+      "features": [
+        "3-piece set (Lehenga, Choli, Dupatta)",
+        "Heavy embroidery work",
+        "Semi-stitched, customizable fit",
+        "Can be customized to your measurements"
+      ],
+      "rating": 4.8,
+      "reviews": 89,
+      "badges": ["bestseller"],
+      "createdAt": "2024-11-15T00:00:00Z",
+      "tags": ["lehenga", "bridal", "embroidered", "designer"]
+    },
+    {
+      "id": "ETH003",
+      "name": "Embroidered Anarkali Suit",
+      "slug": "embroidered-anarkali-suit",
+      "category": "ethnic",
+      "subCategory": "suits",
+      "description": "Experience grace and sophistication with this beautiful embroidered Anarkali suit. The flowing silhouette and intricate embroidery create a stunning look perfect for both formal and festive occasions. Comfortable yet elegant, this outfit is a must-have.",
+      "price": 6999,
+      "originalPrice": 9999,
+      "discount": 30,
+      "currency": "INR",
+      "inStock": false,
+      "stockQuantity": 0,
+      "sku": "LUXE-ANK-003",
+      "images": [
+        "/images/ethnic/ethnic3.jpg",
+        "/images/products/anarkali-2.jpg",
+        "/images/products/anarkali-3.jpg",
+        "/images/products/anarkali-4.jpg"
+      ],
+      "sizes": ["S", "M", "L", "XL"],
+      "colors": [
+        { "name": "Peach", "value": "#FFE5B4", "inStock": false },
+        { "name": "Mint Green", "value": "#98FF98", "inStock": false }
+      ],
+      "fabric": "Georgette",
+      "work": "Thread and Sequin Embroidery",
+      "length": "Floor Length - 52 inches",
+      "occasion": "Party, Festival, Casual",
+      "pattern": "Embroidered",
+      "careInstructions": "Hand wash or dry clean",
+      "features": [
+        "3-piece set with dupatta",
+        "Flared Anarkali style",
+        "Comfortable georgette fabric",
+        "Semi-stitched for custom fit"
+      ],
+      "rating": 4.3,
+      "reviews": 56,
+      "badges": ["sale"],
+      "createdAt": "2024-10-20T00:00:00Z",
+      "tags": ["anarkali", "embroidered", "georgette", "party wear"]
+    },
+    {
+      "id": "ETH004",
+      "name": "Traditional Sharara Set",
+      "slug": "traditional-sharara-set",
+      "category": "ethnic",
+      "subCategory": "suits",
+      "description": "Embrace traditional elegance with this stunning sharara set. Featuring a short kurti, flared sharara, and embellished dupatta, this outfit combines classic design with contemporary style. Perfect for mehendi, sangeet, and festive celebrations.",
+      "price": 7999,
+      "originalPrice": 11999,
+      "discount": 33,
+      "currency": "INR",
+      "inStock": true,
+      "stockQuantity": 12,
+      "sku": "LUXE-SHA-004",
+      "images": [
+        "/images/ethnic/ethnic4.jpg",
+        "/images/products/sharara-2.jpg",
+        "/images/products/sharara-3.jpg",
+        "/images/products/sharara-4.jpg"
+      ],
+      "sizes": ["S", "M", "L", "XL"],
+      "colors": [
+        { "name": "Mustard Yellow", "value": "#FFDB58", "inStock": true },
+        { "name": "Purple", "value": "#800080", "inStock": true },
+        { "name": "Teal", "value": "#008080", "inStock": true }
+      ],
+      "fabric": "Cotton Silk",
+      "work": "Gota Patti and Mirror Work",
+      "length": "Kurti: 28 inches, Sharara: 38 inches",
+      "occasion": "Mehendi, Sangeet, Festival",
+      "pattern": "Embellished",
+      "careInstructions": "Dry clean recommended",
+      "features": [
+        "3-piece traditional set",
+        "Comfortable cotton silk fabric",
+        "Traditional gota patti work",
+        "Flared sharara pants"
+      ],
+      "rating": 4.6,
+      "reviews": 72,
+      "badges": [],
+      "createdAt": "2024-11-01T00:00:00Z",
+      "tags": ["sharara", "traditional", "gota patti", "festive"]
+    },
+    {
+      "id": "ETH005",
+      "name": "Silk Palazzo Suit Set",
+      "slug": "silk-palazzo-suit-set",
+      "category": "ethnic",
+      "subCategory": "suits",
+      "description": "Contemporary meets traditional in this elegant silk palazzo suit set. The straight-cut kurta paired with wide-leg palazzo pants creates a modern silhouette while maintaining ethnic charm. Perfect for both office wear and evening parties.",
+      "price": 4999,
+      "originalPrice": 7999,
+      "discount": 38,
+      "currency": "INR",
+      "inStock": true,
+      "stockQuantity": 20,
+      "sku": "LUXE-PAL-005",
+      "images": [
+        "/images/ethnic/ethnic5.jpg",
+        "/images/products/palazzo-2.jpg",
+        "/images/products/palazzo-3.jpg",
+        "/images/products/palazzo-4.jpg"
+      ],
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "colors": [
+        { "name": "Black", "value": "#000000", "inStock": true },
+        { "name": "Ivory", "value": "#FFFFF0", "inStock": true },
+        { "name": "Wine", "value": "#722F37", "inStock": true }
+      ],
+      "fabric": "Silk Blend",
+      "work": "Minimal Embroidery",
+      "length": "Kurta: 42 inches, Palazzo: 38 inches",
+      "occasion": "Office, Party, Casual",
+      "pattern": "Solid with Embroidered Sleeves",
+      "careInstructions": "Machine wash cold or dry clean",
+      "features": [
+        "Modern palazzo style",
+        "Comfortable silk blend fabric",
+        "Versatile for multiple occasions",
+        "Ready to wear"
+      ],
+      "rating": 4.4,
+      "reviews": 91,
+      "badges": ["sale"],
+      "createdAt": "2024-11-10T00:00:00Z",
+      "tags": ["palazzo", "silk", "contemporary", "versatile"]
+    },
+    {
+      "id": "WES001",
+      "name": "Elegant Evening Gown",
+      "slug": "elegant-evening-gown",
+      "category": "western",
+      "subCategory": "dresses",
+      "description": "Make a stunning entrance with this elegant floor-length evening gown. Featuring a fitted bodice, flowing skirt, and exquisite detailing, this dress is perfect for gala events, formal dinners, and special celebrations. The luxurious fabric drapes beautifully.",
+      "price": 12999,
+      "originalPrice": 17999,
+      "discount": 28,
+      "currency": "INR",
+      "inStock": true,
+      "stockQuantity": 10,
+      "sku": "LUXE-GOW-001",
+      "images": [
+        "/images/western/western1.jpg",
+        "/images/products/gown-2.jpg",
+        "/images/products/gown-3.jpg",
+        "/images/products/gown-4.jpg"
+      ],
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "colors": [
+        { "name": "Black", "value": "#000000", "inStock": true },
+        { "name": "Navy Blue", "value": "#000080", "inStock": true },
+        { "name": "Burgundy", "value": "#800020", "inStock": false }
+      ],
+      "fabric": "Satin & Chiffon",
+      "work": "Embellished Bodice",
+      "length": "Floor Length - 58 inches",
+      "occasion": "Gala, Formal Event, Wedding Reception",
+      "pattern": "Solid with Embellishments",
+      "careInstructions": "Dry clean only",
+      "features": [
+        "Floor-length evening gown",
+        "Fitted bodice with flowing skirt",
+        "Hidden back zipper",
+        "Built-in padding"
+      ],
+      "rating": 4.6,
+      "reviews": 87,
+      "badges": ["new"],
+      "createdAt": "2024-12-05T00:00:00Z",
+      "tags": ["gown", "evening wear", "formal", "elegant"]
+    },
+    {
+      "id": "WES002",
+      "name": "Cocktail Dress",
+      "slug": "cocktail-dress",
+      "category": "western",
+      "subCategory": "dresses",
+      "description": "Perfect for cocktail parties and evening events, this chic dress features a flattering silhouette and contemporary design. The knee-length cut and elegant details make it a versatile addition to your wardrobe for various semi-formal occasions.",
+      "price": 5999,
+      "originalPrice": 8999,
+      "discount": 33,
+      "currency": "INR",
+      "inStock": true,
+      "stockQuantity": 18,
+      "sku": "LUXE-COC-002",
+      "images": [
+        "/images/products/cocktail-1.jpg",
+        "/images/products/cocktail-2.jpg",
+        "/images/products/cocktail-3.jpg",
+        "/images/products/cocktail-4.jpg"
+      ],
+      "sizes": ["XS", "S", "M", "L"],
+      "colors": [
+        { "name": "Red", "value": "#FF0000", "inStock": true },
+        { "name": "Emerald", "value": "#50C878", "inStock": true },
+        { "name": "Gold", "value": "#FFD700", "inStock": true }
+      ],
+      "fabric": "Crepe",
+      "work": "Sequin Detailing",
+      "length": "Knee Length - 36 inches",
+      "occasion": "Cocktail Party, Date Night, Celebration",
+      "pattern": "Solid with Sequin Work",
+      "careInstructions": "Dry clean recommended",
+      "features": [
+        "Flattering A-line cut",
+        "Sequin embellishments",
+        "Back zipper closure",
+        "Fully lined"
+      ],
+      "rating": 4.4,
+      "reviews": 63,
+      "badges": ["sale"],
+      "createdAt": "2024-11-20T00:00:00Z",
+      "tags": ["cocktail", "party dress", "sequin", "evening"]
+    },
+    {
+      "id": "WES003",
+      "name": "Blazer & Trouser Set",
+      "slug": "blazer-trouser-set",
+      "category": "western",
+      "subCategory": "custom",
+      "description": "Sophisticated and powerful, this tailored blazer and trouser set is perfect for the modern professional. The structured blazer and perfectly fitted trousers create a polished look suitable for business meetings, interviews, and formal events.",
+      "price": 8999,
+      "originalPrice": 12999,
+      "discount": 31,
+      "currency": "INR",
+      "inStock": true,
+      "stockQuantity": 14,
+      "sku": "LUXE-BLZ-003",
+      "images": [
+        "/images/products/blazer-1.jpg",
+        "/images/products/blazer-2.jpg",
+        "/images/products/blazer-3.jpg",
+        "/images/products/blazer-4.jpg"
+      ],
+      "sizes": ["XS", "S", "M", "L", "XL", "XXL"],
+      "colors": [
+        { "name": "Black", "value": "#000000", "inStock": true },
+        { "name": "Grey", "value": "#808080", "inStock": true },
+        { "name": "Navy", "value": "#000080", "inStock": true }
+      ],
+      "fabric": "Polyester Blend",
+      "work": "Tailored Fit",
+      "length": "Blazer: 28 inches, Trouser: 38 inches",
+      "occasion": "Office, Business Meeting, Formal Event",
+      "pattern": "Solid",
+      "careInstructions": "Dry clean only",
+      "features": [
+        "2-piece tailored set",
+        "Structured blazer with notch lapel",
+        "Slim-fit trousers",
+        "Professional and versatile"
+      ],
+      "rating": 4.5,
+      "reviews": 91,
+      "badges": [],
+      "createdAt": "2024-10-15T00:00:00Z",
+      "tags": ["blazer", "formal", "professional", "office wear"]
+    },
+    {
+      "id": "WES004",
+      "name": "Floral Maxi Dress",
+      "slug": "floral-maxi-dress",
+      "category": "western",
+      "subCategory": "dresses",
+      "description": "Embrace bohemian elegance with this beautiful floral maxi dress. The flowing silhouette and vibrant print make it perfect for summer events, beach vacations, and casual outings. Comfortable and stylish, this dress is a seasonal favorite.",
+      "price": 4999,
+      "originalPrice": 7999,
+      "discount": 38,
+      "currency": "INR",
+      "inStock": true,
+      "stockQuantity": 22,
+      "sku": "LUXE-MAX-004",
+      "images": [
+        "/images/products/maxi-1.jpg",
+        "/images/products/maxi-2.jpg",
+        "/images/products/maxi-3.jpg",
+        "/images/products/maxi-4.jpg"
+      ],
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "colors": [
+        { "name": "Floral Multi", "value": "#FFB6C1", "inStock": true },
+        { "name": "Blue Floral", "value": "#87CEEB", "inStock": true }
+      ],
+      "fabric": "Rayon",
+      "work": "Printed",
+      "length": "Maxi Length - 54 inches",
+      "occasion": "Beach, Casual, Summer Party",
+      "pattern": "Floral Print",
+      "careInstructions": "Machine wash cold",
+      "features": [
+        "Flowy maxi length",
+        "Comfortable rayon fabric",
+        "Adjustable straps",
+        "Elastic waist for comfort"
+      ],
+      "rating": 4.3,
+      "reviews": 54,
+      "badges": ["sale"],
+      "createdAt": "2024-09-10T00:00:00Z",
+      "tags": ["maxi", "floral", "summer", "casual"]
+    },
+    {
+      "id": "WES005",
+      "name": "Designer Jumpsuit",
+      "slug": "designer-jumpsuit",
+      "category": "western",
+      "subCategory": "dresses",
+      "description": "Contemporary and chic, this designer jumpsuit is a statement piece for any wardrobe. The tailored fit and modern design make it perfect for parties, dinners, and special occasions. Effortlessly stylish with minimal accessorizing needed.",
+      "price": 6999,
+      "originalPrice": 9999,
+      "discount": 30,
+      "currency": "INR",
+      "inStock": true,
+      "stockQuantity": 16,
+      "sku": "LUXE-JMP-005",
+      "images": [
+        "/images/products/jumpsuit-1.jpg",
+        "/images/products/jumpsuit-2.jpg",
+        "/images/products/jumpsuit-3.jpg",
+        "/images/products/jumpsuit-4.jpg"
+      ],
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "colors": [
+        { "name": "Black", "value": "#000000", "inStock": true },
+        { "name": "Olive Green", "value": "#808000", "inStock": true },
+        { "name": "Rust", "value": "#B7410E", "inStock": false }
+      ],
+      "fabric": "Crepe",
+      "work": "Tailored",
+      "length": "Full Length - 58 inches",
+      "occasion": "Party, Dinner, Celebration",
+      "pattern": "Solid",
+      "careInstructions": "Dry clean or hand wash",
+      "features": [
+        "One-piece jumpsuit",
+        "Back zipper closure",
+        "Wide leg design",
+        "Flattering V-neckline"
+      ],
+      "rating": 4.7,
+      "reviews": 76,
+      "badges": ["new"],
+      "createdAt": "2024-11-25T00:00:00Z",
+      "tags": ["jumpsuit", "modern", "party wear", "designer"]
+    },
+    {
+      "id": "ETH006",
+      "name": "Chanderi Silk Kurta Set",
+      "slug": "chanderi-silk-kurta-set",
+      "category": "ethnic",
+      "subCategory": "suits",
+      "description": "Experience the lightness and elegance of Chanderi silk with this beautiful kurta set. The subtle sheen and delicate fabric make it perfect for daytime events and festive occasions. Paired with comfortable pants and a matching dupatta.",
+      "price": 5499,
+      "originalPrice": 7999,
+      "discount": 31,
+      "currency": "INR",
+      "inStock": true,
+      "stockQuantity": 18,
+      "sku": "LUXE-CHA-006",
+      "images": [
+        "/images/ethnic/ethnic6.jpg",
+        "/images/products/chanderi-2.jpg",
+        "/images/products/chanderi-3.jpg",
+        "/images/products/chanderi-4.jpg"
+      ],
+      "sizes": ["S", "M", "L", "XL", "XXL"],
+      "colors": [
+        { "name": "Beige", "value": "#F5F5DC", "inStock": true },
+        { "name": "Light Pink", "value": "#FFB6C1", "inStock": true },
+        { "name": "Sky Blue", "value": "#87CEEB", "inStock": true }
+      ],
+      "fabric": "Chanderi Silk",
+      "work": "Block Print",
+      "length": "Kurta: 44 inches",
+      "occasion": "Festival, Casual, Day Event",
+      "pattern": "Printed",
+      "careInstructions": "Dry clean recommended",
+      "features": [
+        "Lightweight Chanderi silk",
+        "Traditional block print",
+        "3-piece set with dupatta",
+        "Comfortable for all-day wear"
+      ],
+      "rating": 4.5,
+      "reviews": 68,
+      "badges": [],
+      "createdAt": "2024-10-05T00:00:00Z",
+      "tags": ["chanderi", "silk", "kurta", "traditional"]
+    },
+    {
+      "id": "ETH007",
+      "name": "Georgette Saree with Blouse",
+      "slug": "georgette-saree-blouse",
+      "category": "ethnic",
+      "subCategory": "sarees",
+      "description": "Lightweight and elegant, this georgette saree drapes beautifully and is perfect for evening events and celebrations. The contemporary design combined with traditional appeal makes it a versatile choice for modern women.",
+      "price": 3999,
+      "originalPrice": 6999,
+      "discount": 43,
+      "currency": "INR",
+      "inStock": true,
+      "stockQuantity": 25,
+      "sku": "LUXE-GEO-007",
+      "images": [
+        "/images/ethnic/ethnic7.jpg",
+        "/images/products/georgette-saree-2.jpg",
+        "/images/products/georgette-saree-3.jpg",
+        "/images/products/georgette-saree-4.jpg"
+      ],
+      "sizes": ["Free Size"],
+      "colors": [
+        { "name": "Coral", "value": "#FF7F50", "inStock": true },
+        { "name": "Turquoise", "value": "#40E0D0", "inStock": true },
+        { "name": "Lavender", "value": "#E6E6FA", "inStock": true }
+      ],
+      "fabric": "Georgette",
+      "work": "Printed with Lace Border",
+      "length": "5.5 meters with blouse",
+      "occasion": "Party, Wedding, Festival",
+      "pattern": "Printed",
+      "careInstructions": "Hand wash or dry clean",
+      "features": [
+        "Lightweight georgette fabric",
+        "Contemporary print design",
+        "Lace border detailing",
+        "Easy to drape"
+      ],
+      "rating": 4.2,
+      "reviews": 112,
+      "badges": ["sale", "bestseller"],
+      "createdAt": "2024-09-15T00:00:00Z",
+      "tags": ["georgette", "saree", "printed", "lightweight"]
+    },
+    {
+      "id": "WES006",
+      "name": "Formal Pant Suit",
+      "slug": "formal-pant-suit",
+      "category": "western",
+      "subCategory": "custom",
+      "description": "Command attention in the boardroom with this impeccably tailored formal pant suit. The classic design and precise fit make it an essential for professional settings, interviews, and corporate events. Timeless style meets modern sophistication.",
+      "price": 11999,
+      "originalPrice": 16999,
+      "discount": 29,
+      "currency": "INR",
+      "inStock": true,
+      "stockQuantity": 9,
+      "sku": "LUXE-SUI-006",
+      "images": [
+        "/images/products/suit-1.jpg",
+        "/images/products/suit-2.jpg",
+        "/images/products/suit-3.jpg",
+        "/images/products/suit-4.jpg"
+      ],
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "colors": [
+        { "name": "Charcoal", "value": "#36454F", "inStock": true },
+        { "name": "Navy", "value": "#000080", "inStock": true },
+        { "name": "Black", "value": "#000000", "inStock": true }
+      ],
+      "fabric": "Wool Blend",
+      "work": "Tailored",
+      "length": "Jacket: 26 inches, Pants: 38 inches",
+      "occasion": "Office, Interview, Business",
+      "pattern": "Solid",
+      "careInstructions": "Dry clean only",
+      "features": [
+        "Professional 2-piece suit",
+        "Single-breasted jacket",
+        "Straight-leg trousers",
+        "Premium wool blend fabric"
+      ],
+      "rating": 4.8,
+      "reviews": 102,
+      "badges": [],
+      "createdAt": "2024-10-25T00:00:00Z",
+      "tags": ["formal", "suit", "professional", "business"]
+    },
+    {
+      "id": "WES007",
+      "name": "Casual Shirt Dress",
+      "slug": "casual-shirt-dress",
+      "category": "western",
+      "subCategory": "dresses",
+      "description": "Versatile and comfortable, this casual shirt dress is perfect for everyday wear. The relaxed fit and practical design make it ideal for running errands, casual outings, or weekend brunches. Effortlessly stylish and easy to accessorize.",
+      "price": 2999,
+      "originalPrice": 4999,
+      "discount": 40,
+      "currency": "INR",
+      "inStock": true,
+      "stockQuantity": 30,
+      "sku": "LUXE-SHI-007",
+      "images": [
+        "/images/products/shirt-dress-1.jpg",
+        "/images/products/shirt-dress-2.jpg",
+        "/images/products/shirt-dress-3.jpg",
+        "/images/products/shirt-dress-4.jpg"
+      ],
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "colors": [
+        { "name": "White", "value": "#FFFFFF", "inStock": true },
+        { "name": "Denim Blue", "value": "#1560BD", "inStock": true },
+        { "name": "Khaki", "value": "#C3B091", "inStock": true }
+      ],
+      "fabric": "Cotton",
+      "work": "Button Down",
+      "length": "Above Knee - 34 inches",
+      "occasion": "Casual, Everyday, Brunch",
+      "pattern": "Solid",
+      "careInstructions": "Machine wash",
+      "features": [
+        "Comfortable cotton fabric",
+        "Button-down front",
+        "Belted waist",
+        "Practical pockets"
+      ],
+      "rating": 4.4,
+      "reviews": 145,
+      "badges": ["sale"],
+      "createdAt": "2024-08-20T00:00:00Z",
+      "tags": ["casual", "shirt dress", "cotton", "everyday"]
+    },
+    {
+      "id": "ETH008",
+      "name": "Velvet Lehnga Choli",
+      "slug": "velvet-lehenga-choli",
+      "category": "ethnic",
+      "subCategory": "lehengas",
+      "description": "Make a regal statement with this luxurious velvet lehenga choli. The rich fabric, intricate embroidery, and royal appeal make it perfect for wedding season. This heavy bridal lehenga is designed to make you feel like royalty on your special day.",
+      "price": 24999,
+      "originalPrice": 34999,
+      "discount": 29,
+      "currency": "INR",
+      "inStock": true,
+      "stockQuantity": 5,
+      "sku": "LUXE-VEL-008",
+      "images": [
+        "/images/ethnic/ethnic8.jpg",
+        "/images/products/velvet-lehenga-2.jpg",
+        "/images/products/velvet-lehenga-3.jpg",
+        "/images/products/velvet-lehenga-4.jpg"
+      ],
+      "sizes": ["S", "M", "L", "XL"],
+      "colors": [
+        { "name": "Royal Blue", "value": "#000080", "inStock": true },
+        { "name": "Deep Maroon", "value": "#800000", "inStock": true },
+        { "name": "Bottle Green", "value": "#006A4E", "inStock": false }
+      ],
+      "fabric": "Velvet",
+      "work": "Heavy Zari and Stone Work",
+      "length": "Lehenga Length: 44 inches",
+      "occasion": "Wedding, Bridal, Reception",
+      "pattern": "Heavily Embroidered",
+      "careInstructions": "Dry clean only",
+      "features": [
+        "Premium velvet fabric",
+        "Heavy bridal embroidery",
+        "Semi-stitched for custom fitting",
+        "Includes matching dupatta and choli",
+        "Can be customized to measurements"
+      ],
+      "rating": 4.9,
+      "reviews": 67,
+      "badges": ["new", "bestseller"],
+      "createdAt": "2024-12-10T00:00:00Z",
+      "tags": ["velvet", "bridal", "lehenga", "luxury", "wedding"]
+    }
+  ],
+  "categories": [
+    {
+      "id": "ethnic",
+      "name": "Ethnic Wear",
+      "slug": "ethnic",
+      "description": "Traditional Indian wear including sarees, lehengas, suits and more",
+      "image": "/images/categories/ethnic.jpg"
+    },
+    {
+      "id": "western",
+      "name": "Western Wear",
+      "slug": "western",
+      "description": "Contemporary western fashion including dresses, suits, and formal wear",
+      "image": "/images/categories/western.jpg"
+    }
+  ],
+  "subCategories": [
+    {
+      "id": "sarees",
+      "name": "Sarees",
+      "slug": "sarees",
+      "parentCategory": "ethnic",
+      "description": "Elegant sarees in silk, georgette, and other premium fabrics",
+      "image": "/images/subcategories/sarees.jpg"
+    },
+    {
+      "id": "lehengas",
+      "name": "Lehengas",
+      "slug": "lehengas",
+      "parentCategory": "ethnic",
+      "description": "Designer lehengas perfect for weddings and special occasions",
+      "image": "/images/subcategories/lehengas.jpg"
+    },
+    {
+      "id": "suits",
+      "name": "Suits & Salwar",
+      "slug": "suits",
+      "parentCategory": "ethnic",
+      "description": "Stylish suits, salwar kameez, and palazzo sets",
+      "image": "/images/subcategories/suits.jpg"
+    },
+    {
+      "id": "dresses",
+      "name": "Dresses",
+      "slug": "dresses",
+      "parentCategory": "western",
+      "description": "Contemporary dresses for all occasions",
+      "image": "/images/subcategories/dresses.jpg"
+    },
+    {
+      "id": "custom",
+      "name": "Custom Collection",
+      "slug": "custom",
+      "parentCategory": "western",
+      "description": "Tailored suits, blazers, and formal wear",
+      "image": "/images/subcategories/custom.jpg"
+    }
+  ],
+  "filters": {
+    "priceRanges": [
+      { "label": "Under ₹5,000", "min": 0, "max": 5000 },
+      { "label": "₹5,000 - ₹10,000", "min": 5000, "max": 10000 },
+      { "label": "₹10,000 - ₹20,000", "min": 10000, "max": 20000 },
+      { "label": "Above ₹20,000", "min": 20000, "max": 999999 }
+    ],
+    "occasions": ["Wedding", "Party", "Festival", "Casual", "Office", "Formal Event", "Bridal"],
+    "fabrics": ["Silk", "Cotton", "Georgette", "Velvet", "Crepe", "Satin", "Chiffon", "Wool Blend"],
+    "sizes": {
+      "ethnic": ["XS", "S", "M", "L", "XL", "XXL", "Free Size"],
+      "western": ["XS", "S", "M", "L", "XL", "XXL"]
+    }
+  },
+  "site": {
+    "name": "Luxe Fashion",
+    "tagline": "Redefining Modern Fashion",
+    "currency": "INR",
+    "currencySymbol": "₹",
+    "contact": {
+      "email": "hello@luxefashion.com",
+      "phone": "+91 12345 67890",
+      "whatsapp": "+91 98765 43210",
+      "address": "123 Fashion District, Connaught Place, New Delhi - 110001, India"
+    },
+    "shipping": {
+      "freeShippingThreshold": 2999,
+      "domesticDelivery": "5-7 business days",
+      "expressDelivery": "2-3 business days",
+      "internationalDelivery": "10-15 business days"
+    },
+    "policies": {
+      "returnWindow": 15,
+      "returnPolicy": "Items can be returned within 15 days of delivery",
+      "customItemsReturnable": false
+    }
+  }
+}
