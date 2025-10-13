@@ -18,6 +18,7 @@ import Checkout from './Pages/Checkout'
 import Login from './Pages/Auth/Login'
 import Signup from './Pages/Auth/Signup'
 import OTPVerification from './Pages/Auth/OTPVerification'
+import EthnicCollections from './Pages/EthnicCollections'
 
 function App() {
   return (
@@ -39,6 +40,8 @@ function App() {
             <Route path="wishlist" element={<Wishlist />} />
             <Route path="my-cart" element={<Cart />} />
             <Route path="checkout" element={<Checkout />} />
+
+            <Route path="collections/ethnic" element={<EthnicCollections />} />
 
             {/* auth pages */}
             <Route path="login" element={<Login />} />

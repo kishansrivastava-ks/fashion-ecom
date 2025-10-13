@@ -1,6 +1,7 @@
 import React from 'react'
 import { motion, useInView } from 'framer-motion'
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 
 // Container for the entire featured collections section
 const FeaturedContainer = styled.section`
@@ -205,6 +206,8 @@ const FeaturedCollection = () => {
   const cardsRef = React.useRef(null)
   const buttonRef = React.useRef(null)
 
+  const navigate = useNavigate()
+
   const headerInView = useInView(headerRef, { once: true, margin: '-100px' })
   const cardsInView = useInView(cardsRef, { once: true, margin: '-100px' })
   const buttonInView = useInView(buttonRef, { once: true, margin: '-100px' })
@@ -226,6 +229,7 @@ const FeaturedCollection = () => {
         'Traditional craftsmanship meets contemporary design. Exquisite sarees, lehengas, and custom pieces that celebrate our rich heritage.',
       image: '/images/ethnic.png',
       buttonText: 'Shop Ethnic',
+      to: '/collections/ethnic',
     },
   ]
 
@@ -282,6 +286,7 @@ const FeaturedCollection = () => {
                 transition={{ duration: 0.6, delay: 0.8 + index * 0.3 }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => navigate(`${collection.to}`)}
               >
                 {collection.buttonText}
               </CollectionButton>
