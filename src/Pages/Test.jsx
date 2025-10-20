@@ -7,6 +7,8 @@ import ProductCarousel from '@/components/ProductCarousel'
 import Footer from '@/components/Footer'
 import PageTransition from '@/utils/PageTransition'
 import { useNavigate } from 'react-router-dom'
+import EditorialShowcase from './EditorialShowcase'
+import VideoGridSection from '@/components/VideoGridSection'
 
 // Component Functions
 const HeroSection = () => {
@@ -438,9 +440,12 @@ const Test = () => {
       <FloatingNavbarWrapper />
       <HeroSection />
       <FeaturedCollection />
+      <EditorialShowcase />
+      <VideoGridSection />
       <ProductCarousel />
       <BrandStory />
-      <ProductsGallery />
+
+      {/* <ProductsGallery /> */}
       {/* <Newsletter /> */}
       <Footer />
     </PageTransition>

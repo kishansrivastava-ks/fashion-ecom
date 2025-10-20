@@ -193,7 +193,7 @@ const ProductCarousel = () => {
         </CategorySection>
 
         {/* Western Collection */}
-        <CategorySection>
+        {/* <CategorySection>
           <SectionHeader
             initial={{ y: 30, opacity: 0 }}
             animate={isInView ? { y: 0, opacity: 1 } : {}}
@@ -294,7 +294,7 @@ const ProductCarousel = () => {
               <ChevronRight size={24} />
             </NavButton>
           </CarouselContainer>
-        </CategorySection>
+        </CategorySection> */}
       </Container>
     </Section>
   )
