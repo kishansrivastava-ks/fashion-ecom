@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import styled from 'styled-components'
+import BentoGallery from '@/components/common/BentoGallery'
 
 // Main Section Container
 const Section = styled.section`
@@ -414,41 +415,73 @@ const EditorialShowcase = () => {
       src: '/images/ethnic/ethnic7.jpg',
       title: 'Silk Heritage',
       caption: 'Timeless Collection',
-      span: 3,
-      mobileSpan: 1,
-      aspectRatio: '3/4',
+      gCol: 'span 3',
+      gRow: 'span 2',
+      gColMd: 'span 4',
+      gRowMd: 'span 2',
     },
     {
       src: '/images/ethnic/ethnic33.jpg',
       title: 'Royal Drapes',
       caption: 'Traditional Artistry',
-      span: 4,
-      mobileSpan: 1,
-      aspectRatio: '4/5',
+      gCol: 'span 4',
+      gRow: 'span 2',
+      gColMd: 'span 4',
+      gRowMd: 'span 2',
     },
     {
       src: '/images/ethnic/ethnic41.jpg',
       title: 'Modern Grace',
       caption: 'Contemporary Fusion',
-      span: 5,
-      mobileSpan: 1,
-      aspectRatio: '1/1',
+      gCol: 'span 5',
+      gRow: 'span 2',
+      gColMd: 'span 4',
+      gRowMd: 'span 2',
     },
     {
       src: '/images/ethnic/ethnic63.jpg',
       title: 'Bridal Dreams',
       caption: 'Wedding Collection',
-      span: 6,
-      mobileSpan: 2,
-      aspectRatio: '16/9',
+      gCol: 'span 6',
+      gRow: 'span 3',
+      gColMd: 'span 8',
+      gRowMd: 'span 2',
     },
     {
       src: '/images/ethnic/ethnic61.jpg',
       title: 'Evening Elegance',
       caption: 'Luxury Collection',
-      span: 6,
-      mobileSpan: 1,
-      aspectRatio: '3/4',
+      gCol: 'span 6',
+      gRow: 'span 2',
+      gColMd: 'span 8',
+      gRowMd: 'span 2',
+    },
+    {
+      src: '/images/ethnic/ethnic2.jpg',
+      title: 'Golden Threads',
+      caption: 'Artisan Embroidery',
+      gCol: 'span 4',
+      gRow: 'span 2',
+      gColMd: 'span 4',
+      gRowMd: 'span 2',
+    },
+    {
+      src: '/images/ethnic/ethnic63.jpg',
+      title: 'Chic Comfort',
+      caption: 'Urban Fusion',
+      gCol: 'span 4',
+      gRow: 'span 1',
+      gColMd: 'span 4',
+      gRowMd: 'span 1',
+    },
+    {
+      src: '/images/ethnic/ethnic1.jpg',
+      title: 'Vibrant Aura',
+      caption: 'Festive Collection',
+      gCol: 'span 4',
+      gRow: 'span 2',
+      gColMd: 'span 4',
+      gRowMd: 'span 2',
     },
   ]
 
@@ -509,7 +542,8 @@ const EditorialShowcase = () => {
       <ContentPanel>
         <Container>
           {/* Gallery Section */}
-          <GallerySection ref={galleryRef}>
+          <BentoGallery />
+          {/* <GallerySection ref={galleryRef}>
             <SectionTitle
               initial={{ opacity: 0 }}
               animate={galleryInView ? { opacity: 0.6 } : {}}
@@ -540,10 +574,10 @@ const EditorialShowcase = () => {
                 </GalleryItem>
               ))}
             </Gallery>
-          </GallerySection>
+          </GallerySection> */}
 
           {/* Divider Section */}
-          <DividerSection ref={dividerRef}>
+          {/* <DividerSection ref={dividerRef}>
             <DividerText
               initial={{ opacity: 0, y: 20 }}
               animate={dividerInView ? { opacity: 1, y: 0 } : {}}
@@ -552,7 +586,7 @@ const EditorialShowcase = () => {
               Every garment is a masterpiece of craftsmanship, honoring heritage while embracing
               contemporary elegance
             </DividerText>
-          </DividerSection>
+          </DividerSection> */}
 
           {/* Horizontal Scroll Section */}
           <HorizontalSection ref={scrollRef}>
@@ -592,7 +626,7 @@ const EditorialShowcase = () => {
           </HorizontalSection>
 
           {/* Final CTA */}
-          <CTASection
+          {/* <CTASection
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: '-100px' }}
@@ -602,7 +636,7 @@ const EditorialShowcase = () => {
             <CTAButton href="/collections" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               Explore Collections
             </CTAButton>
-          </CTASection>
+          </CTASection> */}
         </Container>
       </ContentPanel>
     </Section>

@@ -9,6 +9,9 @@ import PageTransition from '@/utils/PageTransition'
 import { useNavigate } from 'react-router-dom'
 import EditorialShowcase from './EditorialShowcase'
 import VideoGridSection from '@/components/VideoGridSection'
+import QuoteDivider from '@/components/common/QuoteDivider'
+import CallToAction from '@/components/common/CallToAction'
+import BentoGallery from '@/components/common/BentoGallery'
 
 // Component Functions
 const HeroSection = () => {
@@ -439,10 +442,12 @@ const Test = () => {
       {/* <FloatingNavbar /> */}
       <FloatingNavbarWrapper />
       <HeroSection />
-      <FeaturedCollection />
+      <QuoteDivider />
+      {/* <FeaturedCollection /> */}
       <EditorialShowcase />
       <VideoGridSection />
-      <ProductCarousel />
+      {/* <ProductCarousel /> */}
+      <CallToAction />
       <BrandStory />
 
       {/* <ProductsGallery /> */}
