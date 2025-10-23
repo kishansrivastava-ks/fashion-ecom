@@ -217,7 +217,7 @@ const galleryImages = [
     gRowXs: 'span 4',
   },
   {
-    src: '/images/ethnic/ethnic2.jpg',
+    src: '/images/ethnic/ethnic61.jpg',
     title: 'Royal Drapes',
     caption: 'Traditional Artistry',
     gCol: 'span 5',
@@ -230,7 +230,7 @@ const galleryImages = [
     gRowXs: 'span 4',
   },
   {
-    src: '/images/ethnic/ethnic33.jpg',
+    src: '/images/ethnic/eth004.jpg',
     title: 'Modern Grace',
     caption: 'Contemporary Fusion',
     gCol: 'span 3',
@@ -243,7 +243,7 @@ const galleryImages = [
     gRowXs: 'span 4',
   },
   {
-    src: '/images/ethnic/ethnic34.jpg',
+    src: '/images/ethnic/eth003.jpg',
     title: 'Bridal Dreams',
     caption: 'Wedding Collection',
     gCol: 'span 5',
@@ -256,7 +256,7 @@ const galleryImages = [
     gRowXs: 'span 4',
   },
   {
-    src: '/images/ethnic/ethnic34.jpg',
+    src: '/images/ethnic/eth002.jpg',
     title: 'Evening Elegance',
     caption: 'Luxury Collection',
     gCol: 'span 4',
@@ -269,7 +269,7 @@ const galleryImages = [
     gRowXs: 'span 4',
   },
   {
-    src: '/images/ethnic/ethnic62.jpg',
+    src: '/images/ethnic/eth001.jpg',
     title: 'Golden Threads',
     caption: 'Artisan Embroidery',
     gCol: 'span 3',
