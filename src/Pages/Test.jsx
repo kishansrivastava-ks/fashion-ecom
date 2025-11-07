@@ -42,7 +42,7 @@ const HeroSection = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          LUXE
+          SHASHEE
         </HeroTitle>
         <HeroSubtitle
           initial={{ y: 50, opacity: 0 }}
@@ -445,7 +445,7 @@ const Test = () => {
       <QuoteDivider />
       {/* <FeaturedCollection /> */}
       <EditorialShowcase />
-      <VideoGridSection />
+      {/* <VideoGridSection /> */}
       {/* <ProductCarousel /> */}
       <CallToAction />
       <BrandStory />

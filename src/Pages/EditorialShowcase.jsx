@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import styled from 'styled-components'
 import BentoGallery from '@/components/common/BentoGallery'
+import VideoGridSection from '@/components/VideoGridSection'
 
 // Main Section Container
 const Section = styled.section`
@@ -393,97 +394,118 @@ const CTAButton = styled(motion.a)`
 // Component
 const EditorialShowcase = () => {
   const sectionRef = useRef(null)
-  const heroRef = useRef(null)
-  const galleryRef = useRef(null)
-  const dividerRef = useRef(null)
+  // const heroRef = useRef(null)
+  // const galleryRef = useRef(null)
+  // const dividerRef = useRef(null)
   const scrollRef = useRef(null)
 
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  })
+  // const { scrollYProgress } = useScroll({
+  //   target: heroRef,
+  //   offset: ['start start', 'end start'],
+  // })
 
-  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.1])
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.3])
+  // const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.1])
+  // const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.3])
 
-  const galleryInView = useInView(galleryRef, { once: true, margin: '-100px' })
-  const dividerInView = useInView(dividerRef, { once: false, margin: '-100px' })
+  // const galleryInView = useInView(galleryRef, { once: true, margin: '-100px' })
+  // const dividerInView = useInView(dividerRef, { once: false, margin: '-100px' })
   const scrollInView = useInView(scrollRef, { once: true, margin: '-100px' })
 
-  const galleryImages = [
-    {
-      src: '/images/ethnic/ethnic7.jpg',
-      title: 'Silk Heritage',
-      caption: 'Timeless Collection',
-      gCol: 'span 3',
-      gRow: 'span 2',
-      gColMd: 'span 4',
-      gRowMd: 'span 2',
-    },
-    {
-      src: '/images/ethnic/ethnic33.jpg',
-      title: 'Royal Drapes',
-      caption: 'Traditional Artistry',
-      gCol: 'span 4',
-      gRow: 'span 2',
-      gColMd: 'span 4',
-      gRowMd: 'span 2',
-    },
-    {
-      src: '/images/ethnic/ethnic41.jpg',
-      title: 'Modern Grace',
-      caption: 'Contemporary Fusion',
-      gCol: 'span 5',
-      gRow: 'span 2',
-      gColMd: 'span 4',
-      gRowMd: 'span 2',
-    },
-    {
-      src: '/images/ethnic/ethnic63.jpg',
-      title: 'Bridal Dreams',
-      caption: 'Wedding Collection',
-      gCol: 'span 6',
-      gRow: 'span 3',
-      gColMd: 'span 8',
-      gRowMd: 'span 2',
-    },
-    {
-      src: '/images/ethnic/ethnic61.jpg',
-      title: 'Evening Elegance',
-      caption: 'Luxury Collection',
-      gCol: 'span 6',
-      gRow: 'span 2',
-      gColMd: 'span 8',
-      gRowMd: 'span 2',
-    },
-    {
-      src: '/images/ethnic/ethnic2.jpg',
-      title: 'Golden Threads',
-      caption: 'Artisan Embroidery',
-      gCol: 'span 4',
-      gRow: 'span 2',
-      gColMd: 'span 4',
-      gRowMd: 'span 2',
-    },
-    {
-      src: '/images/ethnic/ethnic63.jpg',
-      title: 'Chic Comfort',
-      caption: 'Urban Fusion',
-      gCol: 'span 4',
-      gRow: 'span 1',
-      gColMd: 'span 4',
-      gRowMd: 'span 1',
-    },
-    {
-      src: '/images/ethnic/ethnic1.jpg',
-      title: 'Vibrant Aura',
-      caption: 'Festive Collection',
-      gCol: 'span 4',
-      gRow: 'span 2',
-      gColMd: 'span 4',
-      gRowMd: 'span 2',
-    },
-  ]
+  // Auto horizontal scroll logic
+  React.useEffect(() => {
+    const scrollWrapper = scrollRef.current
+    if (!scrollWrapper) return
+
+    const scrollInterval = setInterval(() => {
+      // Move one full item width (assuming all items have the same width)
+      const itemWidth = scrollWrapper.querySelector('div > div')?.offsetWidth || 300
+      const maxScroll = scrollWrapper.scrollWidth - scrollWrapper.clientWidth
+
+      // If reached end, reset to start
+      if (scrollWrapper.scrollLeft + itemWidth >= maxScroll) {
+        scrollWrapper.scrollTo({ left: 0, behavior: 'instant' })
+      } else {
+        scrollWrapper.scrollBy({ left: itemWidth, behavior: 'smooth' })
+      }
+    }, 2000) // every 2 seconds
+
+    return () => clearInterval(scrollInterval)
+  }, [])
+
+  // const galleryImages = [
+  //   {
+  //     src: '/images/ethnic/ethnic7.jpg',
+  //     title: 'Silk Heritage',
+  //     caption: 'Timeless Collection',
+  //     gCol: 'span 3',
+  //     gRow: 'span 2',
+  //     gColMd: 'span 4',
+  //     gRowMd: 'span 2',
+  //   },
+  //   {
+  //     src: '/images/ethnic/ethnic33.jpg',
+  //     title: 'Royal Drapes',
+  //     caption: 'Traditional Artistry',
+  //     gCol: 'span 4',
+  //     gRow: 'span 2',
+  //     gColMd: 'span 4',
+  //     gRowMd: 'span 2',
+  //   },
+  //   {
+  //     src: '/images/ethnic/ethnic41.jpg',
+  //     title: 'Modern Grace',
+  //     caption: 'Contemporary Fusion',
+  //     gCol: 'span 5',
+  //     gRow: 'span 2',
+  //     gColMd: 'span 4',
+  //     gRowMd: 'span 2',
+  //   },
+  //   {
+  //     src: '/images/ethnic/ethnic63.jpg',
+  //     title: 'Bridal Dreams',
+  //     caption: 'Wedding Collection',
+  //     gCol: 'span 6',
+  //     gRow: 'span 3',
+  //     gColMd: 'span 8',
+  //     gRowMd: 'span 2',
+  //   },
+  //   {
+  //     src: '/images/ethnic/ethnic61.jpg',
+  //     title: 'Evening Elegance',
+  //     caption: 'Luxury Collection',
+  //     gCol: 'span 6',
+  //     gRow: 'span 2',
+  //     gColMd: 'span 8',
+  //     gRowMd: 'span 2',
+  //   },
+  //   {
+  //     src: '/images/ethnic/ethnic2.jpg',
+  //     title: 'Golden Threads',
+  //     caption: 'Artisan Embroidery',
+  //     gCol: 'span 4',
+  //     gRow: 'span 2',
+  //     gColMd: 'span 4',
+  //     gRowMd: 'span 2',
+  //   },
+  //   {
+  //     src: '/images/ethnic/ethnic63.jpg',
+  //     title: 'Chic Comfort',
+  //     caption: 'Urban Fusion',
+  //     gCol: 'span 4',
+  //     gRow: 'span 1',
+  //     gColMd: 'span 4',
+  //     gRowMd: 'span 1',
+  //   },
+  //   {
+  //     src: '/images/ethnic/ethnic1.jpg',
+  //     title: 'Vibrant Aura',
+  //     caption: 'Festive Collection',
+  //     gCol: 'span 4',
+  //     gRow: 'span 2',
+  //     gColMd: 'span 4',
+  //     gRowMd: 'span 2',
+  //   },
+  // ]
 
   const scrollImages = [
     {
@@ -515,10 +537,11 @@ const EditorialShowcase = () => {
 
   return (
     <Section ref={sectionRef}>
+      <VideoGridSection />
       {/* Hero Panel */}
-      <HeroPanel ref={heroRef}>
-        <HeroImage style={{ scale: heroScale, opacity: heroOpacity }} />
-        <HeroContent>
+      {/* <HeroPanel ref={heroRef}> */}
+      {/* <HeroImage style={{ scale: heroScale, opacity: heroOpacity }} /> */}
+      {/* <HeroContent>
           <HeroTitle
             initial={{ y: 80, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -535,58 +558,14 @@ const EditorialShowcase = () => {
           >
             Where Tradition Meets Modernity
           </HeroSubtitle>
-        </HeroContent>
-      </HeroPanel>
+        </HeroContent> */}
+      {/* </HeroPanel> */}
 
       {/* Content Panel */}
       <ContentPanel>
         <Container>
           {/* Gallery Section */}
           <BentoGallery />
-          {/* <GallerySection ref={galleryRef}>
-            <SectionTitle
-              initial={{ opacity: 0 }}
-              animate={galleryInView ? { opacity: 0.6 } : {}}
-              transition={{ duration: 0.8 }}
-            >
-              Featured Collections
-            </SectionTitle>
-            <Gallery>
-              {galleryImages.map((item, index) => (
-                <GalleryItem
-                  key={index}
-                  span={item.span}
-                  mobileSpan={item.mobileSpan}
-                  aspectRatio={item.aspectRatio}
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={galleryInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{
-                    duration: 0.8,
-                    delay: index * 0.1,
-                    ease: [0.4, 0, 0.2, 1],
-                  }}
-                >
-                  <GalleryImage src={item.src} alt={item.title} />
-                  <ImageCaption>
-                    <CaptionTitle>{item.title}</CaptionTitle>
-                    <CaptionSubtext>{item.caption}</CaptionSubtext>
-                  </ImageCaption>
-                </GalleryItem>
-              ))}
-            </Gallery>
-          </GallerySection> */}
-
-          {/* Divider Section */}
-          {/* <DividerSection ref={dividerRef}>
-            <DividerText
-              initial={{ opacity: 0, y: 20 }}
-              animate={dividerInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.9, ease: [0.4, 0, 0.2, 1] }}
-            >
-              Every garment is a masterpiece of craftsmanship, honoring heritage while embracing
-              contemporary elegance
-            </DividerText>
-          </DividerSection> */}
 
           {/* Horizontal Scroll Section */}
           <HorizontalSection ref={scrollRef}>
@@ -624,19 +603,6 @@ const EditorialShowcase = () => {
               </ScrollContainer>
             </ScrollWrapper>
           </HorizontalSection>
-
-          {/* Final CTA */}
-          {/* <CTASection
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.8 }}
-          >
-            <CTATitle>Discover Your Style</CTATitle>
-            <CTAButton href="/collections" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              Explore Collections
-            </CTAButton>
-          </CTASection> */}
         </Container>
       </ContentPanel>
     </Section>

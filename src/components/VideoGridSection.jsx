@@ -202,10 +202,10 @@ const VideoGridSection = () => {
   ]
 
   const posterImages = [
-    '/images/',
-    'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&h=1000&fit=crop',
-    'https://images.unsplash.com/photo-1583391733981-21a67a2f9a38?w=800&h=1000&fit=crop',
-    'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=800&h=1000&fit=crop',
+    '/images/ethnic/eth004.jpg',
+    '/images/ethnic/ethnic61.jpg',
+    '/images/ethnic/eth003.jpg',
+    '/images/ethnic/ethnic34.jpg',
   ]
 
   const containerVariants = {
@@ -269,7 +269,7 @@ const VideoGridSection = () => {
                 setLoadedVideos((prev) => ({ ...prev, [index]: true }))
               }}
             >
-              <source src={category.video} type="video/mp4" />
+              {/* <source src={category.video} type="video/mp4" /> */}
             </Video>
 
             <VideoContent>

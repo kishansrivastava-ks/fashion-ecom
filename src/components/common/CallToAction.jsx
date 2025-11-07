@@ -5,7 +5,7 @@ import styled from 'styled-components'
 // Styled Components for the CTA Section
 const CTASection = styled(motion.div)`
   text-align: center;
-  padding: 15rem 2rem;
+  padding: 10rem 2rem;
   background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
   margin: 0 -5rem;
 

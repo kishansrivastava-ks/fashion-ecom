@@ -474,7 +474,7 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <BrandLogo>LUXE</BrandLogo>
+            <BrandLogo>SHASHEE</BrandLogo>
             <BrandTagline>
               Redefining modern fashion through the perfect blend of traditional craftsmanship and
               contemporary design. Where every piece tells a story of elegance and sophistication.
@@ -596,18 +596,18 @@ const Footer = () => {
               <ArrowRight size={14} />
               Shipping Info
             </FooterLink>
-            <FooterLink href="/returns">
+            {/* <FooterLink href="/returns">
               <ArrowRight size={14} />
               Returns & Exchange
-            </FooterLink>
-            <FooterLink href="/care-guide">
+            </FooterLink> */}
+            {/* <FooterLink href="/care-guide">
               <ArrowRight size={14} />
               Care Guide
-            </FooterLink>
-            <FooterLink href="/wholesale">
+            </FooterLink> */}
+            {/* <FooterLink href="/wholesale">
               <ArrowRight size={14} />
               Wholesale Inquiry
-            </FooterLink>
+            </FooterLink> */}
             <FooterLink href="/reviews">
               <Star size={14} />
               Customer Reviews
@@ -642,7 +642,7 @@ const Footer = () => {
                 <ContactIcon>
                   <Mail size={16} />
                 </ContactIcon>
-                <div>hello@luxefashion.com</div>
+                <div>hello@shasheefashion.com</div>
               </ContactItem>
               <ContactItem>
                 <ContactIcon>
@@ -724,7 +724,7 @@ const Footer = () => {
       <BottomSection>
         <BottomContainer>
           <Copyright>
-            © {currentYear} Luxe Fashion. All rights reserved. Designed with ❤️ in India
+            © {currentYear} SHASHEE Fashion. All rights reserved. Designed with ❤️ in India
           </Copyright>
 
           <LegalLinks>

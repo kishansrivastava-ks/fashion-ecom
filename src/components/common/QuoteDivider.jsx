@@ -5,7 +5,7 @@ import styled from 'styled-components'
 // Styled Components
 const DividerSection = styled.div`
   margin: 5rem 0;
-  padding: 8rem 0;
+  padding: 4rem 0;
   text-align: center;
   /* border-top: 1px solid rgba(0, 0, 0, 0.08); */
   /* border-bottom: 1px solid rgba(0, 0, 0, 0.08); */

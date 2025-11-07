@@ -9,7 +9,7 @@ const NavContainer = styled(motion.nav)`
   position: fixed;
   /* position: absolute; */
   top: 2rem;
-  left: 20%;
+  left: 15%;
   transform: translateX(-50%);
 
   z-index: 1000;
@@ -310,7 +310,7 @@ const FloatingNavbar = () => {
         <NavList>
           {/* Brand */}
           <Brand whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            LUXE
+            SHASHEE
           </Brand>
 
           {/* Desktop Navigation */}
