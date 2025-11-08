@@ -5,7 +5,7 @@ import styled from 'styled-components'
 // Styled Components
 const DividerSection = styled.div`
   margin: 5rem 0;
-  padding: 4rem 0;
+  padding: 1rem 0;
   text-align: center;
   /* border-top: 1px solid rgba(0, 0, 0, 0.08); */
   /* border-bottom: 1px solid rgba(0, 0, 0, 0.08); */
@@ -21,6 +21,7 @@ const DividerText = styled(motion.p)`
   font-weight: 300;
   line-height: 1.6;
   letter-spacing: -0.01em;
+  letter-spacing: 0.6rem;
   max-width: 900px;
   margin: 0 auto;
   /* border: 2px solid red; */
@@ -40,8 +41,7 @@ const QuoteDivider = ({ children }) => {
         animate={dividerInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.9, ease: [0.4, 0, 0.2, 1] }}
       >
-        Every garment is a masterpiece of craftsmanship, honoring heritage while embracing
-        contemporary elegance
+        A/W Collection 2025-26
       </DividerText>
     </DividerSection>
   )

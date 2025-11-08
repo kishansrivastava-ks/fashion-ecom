@@ -9,7 +9,7 @@ const NavContainer = styled(motion.nav)`
   position: fixed;
   /* position: absolute; */
   top: 2rem;
-  left: 15%;
+  left: 20%;
   transform: translateX(-50%);
 
   z-index: 1000;
@@ -276,7 +276,7 @@ const FloatingNavbar = () => {
   const navItems = [
     { name: 'Home', href: '/home' },
     { name: 'Collections', href: '#collections', hasDropdown: true },
-    { name: 'About', href: '/about' },
+    // { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
   ]
 

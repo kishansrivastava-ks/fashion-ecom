@@ -24,7 +24,7 @@ const HeroImage = styled(motion.div)`
   width: 100%;
   height: 100%;
   background: linear-gradient(45deg, #1a1a1a 0%, #2d2d2d 100%);
-  background-image: url('https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1920&h=1080&fit=crop&crop=center');
+  background-image: url('/images/ethnic/eth001.jpg');
   background-size: cover;
   background-position: center;
   z-index: 1;
@@ -415,13 +415,16 @@ const ValueText = styled.p`
 const CTASection = styled.section`
   padding: 8rem 2rem;
   background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  background: white;
   text-align: center;
   color: white;
+  color: black;
 `
 
 const CTAContent = styled(motion.div)`
   max-width: 600px;
   margin: 0 auto;
+  color: black;
 `
 
 const CTATitle = styled(motion.h2)`
@@ -431,6 +434,7 @@ const CTATitle = styled(motion.h2)`
   line-height: 1.2;
   margin: 0 0 2rem 0;
   color: white;
+  color: black;
 `
 
 const CTAText = styled(motion.p)`
@@ -440,12 +444,14 @@ const CTAText = styled(motion.p)`
   margin: 0 0 3rem 0;
   opacity: 0.9;
   color: white;
+  color: black;
 `
 
 const CTAButtons = styled(motion.div)`
   display: flex;
   gap: 2rem;
   justify-content: center;
+  color: black;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -455,7 +461,7 @@ const CTAButtons = styled(motion.div)`
 
 const CTAButton = styled(motion.button)`
   background: ${(props) => (props.primary ? 'white' : 'transparent')};
-  border: 1px solid white;
+  border: 1px solid black;
   color: ${(props) => (props.primary ? 'black' : 'white')};
   padding: 1rem 2.5rem;
   font-size: 1rem;
@@ -464,10 +470,12 @@ const CTAButton = styled(motion.button)`
   cursor: pointer;
   transition: all 0.3s ease;
   min-width: 200px;
+  color: black;
 
   &:hover {
-    background: ${(props) => (props.primary ? '#f0f0f0' : 'white')};
-    color: black;
+    /* background: ${(props) => (props.primary ? '#000' : 'white')}; */
+    background: black;
+    color: white;
   }
 `
 
@@ -811,9 +819,9 @@ const AboutUs = () => {
       <FloatingNavbar />
       <HeroSection />
       <FounderStory />
-      <VisionMission />
-      <JourneyTimeline />
-      <OurValues />
+      {/* <VisionMission /> */}
+      {/* <JourneyTimeline /> */}
+      {/* <OurValues /> */}
       <CallToAction />
       <Footer />
     </PageTransition>

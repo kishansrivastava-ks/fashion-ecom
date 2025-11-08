@@ -447,7 +447,7 @@ const Test = () => {
       <EditorialShowcase />
       {/* <VideoGridSection /> */}
       {/* <ProductCarousel /> */}
-      <CallToAction />
+      {/* <CallToAction /> */}
       <BrandStory />
 
       {/* <ProductsGallery /> */}
