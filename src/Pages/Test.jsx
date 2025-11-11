@@ -12,6 +12,7 @@ import VideoGridSection from '@/components/VideoGridSection'
 import QuoteDivider from '@/components/common/QuoteDivider'
 import CallToAction from '@/components/common/CallToAction'
 import BentoGallery from '@/components/common/BentoGallery'
+import Banner from '@/components/common/Banner'
 
 // Component Functions
 const HeroSection = () => {
@@ -42,7 +43,7 @@ const HeroSection = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          SHASHEE
+          {/* SHAASHEE */}
         </HeroTitle>
         <HeroSubtitle
           initial={{ y: 50, opacity: 0 }}
@@ -439,6 +440,7 @@ const FloatingNavbarWrapper = () => {
 const Test = () => {
   return (
     <PageTransition>
+      <Banner />
       {/* <FloatingNavbar /> */}
       <FloatingNavbarWrapper />
       <HeroSection />

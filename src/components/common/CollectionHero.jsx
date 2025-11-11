@@ -61,10 +61,12 @@ const HeroContent = styled.div`
   color: white;
   max-width: 900px;
   padding: 0 2rem;
+  margin-top: auto;
+  margin-bottom: 5rem;
 `
 
-const HeroTitle = styled(motion.h1)`
-  font-size: clamp(3.5rem, 7vw, 7rem);
+const HeroTitle = styled(motion.h3)`
+  font-size: clamp(2rem, 3vw, 3rem);
   font-weight: 100;
   letter-spacing: 0.5rem;
   line-height: 0.9;
@@ -74,7 +76,7 @@ const HeroTitle = styled(motion.h1)`
 `
 
 const HeroSubtitle = styled(motion.p)`
-  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-size: clamp(1rem, 1vw, 1rem);
   font-weight: 300;
   letter-spacing: 0.15rem;
   margin: 0;
