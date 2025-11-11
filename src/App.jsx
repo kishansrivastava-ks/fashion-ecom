@@ -18,7 +18,10 @@ import Checkout from './Pages/Checkout'
 import Login from './Pages/Auth/Login'
 import Signup from './Pages/Auth/Signup'
 import OTPVerification from './Pages/Auth/OTPVerification'
-import EthnicCollections from './Pages/EthnicCollections'
+import EthnicCollections from './Pages/Collections/EthnicCollection'
+import WesternCollections from './Pages/Collections/WesternCollections'
+import BridalCollections from './Pages/Collections/BridalCollections'
+import CustomCollections from './Pages/Collections/CustomCollections'
 
 function App() {
   return (
@@ -42,7 +45,11 @@ function App() {
             <Route path="checkout" element={<Checkout />} />
 
             <Route path="products/ethnic/:slug" element={<ProductDetail />} />
+            {/* <Route path="collections/ethnic" element={<EthnicCollections />} /> */}
             <Route path="collections/ethnic" element={<EthnicCollections />} />
+            <Route path="collections/western" element={<WesternCollections />} />
+            <Route path="collections/bridal" element={<BridalCollections />} />
+            <Route path="collections/custom" element={<CustomCollections />} />
 
             {/* auth pages */}
             <Route path="login" element={<Login />} />

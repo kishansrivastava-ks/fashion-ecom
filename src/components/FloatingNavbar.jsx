@@ -34,7 +34,7 @@ const NavContainer = styled(motion.nav)`
 const NavList = styled.ul`
   display: flex;
   align-items: center;
-  gap: 2.5rem;
+  gap: 2rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -310,7 +310,7 @@ const FloatingNavbar = () => {
         <NavList>
           {/* Brand */}
           <Brand whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            SHASHEE
+            SHAASHEE
           </Brand>
 
           {/* Desktop Navigation */}

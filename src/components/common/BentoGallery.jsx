@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 // Section Container
 const BentoSection = styled.section`
-  margin-bottom: 15rem;
+  margin-bottom: 6rem;
   padding: 0 2rem;
   background: #fff;
 
@@ -25,7 +25,7 @@ const SectionTitle = styled.h2`
   font-weight: 300;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  margin-bottom: 6rem;
+  margin-bottom: 2rem;
   color: #000;
   opacity: 0.6;
   text-align: left;

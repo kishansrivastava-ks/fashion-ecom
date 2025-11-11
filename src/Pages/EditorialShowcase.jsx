@@ -66,7 +66,7 @@ const HeroSubtitle = styled(motion.p)`
 const ContentPanel = styled.div`
   position: relative;
   background: #fff;
-  padding: 6rem 0;
+  padding: 3rem 0;
 
   @media (max-width: 768px) {
     padding: 8rem 0;
@@ -219,7 +219,7 @@ const DividerText = styled(motion.p)`
 // Horizontal Scroll Section
 const HorizontalSection = styled.div`
   position: relative;
-  margin-bottom: 5rem;
+  margin-bottom: 2rem;
   padding: 0 5rem;
 
   @media (max-width: 768px) {
