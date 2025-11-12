@@ -1,4 +1,6 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import productsData from '../data/data.json'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Heart,
@@ -19,39 +21,68 @@ import PageTransition from '@/utils/PageTransition'
 
 // Component
 const ProductDetail = () => {
+  const { slug } = useParams()
+  const navigate = useNavigate()
   const [selectedImage, setSelectedImage] = useState(0)
-  const [selectedSize, setSelectedSize] = useState('M')
-  const [selectedColor, setSelectedColor] = useState('#000000')
+  const [selectedSize, setSelectedSize] = useState('')
+  const [selectedColor, setSelectedColor] = useState('')
   const [quantity, setQuantity] = useState(1)
   const [isWishlisted, setIsWishlisted] = useState(false)
   const [activeTab, setActiveTab] = useState('description')
   const [showZoom, setShowZoom] = useState(false)
+  const [product, setProduct] = useState(null)
+  const [loading, setLoading] = useState(true)
 
-  const product = {
-    id: 1,
-    name: 'Elegant Silk Saree',
-    category: 'Ethnic Wear',
-    currentPrice: 8999,
-    originalPrice: 12999,
-    discount: 31,
-    rating: 4.5,
-    reviews: 124,
-    inStock: true,
-    images: [
-      '/images/saree2.jpg',
-      '/images/saree3.jpg',
-      '/images/saree4.jpg',
-      'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600&h=800&fit=crop',
-    ],
-    description:
-      'Indulge in timeless elegance with our exquisite handwoven silk saree. This masterpiece features intricate traditional motifs and a stunning pallu design that showcases the rich heritage of Indian craftsmanship. Perfect for weddings, festivals, and special occasions.',
-    sizes: ['S', 'M', 'L', 'XL'],
-    colors: [
-      { name: 'Black', value: '#000000' },
-      { name: 'Maroon', value: '#800000' },
-      { name: 'Navy', value: '#000080' },
-      { name: 'Emerald', value: '#50C878' },
-    ],
+  // Fetch product data based on slug
+  useEffect(() => {
+    const foundProduct = productsData.products.find((p) => p.slug === slug)
+
+    if (foundProduct) {
+      setProduct(foundProduct)
+      // Set default selections
+      if (foundProduct.sizes && foundProduct.sizes.length > 0) {
+        setSelectedSize(foundProduct.sizes[0])
+      }
+      if (foundProduct.colors && foundProduct.colors.length > 0) {
+        const firstAvailableColor = foundProduct.colors.find((c) => c.inStock)
+        setSelectedColor(
+          firstAvailableColor ? firstAvailableColor.value : foundProduct.colors[0].value
+        )
+      }
+      setLoading(false)
+    } else {
+      // Product not found, redirect to home or show 404
+      setLoading(false)
+      // Optionally: navigate('/404') or navigate('/')
+    }
+  }, [slug])
+
+  // Add loading state
+  if (loading) {
+    return (
+      <PageTransition>
+        <Container>
+          <div style={{ textAlign: 'center', padding: '100px 0' }}>
+            <h2>Loading...</h2>
+          </div>
+        </Container>
+      </PageTransition>
+    )
+  }
+
+  // Product not found
+  if (!product) {
+    return (
+      <PageTransition>
+        <Container>
+          <div style={{ textAlign: 'center', padding: '100px 0' }}>
+            <h2>Product Not Found</h2>
+            <p>The product you're looking for doesn't exist.</p>
+            <button onClick={() => navigate('/')}>Go to Home</button>
+          </div>
+        </Container>
+      </PageTransition>
+    )
   }
 
   const handleQuantityChange = (change) => {
@@ -81,7 +112,15 @@ const ProductDetail = () => {
             </ThumbnailList>
 
             <MainImageContainer onClick={() => setShowZoom(true)}>
-              <ImageBadge>NEW ARRIVAL</ImageBadge>
+              {product.badges && product.badges.length > 0 && (
+                <ImageBadge>
+                  {product.badges[0].toUpperCase() === 'NEW'
+                    ? 'NEW ARRIVAL'
+                    : product.badges[0].toUpperCase() === 'BESTSELLER'
+                      ? 'BESTSELLER'
+                      : product.badges[0].toUpperCase()}
+                </ImageBadge>
+              )}
               <MainImage
                 src={product.images[selectedImage]}
                 alt={product.name}
@@ -95,8 +134,14 @@ const ProductDetail = () => {
           {/* Product Info */}
           <ProductInfo>
             <Breadcrumb>
-              <a href="/">Home</a> / <a href="/ethnic">Ethnic Wear</a> /{' '}
-              <a href="/sarees">Sarees</a>
+              <a href="/">Home</a> /{' '}
+              <a href={`/collections/${product.category}`}>
+                {product.category.charAt(0).toUpperCase() + product.category.slice(1)}
+              </a>{' '}
+              /{' '}
+              <a href={`/${product.category}/${product.subCategory}`}>
+                {product.subCategory.charAt(0).toUpperCase() + product.subCategory.slice(1)}
+              </a>
             </Breadcrumb>
 
             <ProductTitle>{product.name}</ProductTitle>
@@ -118,10 +163,18 @@ const ProductDetail = () => {
             </Rating>
 
             <PriceContainer>
-              <CurrentPrice>₹{product.currentPrice.toLocaleString()}</CurrentPrice>
+              <CurrentPrice>₹{product.price.toLocaleString()}</CurrentPrice>
               <OriginalPrice>₹{product.originalPrice.toLocaleString()}</OriginalPrice>
               <Discount>{product.discount}% OFF</Discount>
             </PriceContainer>
+
+            {product.inStock ? (
+              <StockStatus inStock={true}>
+                ✓ In Stock ({product.stockQuantity} available)
+              </StockStatus>
+            ) : (
+              <StockStatus inStock={false}>Out of Stock</StockStatus>
+            )}
 
             <Description>{product.description}</Description>
 
@@ -156,9 +209,14 @@ const ProductDetail = () => {
                     key={color.value}
                     color={color.value}
                     selected={selectedColor === color.value}
-                    onClick={() => setSelectedColor(color.value)}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
+                    onClick={() => color.inStock && setSelectedColor(color.value)}
+                    disabled={!color.inStock}
+                    whileHover={color.inStock ? { scale: 1.1 } : {}}
+                    whileTap={color.inStock ? { scale: 0.95 } : {}}
+                    style={{
+                      opacity: color.inStock ? 1 : 0.4,
+                      cursor: color.inStock ? 'pointer' : 'not-allowed',
+                    }}
                   />
                 ))}
               </ColorOptions>
@@ -288,29 +346,41 @@ const ProductDetail = () => {
                 <h3>Product Specifications</h3>
                 <ul>
                   <li>
-                    <strong>Fabric:</strong> Pure Silk
+                    <strong>Fabric:</strong> {product.fabric}
                   </li>
                   <li>
-                    <strong>Work:</strong> Traditional Zari Weaving
+                    <strong>Work:</strong> {product.work}
                   </li>
                   <li>
-                    <strong>Length:</strong> 5.5 meters (saree) + 0.8 meters (blouse piece)
+                    <strong>Length:</strong> {product.length}
                   </li>
                   <li>
-                    <strong>Occasion:</strong> Wedding, Festival, Party
+                    <strong>Occasion:</strong> {product.occasion}
                   </li>
                   <li>
-                    <strong>Pattern:</strong> Woven Design
+                    <strong>Pattern:</strong> {product.pattern}
                   </li>
                   <li>
-                    <strong>Wash Care:</strong> Dry Clean Only
+                    <strong>Wash Care:</strong> {product.careInstructions}
                   </li>
                   <li>
                     <strong>Origin:</strong> Handcrafted in India
                   </li>
                   <li>
-                    <strong>SKU:</strong> LUXE-SAR-001
+                    <strong>SKU:</strong> {product.sku}
                   </li>
+                  {product.features && product.features.length > 0 && (
+                    <>
+                      <li style={{ marginTop: '20px' }}>
+                        <strong>Key Features:</strong>
+                      </li>
+                      {product.features.map((feature, index) => (
+                        <li key={index} style={{ marginLeft: '20px' }}>
+                          • {feature}
+                        </li>
+                      ))}
+                    </>
+                  )}
                 </ul>
               </TabContent>
             )}
@@ -324,11 +394,11 @@ const ProductDetail = () => {
               >
                 <h3>Care Instructions</h3>
                 <p>
-                  To maintain the beauty and longevity of your silk saree, please follow these care
-                  guidelines:
+                  To maintain the beauty and longevity of your {product.name.toLowerCase()}, please
+                  follow these care guidelines:
                 </p>
                 <ul>
-                  <li>Dry clean only - Do not wash at home</li>
+                  <li>{product.careInstructions}</li>
                   <li>Store in a cool, dry place away from direct sunlight</li>
                   <li>Avoid contact with perfumes, deodorants, and other chemicals</li>
                   <li>Iron on low heat with a cloth barrier</li>
@@ -337,8 +407,8 @@ const ProductDetail = () => {
                   <li>Keep away from sharp objects that may snag the fabric</li>
                 </ul>
                 <p>
-                  <strong>Note:</strong> Proper care will ensure your saree remains beautiful for
-                  generations to come.
+                  <strong>Note:</strong> Proper care will ensure your garment remains beautiful for
+                  years to come.
                 </p>
               </TabContent>
             )}
@@ -974,4 +1044,10 @@ const ReviewDate = styled.div`
 const ReviewText = styled.p`
   margin: 0;
   line-height: 1.6;
+`
+const StockStatus = styled.div`
+  margin: 12px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: ${(props) => (props.inStock ? '#22c55e' : '#ef4444')};
 `

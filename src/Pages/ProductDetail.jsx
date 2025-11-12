@@ -28,8 +28,11 @@ const ProductDetail = () => {
   const [selectedColor, setSelectedColor] = useState('')
   const [quantity, setQuantity] = useState(1)
   const [isWishlisted, setIsWishlisted] = useState(false)
-  const [activeTab, setActiveTab] = useState('description')
-  const [showZoom, setShowZoom] = useState(false)
+
+  const [showZoomPreview, setShowZoomPreview] = useState(false)
+  const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 })
+  const imageRef = useRef(null)
+
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -92,6 +95,24 @@ const ProductDetail = () => {
     }
   }
 
+  const handleMouseMove = (e) => {
+    if (!imageRef.current) return
+
+    const rect = imageRef.current.getBoundingClientRect()
+    const x = ((e.clientX - rect.left) / rect.width) * 100
+    const y = ((e.clientY - rect.top) / rect.height) * 100
+
+    setZoomPosition({ x, y })
+  }
+
+  const handleMouseEnter = () => {
+    setShowZoomPreview(true)
+  }
+
+  const handleMouseLeave = () => {
+    setShowZoomPreview(false)
+  }
+
   return (
     <PageTransition>
       <Container>
@@ -111,7 +132,11 @@ const ProductDetail = () => {
               ))}
             </ThumbnailList>
 
-            <MainImageContainer onClick={() => setShowZoom(true)}>
+            <MainImageContainer
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onMouseMove={handleMouseMove}
+            >
               {product.badges && product.badges.length > 0 && (
                 <ImageBadge>
                   {product.badges[0].toUpperCase() === 'NEW'
@@ -122,13 +147,50 @@ const ProductDetail = () => {
                 </ImageBadge>
               )}
               <MainImage
+                ref={imageRef}
                 src={product.images[selectedImage]}
                 alt={product.name}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 key={selectedImage}
               />
+
+              {/* Zoom Box Indicator */}
+              <AnimatePresence>
+                {showZoomPreview && (
+                  <ZoomBox
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    style={{
+                      left: `${zoomPosition.x}%`,
+                      top: `${zoomPosition.y}%`,
+                    }}
+                  />
+                )}
+              </AnimatePresence>
             </MainImageContainer>
+
+            {/* Zoom Preview Panel */}
+            <AnimatePresence>
+              {showZoomPreview && (
+                <ZoomPreviewPanel
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <ZoomPreviewImage
+                    src={product.images[selectedImage]}
+                    alt={product.name}
+                    style={{
+                      transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`,
+                      transform: `scale(2.5) translate(${50 - zoomPosition.x}%, ${50 - zoomPosition.y}%)`,
+                    }}
+                  />
+                </ZoomPreviewPanel>
+              )}
+            </AnimatePresence>
           </GalleryContainer>
 
           {/* Product Info */}
@@ -146,39 +208,11 @@ const ProductDetail = () => {
 
             <ProductTitle>{product.name}</ProductTitle>
 
-            <Rating>
-              <Stars>
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    size={18}
-                    fill={i < Math.floor(product.rating) ? '#ffa500' : 'none'}
-                    color="#ffa500"
-                  />
-                ))}
-              </Stars>
-              <RatingText>
-                {product.rating} ({product.reviews} reviews)
-              </RatingText>
-            </Rating>
-
             <PriceContainer>
               <CurrentPrice>₹{product.price.toLocaleString()}</CurrentPrice>
-              <OriginalPrice>₹{product.originalPrice.toLocaleString()}</OriginalPrice>
-              <Discount>{product.discount}% OFF</Discount>
             </PriceContainer>
 
-            {product.inStock ? (
-              <StockStatus inStock={true}>
-                ✓ In Stock ({product.stockQuantity} available)
-              </StockStatus>
-            ) : (
-              <StockStatus inStock={false}>Out of Stock</StockStatus>
-            )}
-
             <Description>{product.description}</Description>
-
-            <Divider />
 
             {/* Size Selection */}
             <OptionGroup>
@@ -196,30 +230,6 @@ const ProductDetail = () => {
                   </SizeButton>
                 ))}
               </SizeOptions>
-            </OptionGroup>
-
-            {/* Color Selection */}
-            <OptionGroup>
-              <OptionLabel>
-                Select Color: {product.colors.find((c) => c.value === selectedColor)?.name}
-              </OptionLabel>
-              <ColorOptions>
-                {product.colors.map((color) => (
-                  <ColorButton
-                    key={color.value}
-                    color={color.value}
-                    selected={selectedColor === color.value}
-                    onClick={() => color.inStock && setSelectedColor(color.value)}
-                    disabled={!color.inStock}
-                    whileHover={color.inStock ? { scale: 1.1 } : {}}
-                    whileTap={color.inStock ? { scale: 0.95 } : {}}
-                    style={{
-                      opacity: color.inStock ? 1 : 0.4,
-                      cursor: color.inStock ? 'pointer' : 'not-allowed',
-                    }}
-                  />
-                ))}
-              </ColorOptions>
             </OptionGroup>
 
             {/* Quantity */}
@@ -286,224 +296,6 @@ const ProductDetail = () => {
             </Features>
           </ProductInfo>
         </ProductSection>
-
-        {/* Tabs Section */}
-        <TabsSection>
-          <TabButtons>
-            <TabButton
-              active={activeTab === 'description'}
-              onClick={() => setActiveTab('description')}
-            >
-              Description
-            </TabButton>
-            <TabButton active={activeTab === 'details'} onClick={() => setActiveTab('details')}>
-              Product Details
-            </TabButton>
-            <TabButton active={activeTab === 'care'} onClick={() => setActiveTab('care')}>
-              Care Instructions
-            </TabButton>
-            <TabButton active={activeTab === 'reviews'} onClick={() => setActiveTab('reviews')}>
-              Reviews ({product.reviews})
-            </TabButton>
-          </TabButtons>
-
-          <AnimatePresence mode="wait">
-            {activeTab === 'description' && (
-              <TabContent
-                key="description"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-              >
-                <h3>About This Product</h3>
-                <p>
-                  Experience the epitome of traditional Indian elegance with this stunning silk
-                  saree. Handcrafted by skilled artisans, this piece represents months of dedicated
-                  work and attention to detail. The luxurious silk fabric drapes beautifully,
-                  creating an effortlessly graceful silhouette.
-                </p>
-                <p>
-                  The intricate zari work and traditional motifs are a testament to our commitment
-                  to preserving Indian textile heritage while adding contemporary touches. Each
-                  saree comes with a matching blouse piece that can be customized to your
-                  measurements.
-                </p>
-                <p>
-                  Perfect for weddings, festivals, and special celebrations, this saree is designed
-                  to make you feel confident and beautiful. The timeless design ensures it will
-                  remain a treasured piece in your wardrobe for years to come.
-                </p>
-              </TabContent>
-            )}
-
-            {activeTab === 'details' && (
-              <TabContent
-                key="details"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-              >
-                <h3>Product Specifications</h3>
-                <ul>
-                  <li>
-                    <strong>Fabric:</strong> {product.fabric}
-                  </li>
-                  <li>
-                    <strong>Work:</strong> {product.work}
-                  </li>
-                  <li>
-                    <strong>Length:</strong> {product.length}
-                  </li>
-                  <li>
-                    <strong>Occasion:</strong> {product.occasion}
-                  </li>
-                  <li>
-                    <strong>Pattern:</strong> {product.pattern}
-                  </li>
-                  <li>
-                    <strong>Wash Care:</strong> {product.careInstructions}
-                  </li>
-                  <li>
-                    <strong>Origin:</strong> Handcrafted in India
-                  </li>
-                  <li>
-                    <strong>SKU:</strong> {product.sku}
-                  </li>
-                  {product.features && product.features.length > 0 && (
-                    <>
-                      <li style={{ marginTop: '20px' }}>
-                        <strong>Key Features:</strong>
-                      </li>
-                      {product.features.map((feature, index) => (
-                        <li key={index} style={{ marginLeft: '20px' }}>
-                          • {feature}
-                        </li>
-                      ))}
-                    </>
-                  )}
-                </ul>
-              </TabContent>
-            )}
-
-            {activeTab === 'care' && (
-              <TabContent
-                key="care"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-              >
-                <h3>Care Instructions</h3>
-                <p>
-                  To maintain the beauty and longevity of your {product.name.toLowerCase()}, please
-                  follow these care guidelines:
-                </p>
-                <ul>
-                  <li>{product.careInstructions}</li>
-                  <li>Store in a cool, dry place away from direct sunlight</li>
-                  <li>Avoid contact with perfumes, deodorants, and other chemicals</li>
-                  <li>Iron on low heat with a cloth barrier</li>
-                  <li>Wrap in muslin cloth for storage</li>
-                  <li>Air out periodically to prevent moisture buildup</li>
-                  <li>Keep away from sharp objects that may snag the fabric</li>
-                </ul>
-                <p>
-                  <strong>Note:</strong> Proper care will ensure your garment remains beautiful for
-                  years to come.
-                </p>
-              </TabContent>
-            )}
-
-            {activeTab === 'reviews' && (
-              <TabContent
-                key="reviews"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-              >
-                <h3>Customer Reviews</h3>
-                <ReviewsContainer>
-                  <ReviewCard>
-                    <ReviewHeader>
-                      <div>
-                        <ReviewerName>Priya Sharma</ReviewerName>
-                        <Stars>
-                          {[...Array(5)].map((_, i) => (
-                            <Star key={i} size={14} fill="#ffa500" color="#ffa500" />
-                          ))}
-                        </Stars>
-                      </div>
-                      <ReviewDate>2 weeks ago</ReviewDate>
-                    </ReviewHeader>
-                    <ReviewText>
-                      Absolutely stunning saree! The quality is exceptional and the colors are even
-                      more beautiful in person. Received so many compliments at my cousin's wedding.
-                      Highly recommend!
-                    </ReviewText>
-                  </ReviewCard>
-
-                  <ReviewCard>
-                    <ReviewHeader>
-                      <div>
-                        <ReviewerName>Anita Desai</ReviewerName>
-                        <Stars>
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              size={14}
-                              fill={i < 4 ? '#ffa500' : 'none'}
-                              color="#ffa500"
-                            />
-                          ))}
-                        </Stars>
-                      </div>
-                      <ReviewDate>1 month ago</ReviewDate>
-                    </ReviewHeader>
-                    <ReviewText>
-                      Beautiful craftsmanship and the silk quality is top-notch. The only reason for
-                      4 stars is the delivery took a bit longer than expected, but it was worth the
-                      wait!
-                    </ReviewText>
-                  </ReviewCard>
-
-                  <ReviewCard>
-                    <ReviewHeader>
-                      <div>
-                        <ReviewerName>Meera Reddy</ReviewerName>
-                        <Stars>
-                          {[...Array(5)].map((_, i) => (
-                            <Star key={i} size={14} fill="#ffa500" color="#ffa500" />
-                          ))}
-                        </Stars>
-                      </div>
-                      <ReviewDate>1 month ago</ReviewDate>
-                    </ReviewHeader>
-                    <ReviewText>
-                      This is my third purchase from Luxe Fashion and they never disappoint. The
-                      attention to detail is remarkable. Perfect for special occasions!
-                    </ReviewText>
-                  </ReviewCard>
-                </ReviewsContainer>
-              </TabContent>
-            )}
-          </AnimatePresence>
-        </TabsSection>
-
-        {/* Zoom Modal */}
-        <AnimatePresence>
-          {showZoom && (
-            <ZoomOverlay
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setShowZoom(false)}
-            >
-              <CloseButton onClick={() => setShowZoom(false)}>
-                <X size={20} />
-              </CloseButton>
-              <ZoomImage src={product.images[selectedImage]} alt={product.name} />
-            </ZoomOverlay>
-          )}
-        </AnimatePresence>
       </Container>
     </PageTransition>
   )
@@ -577,10 +369,8 @@ const MainImageContainer = styled.div`
   flex: 1;
   position: relative;
   overflow: hidden;
-  background: #f8f8f8;
-  cursor: zoom-in;
-  /* border: 2px solid red; */
-  height: max-content;
+  /* background: #f8f8f8; */
+  cursor: crosshair;
   height: min-content;
 `
 
@@ -588,8 +378,10 @@ const MainImage = styled(motion.img)`
   width: 100%;
   height: auto;
   display: block;
-  object-fit: cover;
+  /* object-fit: cover; */
   min-height: 600px;
+  height: 90vh;
+  object-fit: contain;
 
   @media (max-width: 968px) {
     min-height: 400px;
@@ -606,46 +398,6 @@ const ImageBadge = styled.div`
   font-size: 0.85rem;
   font-weight: 500;
   letter-spacing: 0.05em;
-`
-
-const ZoomOverlay = styled(motion.div)`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.95);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-`
-
-const ZoomImage = styled.img`
-  max-width: 90%;
-  max-height: 90%;
-  object-fit: contain;
-`
-
-const CloseButton = styled.button`
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-  background: white;
-  border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-
-  &:hover {
-    transform: scale(1.1);
-  }
 `
 
 // Product Info Styles
@@ -1050,4 +802,39 @@ const StockStatus = styled.div`
   font-size: 14px;
   font-weight: 500;
   color: ${(props) => (props.inStock ? '#22c55e' : '#ef4444')};
+`
+const ZoomBox = styled(motion.div)`
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+`
+
+const ZoomPreviewPanel = styled(motion.div)`
+  position: absolute;
+  right: 250px;
+  top: 10%;
+  width: 450px;
+  height: 450px;
+  background: white;
+  border: 1px solid #e0e0e0;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  z-index: 20;
+
+  @media (max-width: 1400px) {
+    display: none;
+  }
+`
+
+const ZoomPreviewImage = styled.img`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
 `

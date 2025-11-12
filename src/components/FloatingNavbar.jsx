@@ -426,7 +426,7 @@ const FloatingNavbar = () => {
                               initial={{ opacity: 0, y: 20 }}
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ duration: 0.4, delay: idx * 0.1 }}
-                              whileHover={{ y: -5 }}
+                              // whileHover={{ y: -5 }}
                             >
                               <CollectionCardImage src={collection.image} alt={collection.name} />
                               <CollectionCardOverlay />
