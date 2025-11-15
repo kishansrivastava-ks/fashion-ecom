@@ -7,11 +7,9 @@ import { useNavigate } from 'react-router-dom'
 // Main navigation container
 const NavContainer = styled(motion.nav)`
   position: fixed;
-  /* position: absolute; */
   top: 2rem;
   left: 20%;
   transform: translateX(-50%);
-
   z-index: 1000;
   backdrop-filter: blur(20px);
   background: rgba(255, 255, 255, 0.95);
@@ -110,10 +108,8 @@ const DropdownContainer = styled(motion.div)`
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  /* border-radius: 20px; */
   padding: 2rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-  /* min-width: 1300px; */
   width: 100vw;
 
   @media (max-width: 1024px) {

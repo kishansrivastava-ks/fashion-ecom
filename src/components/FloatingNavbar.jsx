@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 const NavContainer = styled(motion.nav)`
   position: fixed;
   top: 2rem;
-  left: 17.5%;
+  left: 20%;
   transform: translateX(-50%);
   z-index: 1000;
   backdrop-filter: blur(20px);
@@ -17,8 +17,6 @@ const NavContainer = styled(motion.nav)`
   border-radius: 50px;
   padding: 1rem 2rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  width: auto;
-  max-width: 90vw;
 
   @media (max-width: 1024px) {
     top: 1.5rem;
@@ -120,16 +118,15 @@ const NavLink = styled.a`
 const DropdownContainer = styled(motion.div)`
   position: absolute;
   top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
+  right: -500%;
+  transform: translateX(50%);
   margin-top: 1.5rem;
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 2rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-  width: 90vw;
-  max-width: 1400px;
+  width: 100vw;
 
   @media (max-width: 1024px) {
     width: 85vw;
