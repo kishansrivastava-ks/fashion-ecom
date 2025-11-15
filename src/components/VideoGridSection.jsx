@@ -25,14 +25,16 @@ const VideoGrid = styled.div`
 
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(4, 50vh);
-    gap: 1px;
+    grid-template-rows: repeat(4, 1fr);
+    height: 400vh; /* Changed from auto to give proper height */
+    gap: 0;
   }
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(4, 45vh);
-    gap: 1px;
+    grid-template-rows: repeat(4, 1fr);
+    height: 300vh; /* Adjusted for mobile */
+    gap: 0;
   }
 `
 
@@ -84,6 +86,10 @@ const VideoContent = styled.div`
   justify-content: center;
   z-index: 10;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.4) 100%);
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `
 
 const CategoryTitle = styled(motion.a)`
@@ -126,10 +132,17 @@ const CategoryTitle = styled(motion.a)`
     }
   }
 
+  @media (max-width: 1024px) {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    padding: 1rem 3rem;
+    letter-spacing: 0.2em;
+  }
+
   @media (max-width: 768px) {
-    font-size: clamp(1.2rem, 4vw, 1.8rem);
-    padding: 1rem 2rem;
+    font-size: clamp(1rem, 4vw, 1.5rem);
+    padding: 0.8rem 2rem;
     border-width: 1.5px;
+    letter-spacing: 0.15em;
   }
 `
 
@@ -154,12 +167,22 @@ const CategorySubtext = styled(motion.div)`
     bottom: 3.2rem;
   }
 
+  @media (max-width: 1024px) {
+    font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+    bottom: 2rem;
+
+    ${VideoCell}:hover & {
+      opacity: 0.9;
+      bottom: 3rem;
+    }
+  }
+
   @media (max-width: 768px) {
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     bottom: 1.5rem;
 
     ${VideoCell}:hover & {
-      bottom: 2rem;
+      bottom: 2.2rem;
     }
   }
 `

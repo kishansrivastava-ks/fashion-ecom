@@ -7,11 +7,9 @@ import { useNavigate } from 'react-router-dom'
 // Main navigation container
 const NavContainer = styled(motion.nav)`
   position: fixed;
-  /* position: absolute; */
   top: 2rem;
-  left: 20%;
+  left: 17.5%;
   transform: translateX(-50%);
-
   z-index: 1000;
   backdrop-filter: blur(20px);
   background: rgba(255, 255, 255, 0.95);
@@ -19,14 +17,26 @@ const NavContainer = styled(motion.nav)`
   border-radius: 50px;
   padding: 1rem 2rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  width: auto;
+  max-width: 90vw;
+
+  @media (max-width: 1024px) {
+    top: 1.5rem;
+    padding: 0.9rem 1.8rem;
+    max-width: 85vw;
+  }
 
   @media (max-width: 768px) {
     top: 1rem;
-    left: 1rem;
-    right: 1rem;
-    transform: none;
+    left: 2.5%;
+    /* transform: translateX(-50%); */
     border-radius: 25px;
-    padding: 0.8rem 1.5rem;
+    padding: 0.8rem 1.2rem;
+    max-width: 95vw;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.7rem 1rem;
   }
 `
 
@@ -34,17 +44,23 @@ const NavContainer = styled(motion.nav)`
 const NavList = styled.ul`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 2rem;
   margin: 0;
   padding: 0;
   list-style: none;
+  width: 100%;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     gap: 1.5rem;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 768px) {
     gap: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    gap: 0.8rem;
   }
 `
 
@@ -104,36 +120,38 @@ const NavLink = styled.a`
 const DropdownContainer = styled(motion.div)`
   position: absolute;
   top: 100%;
-  right: -500%;
-  transform: translateX(50%);
+  left: 50%;
+  transform: translateX(-50%);
   margin-top: 1.5rem;
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  /* border-radius: 20px; */
   padding: 2rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-  /* min-width: 1300px; */
-  width: 100vw;
+  width: 90vw;
+  max-width: 1400px;
 
   @media (max-width: 1024px) {
-    min-width: 700px;
+    width: 85vw;
+    padding: 1.8rem;
   }
 
   @media (max-width: 768px) {
     position: fixed;
     top: auto;
-    bottom: 100%;
-    left: 1rem;
-    right: 1rem;
+    bottom: 0;
+    left: 0;
+    right: 0;
     transform: none;
     margin-top: 0;
-    margin-bottom: 1rem;
-    min-width: auto;
+    width: 100%;
+    max-width: 100%;
     padding: 1.5rem;
+    border-radius: 20px 20px 0 0;
+    max-height: 70vh;
+    overflow-y: auto;
   }
 `
-
 const DropdownGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -152,7 +170,6 @@ const DropdownGrid = styled.div`
 const CollectionCard = styled(motion.a)`
   position: relative;
   height: 450px;
-  /* border-radius: 12px; */
   overflow: hidden;
   cursor: pointer;
   text-decoration: none;
@@ -160,7 +177,15 @@ const CollectionCard = styled(motion.a)`
   align-items: center;
   justify-content: center;
 
+  @media (max-width: 1024px) {
+    height: 350px;
+  }
+
   @media (max-width: 768px) {
+    height: 250px;
+  }
+
+  @media (max-width: 480px) {
     height: 200px;
   }
 `
@@ -213,8 +238,12 @@ const ActionButtons = styled.div`
   align-items: center;
   gap: 1rem;
 
+  @media (max-width: 768px) {
+    gap: 0.6rem;
+  }
+
   @media (max-width: 480px) {
-    gap: 0.5rem;
+    gap: 0.4rem;
   }
 `
 
@@ -227,14 +256,22 @@ const IconButton = styled(motion.button)`
   color: #333;
   font-size: 1.2rem;
   transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     color: #1a1a1a;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 768px) {
     font-size: 1.1rem;
     padding: 0.4rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    padding: 0.3rem;
   }
 `
 
@@ -280,10 +317,15 @@ const MobileMenu = styled(motion.div)`
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(20px);
   z-index: 999;
-  padding: 6rem 2rem 2rem 2rem;
+  padding: 5rem 2rem 2rem 2rem;
+  overflow-y: auto;
 
   @media (min-width: 769px) {
     display: none;
+  }
+
+  @media (max-width: 480px) {
+    padding: 4rem 1.5rem 2rem 1.5rem;
   }
 `
 
@@ -291,10 +333,16 @@ const MobileMenuList = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
+  /* border: 2px solid red; */
+  margin-top: 3rem;
 `
 
 const MobileMenuItem = styled(motion.li)`
   margin-bottom: 2rem;
+
+  @media (max-width: 480px) {
+    margin-bottom: 1.5rem;
+  }
 `
 
 const MobileMenuLink = styled.a`
@@ -311,6 +359,11 @@ const MobileMenuLink = styled.a`
 
   &:hover {
     color: #1a1a1a;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.3rem;
+    padding: 0.8rem 0;
   }
 `
 
@@ -364,10 +417,10 @@ const FloatingNavbar = () => {
 
   const mobileMenuItems = [
     { name: 'Home', href: '/home' },
-    { name: 'Western Collection', href: '#western' },
-    { name: 'Ethnic Collection', href: '#ethnic' },
-    { name: 'Custom Orders', href: '#custom' },
-    { name: 'About', href: '/about' },
+    { name: 'Ethnic Collection', href: '/collections/ethnic' },
+    { name: 'Western Collection', href: '/collections/western' },
+    { name: 'Bridal Collection', href: '/collections/bridal' },
+    { name: 'Custom Orders', href: '/collections/custom' },
     { name: 'Contact', href: '/contact' },
   ]
 
@@ -393,9 +446,9 @@ const FloatingNavbar = () => {
           </Brand>
 
           {/* Desktop Navigation */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '2.5rem' }}>
+          <NavContentWrapper>
             {/* Hide on mobile */}
-            <div style={{ display: 'none' }} className="desktop-nav">
+            <DesktopNavWrapper>
               {navItems.map((item, index) => (
                 <NavItem
                   key={item.name}
@@ -407,8 +460,6 @@ const FloatingNavbar = () => {
                 >
                   <NavLink href={item.href}>{item.name}</NavLink>
 
-                  {/* Dropdown for Collections */}
-                  {/* Dropdown for Collections */}
                   {/* Dropdown for Collections */}
                   <AnimatePresence>
                     {item.hasDropdown && showDropdown && (
@@ -439,7 +490,7 @@ const FloatingNavbar = () => {
                   </AnimatePresence>
                 </NavItem>
               ))}
-            </div>
+            </DesktopNavWrapper>
 
             {/* Action Buttons */}
             <ActionButtons>
@@ -489,7 +540,7 @@ const FloatingNavbar = () => {
                 ☰
               </MobileMenuToggle>
             </ActionButtons>
-          </div>
+          </NavContentWrapper>
         </NavList>
       </NavContainer>
 
@@ -552,3 +603,28 @@ const FloatingNavbar = () => {
 }
 
 export default FloatingNavbar
+
+const DesktopNavWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`
+const NavContentWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  flex: 1;
+  justify-content: space-between;
+
+  @media (max-width: 1024px) {
+    gap: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+  }
+`

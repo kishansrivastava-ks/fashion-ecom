@@ -7,12 +7,11 @@ const DividerSection = styled.div`
   margin: 3rem 0;
   padding: 0;
   text-align: center;
-  /* border-top: 1px solid rgba(0, 0, 0, 0.08); */
-  /* border-bottom: 1px solid rgba(0, 0, 0, 0.08); */
 
   @media (max-width: 768px) {
-    margin: 10rem 0;
-    padding: 5rem 0;
+    /* margin: 10rem 0; */
+    padding: 0;
+    /* border: 2px solid red; */
   }
 `
 

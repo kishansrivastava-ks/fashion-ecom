@@ -10,18 +10,20 @@ const BentoSection = styled.section`
   background: #fff;
 
   @media (max-width: 1024px) {
-    padding: 0 3rem;
+    padding: 0 2rem;
+    margin-bottom: 5rem;
   }
 
   @media (max-width: 768px) {
-    margin-bottom: 8rem;
-    padding: 0 1.5rem;
+    margin-bottom: 4rem;
+    padding: 0;
+    /* border: 2px solid red; */
   }
 `
 
 // Reusable Section Title
 const SectionTitle = styled.h2`
-  font-size: clamp(1.2rem, 2vw, 1.4rem);
+  font-size: clamp(1rem, 2vw, 1.4rem);
   font-weight: 300;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -41,6 +43,16 @@ const SectionTitle = styled.h2`
     background: #000;
     opacity: 0.2;
   }
+
+  @media (max-width: 768px) {
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.2em;
+
+    &::after {
+      width: 40px;
+      bottom: -0.7rem;
+    }
+  }
 `
 
 // The Bento Grid Container - Now with fixed aspect ratio
@@ -55,24 +67,26 @@ const BentoGrid = styled.div`
   margin: 0 auto;
 
   @media (max-width: 1024px) {
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(8, 1fr);
-    aspect-ratio: 4/3;
-    gap: 0.8rem;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    aspect-ratio: 3/2;
+    gap: 0.75rem;
   }
 
   @media (max-width: 768px) {
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(12, 1fr);
-    aspect-ratio: 3/4;
-    gap: 0.6rem;
+    grid-template-rows: auto;
+    aspect-ratio: unset;
+    gap: 0.5rem;
+    min-height: 200vh;
   }
 
   @media (max-width: 480px) {
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(16, 1fr);
-    aspect-ratio: 2/3;
-    gap: 0.5rem;
+    grid-template-rows: auto;
+    aspect-ratio: unset;
+    gap: 0.4rem;
+    min-height: 250vh;
   }
 `
 
@@ -95,18 +109,26 @@ const BentoItem = styled.div`
   }
 
   @media (max-width: 1024px) {
-    grid-column: ${(props) => props.gColMd || props.gCol || 'span 8'};
-    grid-row: ${(props) => props.gRowMd || props.gRow || 'span 1'};
+    grid-column: ${(props) => props.gColMd || 'span 3'};
+    grid-row: ${(props) => props.gRowMd || 'span 2'};
   }
 
   @media (max-width: 768px) {
     grid-column: ${(props) => props.gColSm || 'span 2'};
-    grid-row: ${(props) => props.gRowSm || 'span 2'};
+    grid-row: ${(props) => props.gRowSm || 'span 3'};
+
+    &:hover {
+      transform: translateY(-3px);
+    }
   }
 
   @media (max-width: 480px) {
     grid-column: ${(props) => props.gColXs || 'span 1'};
-    grid-row: ${(props) => props.gRowXs || 'span 2'};
+    grid-row: ${(props) => props.gRowXs || 'span 3'};
+
+    &:hover {
+      transform: translateY(-2px);
+    }
   }
 `
 
@@ -144,7 +166,10 @@ const ImageCaption = styled.div`
   }
 
   @media (max-width: 768px) {
-    padding: 1rem;
+    padding: 0.8rem;
+    opacity: 1;
+    transform: translateY(0);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
   }
 `
 

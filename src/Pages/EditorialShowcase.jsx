@@ -69,7 +69,7 @@ const ContentPanel = styled.div`
   padding: 3rem 0;
 
   @media (max-width: 768px) {
-    padding: 8rem 0;
+    padding: 3rem 0;
   }
 `
 
@@ -219,11 +219,24 @@ const DividerText = styled(motion.p)`
 // Horizontal Scroll Section
 const HorizontalSection = styled.div`
   position: relative;
-  margin-bottom: 2rem;
-  padding: 0 5rem;
+  margin-bottom: 4rem;
+  padding: 0 2rem;
+
+  @media (max-width: 1024px) {
+    padding: 0 3rem;
+    margin-bottom: 5rem;
+  }
 
   @media (max-width: 768px) {
-    margin-bottom: 8rem;
+    /* padding: 0 1.5rem; */
+    /* border: 2px solid red; */
+    padding: 0;
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 480px) {
+    /* padding: 0 1rem; */
+    margin-bottom: 0;
   }
 `
 
@@ -235,6 +248,16 @@ const ScrollTitle = styled(motion.h2)`
   margin: 0 0 4rem 0;
   color: #000;
   opacity: 0.6;
+
+  @media (max-width: 1024px) {
+    margin: 0 0 3rem 0;
+  }
+
+  @media (max-width: 768px) {
+    margin: 0 0 2rem 0;
+    letter-spacing: 0.2em;
+    font-size: clamp(1rem, 3vw, 1.2rem);
+  }
 `
 
 const ScrollWrapper = styled.div`
@@ -243,20 +266,43 @@ const ScrollWrapper = styled.div`
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
+
+  &:active {
+    cursor: grabbing;
+  }
 
   &::-webkit-scrollbar {
     display: none;
+  }
+
+  @media (max-width: 768px) {
+    /* Add momentum scrolling for iOS */
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    padding-bottom: 1rem;
   }
 `
 
 const ScrollContainer = styled(motion.div)`
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
   padding-right: 5rem;
 
+  @media (max-width: 1024px) {
+    gap: 1.5rem;
+    padding-right: 3rem;
+  }
+
   @media (max-width: 768px) {
-    gap: 1rem;
+    gap: 0.5rem;
     padding-right: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    gap: 0.5rem;
+    padding-right: 1rem;
   }
 `
 
@@ -267,20 +313,21 @@ const ScrollItem = styled(motion.div)`
   position: relative;
   overflow: hidden;
   background: #f9f9f9;
+  scroll-snap-align: start;
 
   @media (max-width: 1024px) {
     width: 300px;
-    height: 420px;
+    height: 440px;
   }
 
   @media (max-width: 768px) {
-    width: 260px;
-    height: 380px;
+    width: 280px;
+    height: 400px;
   }
 
   @media (max-width: 480px) {
-    width: 220px;
-    height: 320px;
+    width: 240px;
+    height: 340px;
   }
 `
 
@@ -292,6 +339,22 @@ const ScrollImage = styled.img`
 
   ${ScrollItem}:hover & {
     transform: scale(1.06);
+  }
+
+  @media (max-width: 768px) {
+    ${ScrollItem}:hover & {
+      transform: scale(1.03);
+    }
+  }
+
+  @media (max-width: 480px) {
+    ${ScrollItem}:active & {
+      transform: scale(1.02);
+    }
+
+    ${ScrollItem}:hover & {
+      transform: none;
+    }
   }
 `
 
@@ -312,6 +375,17 @@ const ScrollCaption = styled(motion.div)`
     opacity: 1;
     transform: translateY(0);
   }
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    opacity: 1;
+    transform: translateY(0);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
 `
 
 const ScrollCaptionTitle = styled.div`
@@ -319,6 +393,14 @@ const ScrollCaptionTitle = styled.div`
   font-weight: 300;
   letter-spacing: 0.05em;
   margin-bottom: 0.3rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.85rem;
+  }
 `
 
 const ScrollCaptionSubtext = styled.div`
@@ -327,6 +409,14 @@ const ScrollCaptionSubtext = styled.div`
   letter-spacing: 0.1em;
   opacity: 0.8;
   text-transform: uppercase;
+
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.65rem;
+  }
 `
 
 // CTA Section

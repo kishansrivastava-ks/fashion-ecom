@@ -100,19 +100,25 @@ const NavLink = styled.a`
 `
 
 // Dropdown menu for collections
+// Large Collections Dropdown Container
 const DropdownContainer = styled(motion.div)`
   position: absolute;
   top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-top: 1rem;
+  right: -500%;
+  transform: translateX(50%);
+  margin-top: 1.5rem;
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 15px;
-  padding: 1.5rem;
-  min-width: 200px;
+  /* border-radius: 20px; */
+  padding: 2rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  /* min-width: 1300px; */
+  width: 100vw;
+
+  @media (max-width: 1024px) {
+    min-width: 700px;
+  }
 
   @media (max-width: 768px) {
     position: fixed;
@@ -124,27 +130,80 @@ const DropdownContainer = styled(motion.div)`
     margin-top: 0;
     margin-bottom: 1rem;
     min-width: auto;
+    padding: 1.5rem;
   }
 `
 
-const DropdownItem = styled(motion.a)`
-  display: block;
-  padding: 0.8rem 0;
-  color: #333;
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 300;
-  letter-spacing: 0.03em;
-  transition: color 0.3s ease;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  cursor: pointer;
+const DropdownGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
 
-  &:last-child {
-    border-bottom: none;
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  &:hover {
-    color: #1a1a1a;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+`
+
+const CollectionCard = styled(motion.a)`
+  position: relative;
+  height: 450px;
+  /* border-radius: 12px; */
+  overflow: hidden;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    height: 200px;
+  }
+`
+
+const CollectionCardImage = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+
+  ${CollectionCard}:hover & {
+    transform: scale(1.1);
+  }
+`
+
+const CollectionCardOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%);
+  transition: background 0.4s ease;
+
+  ${CollectionCard}:hover & {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.7) 100%);
+  }
+`
+
+const CollectionCardText = styled.span`
+  position: relative;
+  z-index: 2;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
   }
 `
 
@@ -281,10 +340,26 @@ const FloatingNavbar = () => {
   ]
 
   const collectionItems = [
-    { name: 'Western Collection', href: '#western' },
-    { name: 'Ethnic Collection', href: '#ethnic' },
-    { name: 'Custom Orders', href: '#custom' },
-    { name: 'New Arrivals', href: '#new-arrivals' },
+    {
+      name: 'Ethnic',
+      href: '/collections/ethnic',
+      image: '/images/ethnic/ethnic42.jpg',
+    },
+    {
+      name: 'Western',
+      href: '/collections/western',
+      image: '/images/ethnic/ethnic61.jpg',
+    },
+    {
+      name: 'Bridal',
+      href: '/collections/bridal',
+      image: '/images/ethnic/ethnic34.jpg',
+    },
+    {
+      name: 'Custom',
+      href: '/collections/custom',
+      image: '/images/ethnic/ethnic2.jpg',
+    },
   ]
 
   const mobileMenuItems = [
@@ -309,7 +384,11 @@ const FloatingNavbar = () => {
       >
         <NavList>
           {/* Brand */}
-          <Brand whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Brand
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => navigate('/')}
+          >
             SHAASHEE
           </Brand>
 
@@ -335,19 +414,24 @@ const FloatingNavbar = () => {
                         initial={{ opacity: 0, y: 10, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        transition={{ duration: 0.2 }}
+                        transition={{ duration: 0.3 }}
                       >
-                        {collectionItems.map((dropdownItem, idx) => (
-                          <DropdownItem
-                            key={dropdownItem.name}
-                            href={dropdownItem.href}
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.2, delay: idx * 0.05 }}
-                          >
-                            {dropdownItem.name}
-                          </DropdownItem>
-                        ))}
+                        <DropdownGrid>
+                          {collectionItems.map((collection, idx) => (
+                            <CollectionCard
+                              key={collection.name}
+                              href={collection.href}
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.4, delay: idx * 0.1 }}
+                              // whileHover={{ y: -5 }}
+                            >
+                              <CollectionCardImage src={collection.image} alt={collection.name} />
+                              <CollectionCardOverlay />
+                              <CollectionCardText>{collection.name}</CollectionCardText>
+                            </CollectionCard>
+                          ))}
+                        </DropdownGrid>
                       </DropdownContainer>
                     )}
                   </AnimatePresence>

@@ -66,53 +66,6 @@ const HeroSection = () => {
   )
 }
 
-// const FeaturedCollection = () => {
-//   const ref = React.useRef(null)
-//   const isInView = useInView(ref, { once: true, margin: '-100px' })
-
-//   return (
-//     <CollectionContainer ref={ref}>
-//       <CollectionContent>
-//         <CollectionTitle
-//           initial={{ x: -100, opacity: 0 }}
-//           animate={isInView ? { x: 0, opacity: 1 } : {}}
-//           transition={{ duration: 0.8 }}
-//         >
-//           SPRING
-//           <br />
-//           COLLECTION
-//         </CollectionTitle>
-//         <CollectionDescription
-//           initial={{ x: -50, opacity: 0 }}
-//           animate={isInView ? { x: 0, opacity: 1 } : {}}
-//           transition={{ duration: 0.8, delay: 0.2 }}
-//         >
-//           Discover our latest collection where contemporary design meets timeless elegance. Each
-//           piece is carefully crafted to embody the perfect balance between comfort and
-//           sophistication.
-//         </CollectionDescription>
-//         <CollectionButton
-//           initial={{ x: -30, opacity: 0 }}
-//           animate={isInView ? { x: 0, opacity: 1 } : {}}
-//           transition={{ duration: 0.8, delay: 0.4 }}
-//           whileHover={{ scale: 1.02 }}
-//           whileTap={{ scale: 0.98 }}
-//         >
-//           SHOP NOW
-//         </CollectionButton>
-//       </CollectionContent>
-
-//       <CollectionImageContainer
-//         initial={{ x: 100, opacity: 0 }}
-//         animate={isInView ? { x: 0, opacity: 1 } : {}}
-//         transition={{ duration: 1 }}
-//       >
-//         <CollectionImage />
-//       </CollectionImageContainer>
-//     </CollectionContainer>
-//   )
-// }
-
 const BrandStory = () => {
   const ref = React.useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
@@ -121,7 +74,10 @@ const BrandStory = () => {
     <StoryContainer ref={ref}>
       <StoryWrapper>
         <StoryImageSection
-          initial={{ x: -100, opacity: 0 }}
+          initial={{
+            x: typeof window !== 'undefined' && window.innerWidth <= 768 ? -50 : -100,
+            opacity: 0,
+          }}
           animate={isInView ? { x: 0, opacity: 1 } : {}}
           transition={{ duration: 1 }}
         >
@@ -634,6 +590,16 @@ const StoryContainer = styled.section`
   display: flex;
   align-items: center;
   padding: 0;
+
+  @media (max-width: 1024px) {
+    min-height: auto;
+  }
+
+  @media (max-width: 768px) {
+    min-height: auto;
+    padding: 4rem 0;
+    padding-top: 0;
+  }
 `
 
 const StoryWrapper = styled.div`
@@ -642,14 +608,30 @@ const StoryWrapper = styled.div`
   grid-template-columns: 1fr 1fr;
   min-height: 100vh;
 
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr 1fr;
+    min-height: 80vh;
+  }
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
+    min-height: auto;
   }
 `
 
 const StoryImageSection = styled(motion.div)`
   position: relative;
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    min-height: 50vh;
+    max-height: 60vh;
+  }
+
+  @media (max-width: 480px) {
+    min-height: 40vh;
+    max-height: 50vh;
+  }
 `
 
 const StoryImage = styled.div`
@@ -659,6 +641,15 @@ const StoryImage = styled.div`
   background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=600&fit=crop&crop=center');
   background-size: cover;
   background-position: center;
+
+  @media (max-width: 768px) {
+    background-position: center 30%;
+    min-height: 50vh;
+  }
+
+  @media (max-width: 480px) {
+    min-height: 40vh;
+  }
 `
 
 const StoryContent = styled(motion.div)`
@@ -667,8 +658,16 @@ const StoryContent = styled(motion.div)`
   justify-content: center;
   padding: 5rem;
 
+  @media (max-width: 1024px) {
+    padding: 4rem 3rem;
+  }
+
   @media (max-width: 768px) {
     padding: 3rem 2rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 2.5rem 1.5rem;
   }
 `
 
@@ -679,6 +678,20 @@ const StoryTitle = styled(motion.h2)`
   line-height: 1.2;
   margin: 0 0 2rem 0;
   color: white;
+
+  @media (max-width: 1024px) {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin: 0 0 1.5rem 0;
+  }
+
+  @media (max-width: 768px) {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    margin: 0 0 1.5rem 0;
+  }
+
+  @media (max-width: 480px) {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
 `
 
 const StoryText = styled(motion.p)`
@@ -687,6 +700,24 @@ const StoryText = styled(motion.p)`
   color: #ccc;
   margin: 0 0 1.5rem 0;
   font-weight: 300;
+
+  @media (max-width: 1024px) {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin: 0 0 1.3rem 0;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 0 0 1.2rem 0;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin: 0 0 1rem 0;
+  }
 `
 
 const StoryQuote = styled(motion.blockquote)`
@@ -698,6 +729,26 @@ const StoryQuote = styled(motion.blockquote)`
   padding-left: 2rem;
   border-left: 1px solid #333;
   color: white;
+
+  @media (max-width: 1024px) {
+    font-size: 1.2rem;
+    margin: 1.5rem 0;
+    padding-left: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin: 1.5rem 0;
+    padding-left: 1.2rem;
+    border-left-width: 2px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    margin: 1rem 0;
+    padding-left: 1rem;
+  }
 `
 
 // Products Gallery Styles
