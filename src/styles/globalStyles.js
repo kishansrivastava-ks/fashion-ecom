@@ -67,4 +67,9 @@ export const GlobalStyles = createGlobalStyle`
     max-width: 100%;
     display: block;
   }
+
+    /* Disable blue tap highlight effect on mobile */
+   a, button {
+    -webkit-tap-highlight-color: transparent;
+  }
 `
