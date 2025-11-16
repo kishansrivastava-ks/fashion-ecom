@@ -63,6 +63,9 @@ const HeroContent = styled.div`
   padding: 0 2rem;
   margin-top: auto;
   margin-bottom: 5rem;
+  @media (max-width: 640px) {
+    margin-bottom: auto;
+  }
 `
 
 const HeroTitle = styled(motion.h3)`
@@ -73,6 +76,10 @@ const HeroTitle = styled(motion.h3)`
   margin: 0 0 2rem 0;
   color: white;
   text-transform: uppercase;
+
+  @media (max-width: 640px) {
+    line-height: 1.6;
+  }
 `
 
 const HeroSubtitle = styled(motion.p)`
