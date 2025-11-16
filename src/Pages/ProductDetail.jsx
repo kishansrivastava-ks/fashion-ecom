@@ -2,20 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import productsData from '../data/data.json'
 import { motion, AnimatePresence } from 'framer-motion'
-import {
-  Heart,
-  ShoppingCart,
-  Ruler,
-  Truck,
-  RotateCcw,
-  Shield,
-  Star,
-  ChevronLeft,
-  ChevronRight,
-  Share2,
-  ZoomIn,
-  X,
-} from 'lucide-react'
+import { Heart, ShoppingCart, Ruler, Truck, RotateCcw, Shield } from 'lucide-react'
 import styled from 'styled-components'
 import PageTransition from '@/utils/PageTransition'
 
@@ -133,9 +120,9 @@ const ProductDetail = () => {
             </ThumbnailList>
 
             <MainImageContainer
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-              onMouseMove={handleMouseMove}
+              onMouseEnter={window.innerWidth > 1024 ? handleMouseEnter : undefined}
+              onMouseLeave={window.innerWidth > 1024 ? handleMouseLeave : undefined}
+              onMouseMove={window.innerWidth > 1024 ? handleMouseMove : undefined}
             >
               {product.badges && product.badges.length > 0 && (
                 <ImageBadge>
@@ -318,10 +305,17 @@ const ProductSection = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
+  /* border: 2px solid red; */
+
+  @media (max-width: 1024px) {
+    gap: 3rem;
+    padding: 2rem 1.5rem;
+  }
 
   @media (max-width: 968px) {
     grid-template-columns: 1fr;
     gap: 2rem;
+    padding: 2rem 0.5rem;
   }
 `
 
@@ -343,6 +337,22 @@ const ThumbnailList = styled.div`
   @media (max-width: 968px) {
     flex-direction: row;
     overflow-x: auto;
+    padding-bottom: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+    /* gap: 0.5rem; */
+
+    &::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 2px;
+    }
   }
 `
 
@@ -372,6 +382,10 @@ const MainImageContainer = styled.div`
   /* background: #f8f8f8; */
   cursor: crosshair;
   height: min-content;
+
+  @media (max-width: 1024px) {
+    cursor: default;
+  }
 `
 
 const MainImage = styled(motion.img)`
@@ -383,8 +397,19 @@ const MainImage = styled(motion.img)`
   height: 90vh;
   object-fit: contain;
 
+  @media (max-width: 1024px) {
+    height: 70vh;
+    min-height: 500px;
+  }
+
   @media (max-width: 968px) {
     min-height: 400px;
+    height: 60vh;
+  }
+
+  @media (max-width: 640px) {
+    min-height: 300px;
+    height: 50vh;
   }
 `
 
@@ -405,6 +430,11 @@ const ProductInfo = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  /* border: 2px solid blue; */
+
+  @media (max-width: 640px) {
+    margin: 0 1rem;
+  }
 `
 
 const Breadcrumb = styled.div`
@@ -429,23 +459,6 @@ const ProductTitle = styled.h1`
   letter-spacing: 0.02em;
 `
 
-const Rating = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`
-
-const Stars = styled.div`
-  display: flex;
-  gap: 0.2rem;
-  color: #ffa500;
-`
-
-const RatingText = styled.span`
-  font-size: 0.9rem;
-  color: #666;
-`
-
 const PriceContainer = styled.div`
   display: flex;
   align-items: center;
@@ -458,33 +471,12 @@ const CurrentPrice = styled.div`
   color: black;
 `
 
-const OriginalPrice = styled.div`
-  font-size: 1.3rem;
-  color: #999;
-  text-decoration: line-through;
-`
-
-const Discount = styled.div`
-  background: #e74c3c;
-  color: white;
-  padding: 0.3rem 0.8rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-  border-radius: 4px;
-`
-
 const Description = styled.p`
   font-size: 1rem;
   line-height: 1.7;
   color: #666;
   margin: 0;
   font-weight: 300;
-`
-
-const Divider = styled.hr`
-  border: none;
-  border-top: 1px solid #e0e0e0;
-  margin: 1rem 0;
 `
 
 // Size and Color Selection
@@ -525,41 +517,6 @@ const SizeButton = styled(motion.button)`
     opacity: 0.3;
     cursor: not-allowed;
   }
-`
-
-const ColorOptions = styled.div`
-  display: flex;
-  gap: 0.8rem;
-`
-
-const ColorButton = styled(motion.button)`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: ${(props) => props.color};
-  border: 2px solid ${(props) => (props.selected ? 'black' : '#e0e0e0')};
-  cursor: pointer;
-  position: relative;
-  transition: all 0.3s ease;
-
-  &:hover {
-    border-color: black;
-  }
-
-  ${(props) =>
-    props.selected &&
-    `
-    &::after {
-      content: '✓';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: white;
-      font-weight: bold;
-      text-shadow: 0 0 2px rgba(0,0,0,0.5);
-    }
-  `}
 `
 
 // Quantity Selector
@@ -686,6 +643,11 @@ const Features = styled.div`
   padding: 1.5rem;
   background: #f8f8f8;
   border-radius: 4px;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
 `
 
 const Feature = styled.div`
@@ -694,115 +656,16 @@ const Feature = styled.div`
   gap: 0.8rem;
   font-size: 0.9rem;
   color: #666;
+
+  @media (max-width: 640px) {
+    font-size: 0.85rem;
+  }
 `
 
 const FeatureIcon = styled.div`
   color: black;
 `
 
-// Tabs Section
-const TabsSection = styled.section`
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2rem 4rem 2rem;
-`
-
-const TabButtons = styled.div`
-  display: flex;
-  gap: 0;
-  border-bottom: 1px solid #e0e0e0;
-  margin-bottom: 2rem;
-`
-
-const TabButton = styled.button`
-  padding: 1rem 2rem;
-  background: none;
-  border: none;
-  font-size: 1rem;
-  font-weight: 400;
-  color: ${(props) => (props.active ? 'black' : '#999')};
-  cursor: pointer;
-  border-bottom: 2px solid ${(props) => (props.active ? 'black' : 'transparent')};
-  transition: all 0.3s ease;
-
-  &:hover {
-    color: black;
-  }
-`
-
-const TabContent = styled(motion.div)`
-  color: #666;
-  line-height: 1.7;
-
-  h3 {
-    font-size: 1.2rem;
-    font-weight: 400;
-    margin: 0 0 1rem 0;
-    color: black;
-  }
-
-  p {
-    margin: 0 0 1rem 0;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-
-    li {
-      padding: 0.5rem 0;
-      padding-left: 1.5rem;
-      position: relative;
-
-      &::before {
-        content: '•';
-        position: absolute;
-        left: 0;
-        color: black;
-      }
-    }
-  }
-`
-
-// Reviews
-const ReviewsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-`
-
-const ReviewCard = styled.div`
-  padding: 1.5rem;
-  background: #f8f8f8;
-  border-radius: 4px;
-`
-
-const ReviewHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-`
-
-const ReviewerName = styled.div`
-  font-weight: 500;
-  color: black;
-`
-
-const ReviewDate = styled.div`
-  font-size: 0.85rem;
-  color: #999;
-`
-
-const ReviewText = styled.p`
-  margin: 0;
-  line-height: 1.6;
-`
-const StockStatus = styled.div`
-  margin: 12px 0;
-  font-size: 14px;
-  font-weight: 500;
-  color: ${(props) => (props.inStock ? '#22c55e' : '#ef4444')};
-`
 const ZoomBox = styled(motion.div)`
   position: absolute;
   width: 200px;
@@ -812,6 +675,10 @@ const ZoomBox = styled(motion.div)`
   pointer-events: none;
   transform: translate(-50%, -50%);
   z-index: 10;
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
 `
 
 const ZoomPreviewPanel = styled(motion.div)`
