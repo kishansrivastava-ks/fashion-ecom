@@ -9,6 +9,12 @@ const StyledBanner = styled.div`
   font-size: 1.5rem;
   letter-spacing: 15px;
   font-family: 'Arial', sans-serif;
+
+  @media (max-width: 640px) {
+    padding: 0.5rem 0;
+    letter-spacing: 10px;
+    font-size: 1.2rem;
+  }
 `
 
 function Banner() {

@@ -417,7 +417,7 @@ const Test = () => {
 
 // Hero Section Styles
 const HeroContainer = styled.section`
-  height: 100vh;
+  height: 100dvh;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -465,6 +465,7 @@ const HeroContent = styled(motion.div)`
   color: white;
   max-width: 800px;
   padding: 0 2rem;
+  /* border: 2px solid white; */
 `
 
 const HeroTitle = styled(motion.h1)`
