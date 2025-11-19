@@ -13,6 +13,7 @@ import QuoteDivider from '@/components/common/QuoteDivider'
 import CallToAction from '@/components/common/CallToAction'
 import BentoGallery from '@/components/common/BentoGallery'
 import Banner from '@/components/common/Banner'
+import EthnicBannerScroll from '@/components/home/EthnicBannerScroll'
 
 // Component Functions
 const HeroSection = () => {
@@ -403,6 +404,7 @@ const Test = () => {
       <QuoteDivider />
       {/* <FeaturedCollection /> */}
       <EditorialShowcase />
+      <EthnicBannerScroll />
       {/* <VideoGridSection /> */}
       {/* <ProductCarousel /> */}
       {/* <CallToAction /> */}

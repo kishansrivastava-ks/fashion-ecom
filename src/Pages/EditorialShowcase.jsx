@@ -66,7 +66,7 @@ const HeroSubtitle = styled(motion.p)`
 const ContentPanel = styled.div`
   position: relative;
   background: #fff;
-  padding: 3rem 0;
+  padding: 1.5rem 0;
 
   @media (max-width: 768px) {
     padding: 3rem 0;
@@ -655,10 +655,10 @@ const EditorialShowcase = () => {
       <ContentPanel>
         <Container>
           {/* Gallery Section */}
-          <BentoGallery />
+          {/* <BentoGallery /> */}
 
           {/* Horizontal Scroll Section */}
-          <HorizontalSection ref={scrollRef}>
+          {/* <HorizontalSection ref={scrollRef}>
             <ScrollTitle
               initial={{ opacity: 0 }}
               animate={scrollInView ? { opacity: 0.6 } : {}}
@@ -692,7 +692,7 @@ const EditorialShowcase = () => {
                 ))}
               </ScrollContainer>
             </ScrollWrapper>
-          </HorizontalSection>
+          </HorizontalSection> */}
         </Container>
       </ContentPanel>
     </Section>

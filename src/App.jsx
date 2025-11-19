@@ -22,6 +22,7 @@ import EthnicCollections from './Pages/Collections/EthnicCollection'
 import WesternCollections from './Pages/Collections/WesternCollections'
 import BridalCollections from './Pages/Collections/BridalCollections'
 import CustomCollections from './Pages/Collections/CustomCollections'
+import WhatsApp from './components/contact/WhatsApp'
 
 function App() {
   return (
@@ -56,6 +57,10 @@ function App() {
             <Route path="signup" element={<Signup />} />
             <Route path="verify-otp" element={<OTPVerification />} />
           </Routes>
+          <WhatsApp
+            message="Hello! I saw your website and have a question."
+            phoneNumber="9140211686"
+          />
         </AnimatePresence>
       </BrowserRouter>
       {/* <Test /> */}

@@ -22,15 +22,15 @@ import styled from 'styled-components'
 
 // Footer Container
 const FooterContainer = styled.footer`
-  background: white;
-  color: black;
+  background: #1a1a1a;
+  color: white;
 `
 
 // Newsletter Section
 const NewsletterSection = styled.section`
-  background: linear-gradient(135deg, #f0f0f0 0%, #ffffff 100%);
+  background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
   padding: 6rem 0;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #333;
 `
 
 const NewsletterContainer = styled.div`
@@ -56,14 +56,14 @@ const NewsletterTitle = styled.h3`
   font-weight: 100;
   letter-spacing: 0.05em;
   margin: 0 0 1rem 0;
-  color: black;
+  color: white;
 `
 
 const NewsletterText = styled.p`
   font-size: 1rem;
   font-weight: 300;
   line-height: 1.6;
-  color: #555;
+  color: #ccc;
   margin: 0;
 `
 
@@ -82,9 +82,9 @@ const NewsletterForm = styled(motion.form)`
 const NewsletterInput = styled.input`
   flex: 1;
   padding: 1rem 1.5rem;
-  border: 1px solid #ccc;
-  background: white;
-  color: black;
+  border: 1px solid #333;
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
   font-size: 1rem;
 
   &::placeholder {
@@ -93,14 +93,14 @@ const NewsletterInput = styled.input`
 
   &:focus {
     outline: none;
-    border-color: #555;
-    background: #f9f9f9;
+    border-color: #666;
+    background: rgba(255, 255, 255, 0.1);
   }
 `
 
 const NewsletterButton = styled(motion.button)`
-  background: black;
-  color: white;
+  background: white;
+  color: black;
   border: none;
   padding: 1rem 1.5rem;
   font-size: 1rem;
@@ -112,7 +112,7 @@ const NewsletterButton = styled(motion.button)`
   transition: all 0.3s ease;
 
   &:hover {
-    background: #333;
+    background: #f0f0f0;
   }
 `
 
@@ -123,11 +123,10 @@ const FooterMain = styled.section`
 
 const FooterGrid = styled.div`
   max-width: 1200px;
-  /* border: 2px solid red; */
   margin: 0 auto;
   padding: 0 2rem;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
   gap: 3rem;
 
   @media (max-width: 1024px) {
@@ -162,14 +161,14 @@ const BrandLogo = styled.h2`
   font-weight: 100;
   letter-spacing: 0.2rem;
   margin: 0 0 1.5rem 0;
-  color: black;
+  color: white;
 `
 
 const BrandTagline = styled.p`
   font-size: 1rem;
   font-weight: 300;
   line-height: 1.6;
-  color: #555;
+  color: #ccc;
   margin: 0 0 2rem 0;
   max-width: 280px;
 
@@ -191,18 +190,18 @@ const SocialLinks = styled.div`
 const SocialLink = styled(motion.a)`
   width: 40px;
   height: 40px;
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: black;
+  color: white;
   text-decoration: none;
   transition: all 0.3s ease;
 
   &:hover {
-    background: black;
-    color: white;
+    background: white;
+    color: black;
     transform: translateY(-2px);
   }
 `
@@ -212,12 +211,12 @@ const ColumnTitle = styled.h4`
   font-weight: 400;
   letter-spacing: 0.1em;
   margin: 0 0 2rem 0;
-  color: black;
+  color: white;
   text-transform: uppercase;
 `
 
 const FooterLink = styled(motion.a)`
-  color: #555;
+  color: #ccc;
   text-decoration: none;
   font-size: 0.95rem;
   font-weight: 300;
@@ -228,7 +227,7 @@ const FooterLink = styled(motion.a)`
   gap: 0.5rem;
 
   &:hover {
-    color: black;
+    color: white;
     transform: translateX(5px);
   }
 
@@ -247,7 +246,7 @@ const ContactItem = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-  color: #555;
+  color: #ccc;
   font-size: 0.95rem;
   font-weight: 300;
 `
@@ -255,7 +254,7 @@ const ContactItem = styled.div`
 const ContactIcon = styled.div`
   width: 35px;
   height: 35px;
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -265,9 +264,9 @@ const ContactIcon = styled.div`
 
 // Features Section
 const FeaturesSection = styled.section`
-  background: #f5f5f5;
+  background: #111;
   padding: 3rem 0;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #333;
 `
 
 const FeaturesContainer = styled.div`
@@ -300,12 +299,12 @@ const FeatureItem = styled(motion.div)`
 const FeatureIcon = styled.div`
   width: 45px;
   height: 45px;
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: black;
+  color: white;
   flex-shrink: 0;
 `
 
@@ -319,21 +318,21 @@ const FeatureTitle = styled.h5`
   font-size: 0.9rem;
   font-weight: 400;
   margin: 0 0 0.25rem 0;
-  color: black;
+  color: white;
 `
 
 const FeatureDescription = styled.p`
   font-size: 0.8rem;
   font-weight: 300;
-  color: #666;
+  color: #999;
   margin: 0;
 `
 
 // Payment & Legal Section
 const BottomSection = styled.section`
-  background: white;
+  background: #000;
   padding: 2rem 0;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #333;
 `
 
 const BottomContainer = styled.div`
@@ -355,7 +354,7 @@ const BottomContainer = styled.div`
 const Copyright = styled.p`
   font-size: 0.9rem;
   font-weight: 300;
-  color: #666;
+  color: #999;
   margin: 0;
 `
 
@@ -370,14 +369,14 @@ const LegalLinks = styled.div`
 `
 
 const LegalLink = styled.a`
-  color: #666;
+  color: #999;
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 300;
   transition: color 0.3s ease;
 
   &:hover {
-    color: black;
+    color: white;
   }
 `
 
@@ -393,7 +392,7 @@ const PaymentMethods = styled.div`
 
 const PaymentText = styled.span`
   font-size: 0.9rem;
-  color: #666;
+  color: #999;
   margin-right: 0.5rem;
 `
 
@@ -405,12 +404,12 @@ const PaymentIcons = styled.div`
 const PaymentIcon = styled.div`
   width: 35px;
   height: 24px;
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: black;
+  color: white;
   font-size: 0.8rem;
   font-weight: bold;
 `
@@ -579,6 +578,39 @@ const Footer = () => {
             <FooterLink href="/size-guide">
               <ArrowRight size={14} />
               Size Guide
+            </FooterLink>
+          </FooterColumn>
+
+          <FooterColumn
+            initial={{ y: 50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <ColumnTitle>Support</ColumnTitle>
+            <FooterLink href="/faq">
+              <ArrowRight size={14} />
+              FAQ
+            </FooterLink>
+            <FooterLink href="/shipping">
+              <ArrowRight size={14} />
+              Shipping Info
+            </FooterLink>
+            {/* <FooterLink href="/returns">
+              <ArrowRight size={14} />
+              Returns & Exchange
+            </FooterLink> */}
+            {/* <FooterLink href="/care-guide">
+              <ArrowRight size={14} />
+              Care Guide
+            </FooterLink> */}
+            {/* <FooterLink href="/wholesale">
+              <ArrowRight size={14} />
+              Wholesale Inquiry
+            </FooterLink> */}
+            <FooterLink href="/reviews">
+              <Star size={14} />
+              Customer Reviews
             </FooterLink>
           </FooterColumn>
 
