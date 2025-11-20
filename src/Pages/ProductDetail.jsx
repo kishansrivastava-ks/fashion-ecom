@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import productsData from '../data/data.json'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Heart, ShoppingCart, Ruler, Truck, RotateCcw, Shield } from 'lucide-react'
+import { Heart, ShoppingCart, Ruler, Truck, RotateCcw, Shield, X, Share2 } from 'lucide-react'
 import styled from 'styled-components'
 import PageTransition from '@/utils/PageTransition'
 
@@ -22,6 +22,9 @@ const ProductDetail = () => {
 
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
+
+  const [showSizeChart, setShowSizeChart] = useState(false)
+  const [showShareNotification, setShowShareNotification] = useState(false)
 
   // Fetch product data based on slug
   useEffect(() => {
@@ -98,6 +101,16 @@ const ProductDetail = () => {
 
   const handleMouseLeave = () => {
     setShowZoomPreview(false)
+  }
+
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href)
+      setShowShareNotification(true)
+      setTimeout(() => setShowShareNotification(false), 2000)
+    } catch (err) {
+      console.error('Failed to copy:', err)
+    }
   }
 
   return (
@@ -182,16 +195,40 @@ const ProductDetail = () => {
 
           {/* Product Info */}
           <ProductInfo>
-            <Breadcrumb>
-              <a href="/">Home</a> /{' '}
-              <a href={`/collections/${product.category}`}>
-                {product.category.charAt(0).toUpperCase() + product.category.slice(1)}
-              </a>{' '}
-              /{' '}
-              <a href={`/${product.category}/${product.subCategory}`}>
-                {product.subCategory.charAt(0).toUpperCase() + product.subCategory.slice(1)}
-              </a>
-            </Breadcrumb>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Breadcrumb>
+                <a href="/">Home</a> /{' '}
+                <a href={`/collections/${product.category}`}>
+                  {product.category.charAt(0).toUpperCase() + product.category.slice(1)}
+                </a>{' '}
+                /{' '}
+                <a href={`/${product.category}/${product.subCategory}`}>
+                  {product.subCategory.charAt(0).toUpperCase() + product.subCategory.slice(1)}
+                </a>
+              </Breadcrumb>
+
+              <ShareButtonContainer>
+                <ShareButton
+                  onClick={handleShare}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Share2 size={18} />
+                  Share
+                </ShareButton>
+                <AnimatePresence>
+                  {showShareNotification && (
+                    <ShareNotification
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                    >
+                      Link copied successfully!
+                    </ShareNotification>
+                  )}
+                </AnimatePresence>
+              </ShareButtonContainer>
+            </div>
 
             <ProductTitle>{product.name}</ProductTitle>
 
@@ -203,7 +240,12 @@ const ProductDetail = () => {
 
             {/* Size Selection */}
             <OptionGroup>
-              <OptionLabel>Select Size</OptionLabel>
+              <SizeHeader>
+                <OptionLabel>Select Size</OptionLabel>
+                <SizeChartLink onClick={() => setShowSizeChart(true)}>
+                  View Size Chart
+                </SizeChartLink>
+              </SizeHeader>
               <SizeOptions>
                 {product.sizes.map((size) => (
                   <SizeButton
@@ -283,6 +325,30 @@ const ProductDetail = () => {
             </Features>
           </ProductInfo>
         </ProductSection>
+
+        <AnimatePresence>
+          {showSizeChart && (
+            <SizeChartModal
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowSizeChart(false)}
+            >
+              <SizeChartContent
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <SizeChartCloseButton onClick={() => setShowSizeChart(false)}>
+                  <X size={24} />
+                </SizeChartCloseButton>
+                <SizeChartImage src="/images/size-chart.webp" alt="Size Chart" />
+              </SizeChartContent>
+            </SizeChartModal>
+          )}
+        </AnimatePresence>
       </Container>
     </PageTransition>
   )
@@ -429,7 +495,7 @@ const ImageBadge = styled.div`
 const ProductInfo = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.2rem;
   /* border: 2px solid blue; */
 
   @media (max-width: 640px) {
@@ -704,4 +770,126 @@ const ZoomPreviewImage = styled.img`
   height: 100%;
   object-fit: cover;
   pointer-events: none;
+`
+
+const SizeHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`
+
+const SizeChartLink = styled.button`
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 0.85rem;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: black;
+  }
+`
+
+const SizeChartModal = styled(motion.div)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 0;
+`
+
+const SizeChartContent = styled(motion.div)`
+  position: relative;
+  width: 90vw;
+  height: 90vh;
+  max-width: 1200px;
+  background: white;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    width: 95vw;
+    height: 95vh;
+  }
+`
+
+const SizeChartCloseButton = styled.button`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: black;
+    color: white;
+    transform: rotate(90deg);
+  }
+
+  @media (max-width: 768px) {
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+`
+
+const SizeChartImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+`
+const ShareButtonContainer = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+`
+
+const ShareButton = styled(motion.button)`
+  background: white;
+  border: 1px solid #e0e0e0;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #666;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: black;
+    color: black;
+  }
+`
+
+const ShareNotification = styled(motion.div)`
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background: black;
+  color: white;
+  padding: 0.6rem 1rem;
+  font-size: 0.85rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 10;
 `
