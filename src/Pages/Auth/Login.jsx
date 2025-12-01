@@ -14,6 +14,213 @@ import {
 import styled from 'styled-components'
 import { Navigate, useNavigate } from 'react-router-dom'
 import PageTransition from '@/utils/PageTransition'
+import { useAuth } from '@/contexts/AuthContext'
+
+// Component
+const Login = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [rememberMe, setRememberMe] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
+  const navigate = useNavigate()
+
+  const { login } = useAuth()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setError('')
+    setIsLoading(true)
+
+    const res = await login(email.trim(), password)
+    setIsLoading(false)
+    console.log('LOGIN RESPONSE', res)
+
+    if (res.ok) {
+      if (res.role === 'admin') {
+        navigate('/admin')
+        return
+      }
+      // on success, go to home
+      navigate('/dashboard')
+    } else {
+      setError(res.message || 'Login failed. Try again.')
+    }
+  }
+
+  const features = [
+    {
+      icon: <ShoppingBag size={22} />,
+      title: 'Exclusive Collections',
+      description: 'Access to designer pieces and limited editions',
+    },
+    {
+      icon: <Heart size={22} />,
+      title: 'Personalized Experience',
+      description: 'Save favorites and get tailored recommendations',
+    },
+    {
+      icon: <Star size={22} />,
+      title: 'Member Benefits',
+      description: 'Early access to sales and special offers',
+    },
+  ]
+
+  return (
+    <PageTransition>
+      <Container>
+        <BrandingSide>
+          <Logo
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            LUXE
+          </Logo>
+
+          <BrandingContent
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <BrandingTitle>Welcome Back to Luxury Fashion</BrandingTitle>
+
+            <BrandingText>
+              Sign in to access your account, manage orders, and enjoy a personalized shopping
+              experience tailored just for you.
+            </BrandingText>
+
+            <Features>
+              {features.map((feature, index) => (
+                <Feature
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
+                >
+                  <FeatureIcon>{feature.icon}</FeatureIcon>
+                  <FeatureText>
+                    <FeatureTitle>{feature.title}</FeatureTitle>
+                    <FeatureDescription>{feature.description}</FeatureDescription>
+                  </FeatureText>
+                </Feature>
+              ))}
+            </Features>
+          </BrandingContent>
+
+          <Testimonial
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          >
+            <TestimonialText>
+              "The quality and craftsmanship of Luxe Fashion pieces are unmatched. Every purchase
+              feels like an investment in timeless elegance."
+            </TestimonialText>
+            <TestimonialAuthor>— Priya S., Verified Customer</TestimonialAuthor>
+          </Testimonial>
+        </BrandingSide>
+
+        <FormSide>
+          <BackButton onClick={() => navigate('/')} whileHover={{ x: -5 }}>
+            <ChevronLeft size={18} />
+            Back to Home
+          </BackButton>
+
+          <FormContainer
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <MobileLogo>LUXE</MobileLogo>
+
+            <FormHeader>
+              <FormTitle>Sign In</FormTitle>
+              <FormSubtitle>Enter your credentials to access your account</FormSubtitle>
+            </FormHeader>
+
+            {error && (
+              <ErrorMessage initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
+                ⚠️ {error}
+              </ErrorMessage>
+            )}
+
+            <FormWrapper>
+              <InputGroup>
+                <Label htmlFor="email">Email Address</Label>
+                <InputWrapper>
+                  <InputIcon>
+                    <Mail size={18} />
+                  </InputIcon>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="your.email@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </InputWrapper>
+              </InputGroup>
+
+              <InputGroup>
+                <Label htmlFor="password">Password</Label>
+                <InputWrapper>
+                  <InputIcon>
+                    <Lock size={18} />
+                  </InputIcon>
+                  <Input
+                    id="password"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <PasswordToggle type="button" onClick={() => setShowPassword(!showPassword)}>
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </PasswordToggle>
+                </InputWrapper>
+              </InputGroup>
+
+              <FormOptions>
+                <RememberMe>
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                  />
+                  Remember me
+                </RememberMe>
+                <ForgotPassword href="/forgot-password">Forgot Password?</ForgotPassword>
+              </FormOptions>
+
+              <SubmitButton
+                type="button"
+                onClick={handleSubmit}
+                disabled={isLoading}
+                whileHover={{ scale: isLoading ? 1 : 1.02 }}
+                whileTap={{ scale: isLoading ? 1 : 0.98 }}
+              >
+                {isLoading ? 'SIGNING IN...' : 'SIGN IN'}
+                {!isLoading && <ArrowRight size={18} />}
+              </SubmitButton>
+            </FormWrapper>
+
+            <Divider>New to Luxe?</Divider>
+
+            <SignupPrompt>
+              Don't have an account? <a href="/signup">Create one now</a>
+            </SignupPrompt>
+          </FormContainer>
+        </FormSide>
+      </Container>
+    </PageTransition>
+  )
+}
+
+export default Login
 
 // Main Container
 const Container = styled.div`
@@ -400,203 +607,3 @@ const ErrorMessage = styled(motion.div)`
   border-radius: 4px;
   font-size: 0.9rem;
 `
-
-// Component
-const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
-  const [rememberMe, setRememberMe] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
-  const navigate = useNavigate()
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setError('')
-    setIsLoading(true)
-
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-
-    if (email === 'demo@luxe.com' && password === 'password') {
-      console.log('Login successful')
-      window.location.href = '/verify-otp'
-    } else {
-      setError('Invalid email or password. Try demo@luxe.com / password')
-    }
-
-    setIsLoading(false)
-  }
-
-  const features = [
-    {
-      icon: <ShoppingBag size={22} />,
-      title: 'Exclusive Collections',
-      description: 'Access to designer pieces and limited editions',
-    },
-    {
-      icon: <Heart size={22} />,
-      title: 'Personalized Experience',
-      description: 'Save favorites and get tailored recommendations',
-    },
-    {
-      icon: <Star size={22} />,
-      title: 'Member Benefits',
-      description: 'Early access to sales and special offers',
-    },
-  ]
-
-  return (
-    <PageTransition>
-      <Container>
-        <BrandingSide>
-          <Logo
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            LUXE
-          </Logo>
-
-          <BrandingContent
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <BrandingTitle>Welcome Back to Luxury Fashion</BrandingTitle>
-
-            <BrandingText>
-              Sign in to access your account, manage orders, and enjoy a personalized shopping
-              experience tailored just for you.
-            </BrandingText>
-
-            <Features>
-              {features.map((feature, index) => (
-                <Feature
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
-                >
-                  <FeatureIcon>{feature.icon}</FeatureIcon>
-                  <FeatureText>
-                    <FeatureTitle>{feature.title}</FeatureTitle>
-                    <FeatureDescription>{feature.description}</FeatureDescription>
-                  </FeatureText>
-                </Feature>
-              ))}
-            </Features>
-          </BrandingContent>
-
-          <Testimonial
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-          >
-            <TestimonialText>
-              "The quality and craftsmanship of Luxe Fashion pieces are unmatched. Every purchase
-              feels like an investment in timeless elegance."
-            </TestimonialText>
-            <TestimonialAuthor>— Priya S., Verified Customer</TestimonialAuthor>
-          </Testimonial>
-        </BrandingSide>
-
-        <FormSide>
-          <BackButton onClick={() => navigate('/')} whileHover={{ x: -5 }}>
-            <ChevronLeft size={18} />
-            Back to Home
-          </BackButton>
-
-          <FormContainer
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <MobileLogo>LUXE</MobileLogo>
-
-            <FormHeader>
-              <FormTitle>Sign In</FormTitle>
-              <FormSubtitle>Enter your credentials to access your account</FormSubtitle>
-            </FormHeader>
-
-            {error && (
-              <ErrorMessage initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-                ⚠️ {error}
-              </ErrorMessage>
-            )}
-
-            <FormWrapper>
-              <InputGroup>
-                <Label htmlFor="email">Email Address</Label>
-                <InputWrapper>
-                  <InputIcon>
-                    <Mail size={18} />
-                  </InputIcon>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="your.email@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </InputWrapper>
-              </InputGroup>
-
-              <InputGroup>
-                <Label htmlFor="password">Password</Label>
-                <InputWrapper>
-                  <InputIcon>
-                    <Lock size={18} />
-                  </InputIcon>
-                  <Input
-                    id="password"
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                  <PasswordToggle type="button" onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </PasswordToggle>
-                </InputWrapper>
-              </InputGroup>
-
-              <FormOptions>
-                <RememberMe>
-                  <input
-                    type="checkbox"
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                  />
-                  Remember me
-                </RememberMe>
-                <ForgotPassword href="/forgot-password">Forgot Password?</ForgotPassword>
-              </FormOptions>
-
-              <SubmitButton
-                type="button"
-                onClick={handleSubmit}
-                disabled={isLoading}
-                whileHover={{ scale: isLoading ? 1 : 1.02 }}
-                whileTap={{ scale: isLoading ? 1 : 0.98 }}
-              >
-                {isLoading ? 'SIGNING IN...' : 'SIGN IN'}
-                {!isLoading && <ArrowRight size={18} />}
-              </SubmitButton>
-            </FormWrapper>
-
-            <Divider>New to Luxe?</Divider>
-
-            <SignupPrompt>
-              Don't have an account? <a href="/signup">Create one now</a>
-            </SignupPrompt>
-          </FormContainer>
-        </FormSide>
-      </Container>
-    </PageTransition>
-  )
-}
-
-export default Login

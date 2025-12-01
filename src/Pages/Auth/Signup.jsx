@@ -16,6 +16,377 @@ import {
 } from 'lucide-react'
 import styled from 'styled-components'
 import PageTransition from '@/utils/PageTransition'
+import { useAuth } from '@/contexts/AuthContext'
+import { useNavigate } from 'react-router-dom'
+
+// Component
+const Signup = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    password: '',
+    confirmPassword: '',
+  })
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [agreedToTerms, setAgreedToTerms] = useState(false)
+  const [subscribeNewsletter, setSubscribeNewsletter] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState(false)
+
+  const { signup } = useAuth()
+  const navigate = useNavigate()
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  const getPasswordStrength = (password) => {
+    if (password.length === 0) return null
+    if (password.length < 6) return 'weak'
+    if (password.length < 10) return 'medium'
+    return 'strong'
+  }
+
+  const passwordStrength = getPasswordStrength(formData.password)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setError('')
+
+    if (!agreedToTerms) {
+      setError('Please agree to the Terms & Conditions')
+      return
+    }
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match')
+      return
+    }
+
+    setIsLoading(true)
+    const res = await signup(formData) // payload must match backend: firstName,lastName,email,phone,password,confirmPassword
+    setIsLoading(false)
+
+    if (res.ok) {
+      // backend sends back email in response
+      // navigate to otp page and pass email in state or query
+      navigate('/verify-otp', { state: { email: res.email } })
+    } else {
+      setError(res.message || 'Signup failed')
+    }
+  }
+
+  const benefits = [
+    {
+      icon: <ShoppingBag size={22} />,
+      title: 'Exclusive Access',
+      description: 'First look at new collections and limited editions',
+    },
+    {
+      icon: <Truck size={22} />,
+      title: 'Free Shipping',
+      description: 'Complimentary delivery on your first order',
+    },
+    {
+      icon: <Heart size={22} />,
+      title: 'Personalized Service',
+      description: 'Styling recommendations tailored just for you',
+    },
+  ]
+
+  return (
+    <PageTransition>
+      <Container>
+        <BrandingSide>
+          <Logo
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            LUXE
+          </Logo>
+
+          <BrandingContent
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <BrandingTitle>Join the Luxe Fashion Family</BrandingTitle>
+
+            <BrandingText>
+              Create your account today and unlock a world of exclusive fashion, personalized
+              experiences, and member-only benefits.
+            </BrandingText>
+
+            <Benefits>
+              {benefits.map((benefit, index) => (
+                <Benefit
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
+                >
+                  <BenefitIcon>{benefit.icon}</BenefitIcon>
+                  <BenefitText>
+                    <BenefitTitle>{benefit.title}</BenefitTitle>
+                    <BenefitDescription>{benefit.description}</BenefitDescription>
+                  </BenefitText>
+                </Benefit>
+              ))}
+            </Benefits>
+          </BrandingContent>
+
+          <PromoSection
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          >
+            <PromoTitle>
+              <CheckCircle size={20} />
+              Welcome Offer
+            </PromoTitle>
+            <PromoText>
+              Sign up now and get 10% off your first purchase plus free shipping on orders over
+              ₹2,999!
+            </PromoText>
+          </PromoSection>
+        </BrandingSide>
+
+        <FormSide>
+          <BackButton onClick={() => window.history.back()} whileHover={{ x: -5 }}>
+            <ChevronLeft size={18} />
+            Back
+          </BackButton>
+
+          <FormContainer
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <MobileLogo>LUXE</MobileLogo>
+
+            <FormHeader>
+              <FormTitle>Create Account</FormTitle>
+              <FormSubtitle>Join us and start your fashion journey</FormSubtitle>
+            </FormHeader>
+
+            {error && (
+              <ErrorMessage initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
+                ⚠️ {error}
+              </ErrorMessage>
+            )}
+
+            {success && (
+              <SuccessMessage initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
+                <CheckCircle size={18} />
+                Account created! Redirecting to verification...
+              </SuccessMessage>
+            )}
+
+            <FormWrapper>
+              <FormRow>
+                <InputGroup>
+                  <Label htmlFor="firstName">
+                    First Name <Required>*</Required>
+                  </Label>
+                  <InputWrapper>
+                    <InputIcon>
+                      <User size={18} />
+                    </InputIcon>
+                    <Input
+                      id="firstName"
+                      name="firstName"
+                      type="text"
+                      placeholder="John"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      required
+                    />
+                  </InputWrapper>
+                </InputGroup>
+
+                <InputGroup>
+                  <Label htmlFor="lastName">
+                    Last Name <Required>*</Required>
+                  </Label>
+                  <InputWrapper>
+                    <InputIcon>
+                      <User size={18} />
+                    </InputIcon>
+                    <Input
+                      id="lastName"
+                      name="lastName"
+                      type="text"
+                      placeholder="Doe"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      required
+                    />
+                  </InputWrapper>
+                </InputGroup>
+              </FormRow>
+
+              <InputGroup>
+                <Label htmlFor="email">
+                  Email Address <Required>*</Required>
+                </Label>
+                <InputWrapper>
+                  <InputIcon>
+                    <Mail size={18} />
+                  </InputIcon>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="your.email@example.com"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </InputWrapper>
+              </InputGroup>
+
+              <InputGroup>
+                <Label htmlFor="phone">
+                  Phone Number <Required>*</Required>
+                </Label>
+                <InputWrapper>
+                  <InputIcon>
+                    <Phone size={18} />
+                  </InputIcon>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    placeholder="+91 98765 43210"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                  />
+                </InputWrapper>
+              </InputGroup>
+
+              <InputGroup>
+                <Label htmlFor="password">
+                  Password <Required>*</Required>
+                </Label>
+                <InputWrapper>
+                  <InputIcon>
+                    <Lock size={18} />
+                  </InputIcon>
+                  <Input
+                    id="password"
+                    name="password"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Create a strong password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                  />
+                  <PasswordToggle type="button" onClick={() => setShowPassword(!showPassword)}>
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </PasswordToggle>
+                </InputWrapper>
+                {formData.password && (
+                  <>
+                    <PasswordStrength>
+                      <StrengthBar active={passwordStrength} strength="weak" />
+                      <StrengthBar
+                        active={passwordStrength === 'medium' || passwordStrength === 'strong'}
+                        strength="medium"
+                      />
+                      <StrengthBar active={passwordStrength === 'strong'} strength="strong" />
+                    </PasswordStrength>
+                    <StrengthText strength={passwordStrength}>
+                      Password strength:{' '}
+                      {passwordStrength
+                        ? passwordStrength.charAt(0).toUpperCase() + passwordStrength.slice(1)
+                        : ''}
+                    </StrengthText>
+                  </>
+                )}
+              </InputGroup>
+
+              <InputGroup>
+                <Label htmlFor="confirmPassword">
+                  Confirm Password <Required>*</Required>
+                </Label>
+                <InputWrapper>
+                  <InputIcon>
+                    <Lock size={18} />
+                  </InputIcon>
+                  <Input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    placeholder="Re-enter your password"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    required
+                  />
+                  <PasswordToggle
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  >
+                    {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </PasswordToggle>
+                </InputWrapper>
+              </InputGroup>
+
+              <CheckboxGroup>
+                <Checkbox>
+                  <input
+                    type="checkbox"
+                    checked={agreedToTerms}
+                    onChange={(e) => setAgreedToTerms(e.target.checked)}
+                  />
+                  <span>
+                    I agree to the <a href="/terms-conditions">Terms & Conditions</a> and{' '}
+                    <a href="/privacy-policy">Privacy Policy</a>
+                  </span>
+                </Checkbox>
+
+                <Checkbox>
+                  <input
+                    type="checkbox"
+                    checked={subscribeNewsletter}
+                    onChange={(e) => setSubscribeNewsletter(e.target.checked)}
+                  />
+                  <span>Subscribe to our newsletter for exclusive offers and updates</span>
+                </Checkbox>
+              </CheckboxGroup>
+
+              <SubmitButton
+                type="button"
+                onClick={handleSubmit}
+                disabled={isLoading || success}
+                whileHover={{ scale: isLoading || success ? 1 : 1.02 }}
+                whileTap={{ scale: isLoading || success ? 1 : 0.98 }}
+              >
+                {isLoading ? 'CREATING ACCOUNT...' : success ? 'SUCCESS!' : 'CREATE ACCOUNT'}
+                {!isLoading && !success && <ArrowRight size={18} />}
+              </SubmitButton>
+            </FormWrapper>
+
+            <Divider>Already have an account?</Divider>
+
+            <LoginPrompt>
+              <a href="/login">Sign in here</a>
+            </LoginPrompt>
+          </FormContainer>
+        </FormSide>
+      </Container>
+    </PageTransition>
+  )
+}
+
+export default Signup
 
 // Main Container
 const Container = styled.div`
@@ -471,374 +842,3 @@ const SuccessMessage = styled(motion.div)`
   align-items: center;
   gap: 0.5rem;
 `
-
-// Component
-const Signup = () => {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    password: '',
-    confirmPassword: '',
-  })
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [agreedToTerms, setAgreedToTerms] = useState(false)
-  const [subscribeNewsletter, setSubscribeNewsletter] = useState(true)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
-  const [success, setSuccess] = useState(false)
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
-  }
-
-  const getPasswordStrength = (password) => {
-    if (password.length === 0) return null
-    if (password.length < 6) return 'weak'
-    if (password.length < 10) return 'medium'
-    return 'strong'
-  }
-
-  const passwordStrength = getPasswordStrength(formData.password)
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setError('')
-
-    if (!agreedToTerms) {
-      setError('Please agree to the Terms & Conditions')
-      return
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match')
-      return
-    }
-
-    if (passwordStrength === 'weak') {
-      setError('Please use a stronger password (minimum 6 characters)')
-      return
-    }
-
-    setIsLoading(true)
-
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-
-    setSuccess(true)
-    setIsLoading(false)
-
-    setTimeout(() => {
-      window.location.href = '/verify-otp'
-    }, 2000)
-  }
-
-  const benefits = [
-    {
-      icon: <ShoppingBag size={22} />,
-      title: 'Exclusive Access',
-      description: 'First look at new collections and limited editions',
-    },
-    {
-      icon: <Truck size={22} />,
-      title: 'Free Shipping',
-      description: 'Complimentary delivery on your first order',
-    },
-    {
-      icon: <Heart size={22} />,
-      title: 'Personalized Service',
-      description: 'Styling recommendations tailored just for you',
-    },
-  ]
-
-  return (
-    <PageTransition>
-      <Container>
-        <BrandingSide>
-          <Logo
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            LUXE
-          </Logo>
-
-          <BrandingContent
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <BrandingTitle>Join the Luxe Fashion Family</BrandingTitle>
-
-            <BrandingText>
-              Create your account today and unlock a world of exclusive fashion, personalized
-              experiences, and member-only benefits.
-            </BrandingText>
-
-            <Benefits>
-              {benefits.map((benefit, index) => (
-                <Benefit
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
-                >
-                  <BenefitIcon>{benefit.icon}</BenefitIcon>
-                  <BenefitText>
-                    <BenefitTitle>{benefit.title}</BenefitTitle>
-                    <BenefitDescription>{benefit.description}</BenefitDescription>
-                  </BenefitText>
-                </Benefit>
-              ))}
-            </Benefits>
-          </BrandingContent>
-
-          <PromoSection
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-          >
-            <PromoTitle>
-              <CheckCircle size={20} />
-              Welcome Offer
-            </PromoTitle>
-            <PromoText>
-              Sign up now and get 10% off your first purchase plus free shipping on orders over
-              ₹2,999!
-            </PromoText>
-          </PromoSection>
-        </BrandingSide>
-
-        <FormSide>
-          <BackButton onClick={() => window.history.back()} whileHover={{ x: -5 }}>
-            <ChevronLeft size={18} />
-            Back
-          </BackButton>
-
-          <FormContainer
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <MobileLogo>LUXE</MobileLogo>
-
-            <FormHeader>
-              <FormTitle>Create Account</FormTitle>
-              <FormSubtitle>Join us and start your fashion journey</FormSubtitle>
-            </FormHeader>
-
-            {error && (
-              <ErrorMessage initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-                ⚠️ {error}
-              </ErrorMessage>
-            )}
-
-            {success && (
-              <SuccessMessage initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-                <CheckCircle size={18} />
-                Account created! Redirecting to verification...
-              </SuccessMessage>
-            )}
-
-            <FormWrapper>
-              <FormRow>
-                <InputGroup>
-                  <Label htmlFor="firstName">
-                    First Name <Required>*</Required>
-                  </Label>
-                  <InputWrapper>
-                    <InputIcon>
-                      <User size={18} />
-                    </InputIcon>
-                    <Input
-                      id="firstName"
-                      name="firstName"
-                      type="text"
-                      placeholder="John"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      required
-                    />
-                  </InputWrapper>
-                </InputGroup>
-
-                <InputGroup>
-                  <Label htmlFor="lastName">
-                    Last Name <Required>*</Required>
-                  </Label>
-                  <InputWrapper>
-                    <InputIcon>
-                      <User size={18} />
-                    </InputIcon>
-                    <Input
-                      id="lastName"
-                      name="lastName"
-                      type="text"
-                      placeholder="Doe"
-                      value={formData.lastName}
-                      onChange={handleChange}
-                      required
-                    />
-                  </InputWrapper>
-                </InputGroup>
-              </FormRow>
-
-              <InputGroup>
-                <Label htmlFor="email">
-                  Email Address <Required>*</Required>
-                </Label>
-                <InputWrapper>
-                  <InputIcon>
-                    <Mail size={18} />
-                  </InputIcon>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="your.email@example.com"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                  />
-                </InputWrapper>
-              </InputGroup>
-
-              <InputGroup>
-                <Label htmlFor="phone">
-                  Phone Number <Required>*</Required>
-                </Label>
-                <InputWrapper>
-                  <InputIcon>
-                    <Phone size={18} />
-                  </InputIcon>
-                  <Input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    placeholder="+91 98765 43210"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                  />
-                </InputWrapper>
-              </InputGroup>
-
-              <InputGroup>
-                <Label htmlFor="password">
-                  Password <Required>*</Required>
-                </Label>
-                <InputWrapper>
-                  <InputIcon>
-                    <Lock size={18} />
-                  </InputIcon>
-                  <Input
-                    id="password"
-                    name="password"
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="Create a strong password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                  />
-                  <PasswordToggle type="button" onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </PasswordToggle>
-                </InputWrapper>
-                {formData.password && (
-                  <>
-                    <PasswordStrength>
-                      <StrengthBar active={passwordStrength} strength="weak" />
-                      <StrengthBar
-                        active={passwordStrength === 'medium' || passwordStrength === 'strong'}
-                        strength="medium"
-                      />
-                      <StrengthBar active={passwordStrength === 'strong'} strength="strong" />
-                    </PasswordStrength>
-                    <StrengthText strength={passwordStrength}>
-                      Password strength:{' '}
-                      {passwordStrength
-                        ? passwordStrength.charAt(0).toUpperCase() + passwordStrength.slice(1)
-                        : ''}
-                    </StrengthText>
-                  </>
-                )}
-              </InputGroup>
-
-              <InputGroup>
-                <Label htmlFor="confirmPassword">
-                  Confirm Password <Required>*</Required>
-                </Label>
-                <InputWrapper>
-                  <InputIcon>
-                    <Lock size={18} />
-                  </InputIcon>
-                  <Input
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    placeholder="Re-enter your password"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    required
-                  />
-                  <PasswordToggle
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  >
-                    {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </PasswordToggle>
-                </InputWrapper>
-              </InputGroup>
-
-              <CheckboxGroup>
-                <Checkbox>
-                  <input
-                    type="checkbox"
-                    checked={agreedToTerms}
-                    onChange={(e) => setAgreedToTerms(e.target.checked)}
-                  />
-                  <span>
-                    I agree to the <a href="/terms-conditions">Terms & Conditions</a> and{' '}
-                    <a href="/privacy-policy">Privacy Policy</a>
-                  </span>
-                </Checkbox>
-
-                <Checkbox>
-                  <input
-                    type="checkbox"
-                    checked={subscribeNewsletter}
-                    onChange={(e) => setSubscribeNewsletter(e.target.checked)}
-                  />
-                  <span>Subscribe to our newsletter for exclusive offers and updates</span>
-                </Checkbox>
-              </CheckboxGroup>
-
-              <SubmitButton
-                type="button"
-                onClick={handleSubmit}
-                disabled={isLoading || success}
-                whileHover={{ scale: isLoading || success ? 1 : 1.02 }}
-                whileTap={{ scale: isLoading || success ? 1 : 0.98 }}
-              >
-                {isLoading ? 'CREATING ACCOUNT...' : success ? 'SUCCESS!' : 'CREATE ACCOUNT'}
-                {!isLoading && !success && <ArrowRight size={18} />}
-              </SubmitButton>
-            </FormWrapper>
-
-            <Divider>Already have an account?</Divider>
-
-            <LoginPrompt>
-              <a href="/login">Sign in here</a>
-            </LoginPrompt>
-          </FormContainer>
-        </FormSide>
-      </Container>
-    </PageTransition>
-  )
-}
-
-export default Signup

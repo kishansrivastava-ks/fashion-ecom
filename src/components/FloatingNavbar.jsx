@@ -3,6 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 import styled from 'styled-components'
 import { Search, Heart, ShoppingBag, User } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '@/contexts/AuthContext'
+import api from '@/api/axios'
+import { useCart } from '@/contexts/CartContext'
 
 // Main navigation container
 const NavContainer = styled(motion.nav)`
@@ -368,8 +371,58 @@ const FloatingNavbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [showDropdown, setShowDropdown] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [cartCount, setCartCount] = useState(3) // Example cart count
   const navigate = useNavigate()
+
+  const [cartCount, setCartCount] = useState(0)
+
+  const { openCart, cart } = useCart()
+
+  const { isAuthenticated, currentUser } = useAuth()
+  console.log('USER FROM NAVBAR', currentUser)
+
+  // effect: fetch cart when auth changes, and listen for cart updates
+  useEffect(() => {
+    let mounted = true
+
+    const fetchCartCount = async () => {
+      if (!isAuthenticated) {
+        if (mounted) setCartCount(0)
+        return
+      }
+      try {
+        const res = await api.get('/cart') // GET /api/v1/cart
+        // backend returns { items: [...], totalItems, totalAmount }
+        const count =
+          res.data.totalItems ?? res.data.items?.reduce((s, it) => s + (it.quantity || 0), 0) ?? 0
+        if (mounted) setCartCount(count)
+      } catch (err) {
+        console.error('Failed to load cart count', err)
+        // keep previous count or set to 0 if you prefer:
+        if (mounted) setCartCount(0)
+      }
+    }
+
+    fetchCartCount()
+
+    // Listen to global cart updates (dispatched by add-to-cart / other components)
+    const onCartUpdated = (evt) => {
+      // evt.detail can include cart object; if provided use it to set count quickly
+      if (evt?.detail) {
+        const d = evt.detail
+        const count = d.totalItems ?? d.items?.reduce((s, it) => s + (it.quantity || 0), 0) ?? 0
+        setCartCount(count)
+      } else {
+        // fallback: refetch from server
+        fetchCartCount()
+      }
+    }
+    window.addEventListener('cartUpdated', onCartUpdated)
+
+    return () => {
+      mounted = false
+      window.removeEventListener('cartUpdated', onCartUpdated)
+    }
+  }, [isAuthenticated])
 
   // Handle scroll effect
   useEffect(() => {
@@ -505,7 +558,8 @@ const FloatingNavbar = () => {
               </IconButton>
 
               <IconButton
-                onClick={() => navigate('/my-cart')}
+                onClick={openCart}
+                // onClick={() => window.dispatchEvent(new Event('openCartSidebar'))}
                 style={{ position: 'relative' }}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
@@ -524,7 +578,11 @@ const FloatingNavbar = () => {
               </IconButton>
 
               <IconButton
-                onClick={() => navigate('/login')}
+                onClick={() =>
+                  navigate(
+                    `${!isAuthenticated ? '/login' : currentUser.role === 'admin' ? '/admin' : '/dashboard'}`
+                  )
+                }
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 title="login"

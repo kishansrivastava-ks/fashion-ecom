@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import FloatingNavbar from '@/components/FloatingNavbar'
 import Footer from '@/components/Footer'
 import PageTransition from '@/utils/PageTransition'
 import CollectionHero from '@/components/common/CollectionHero'
 import ProductsSection from '@/components/common/ProductsSection'
 import productsData from '../../data/data.json'
+import api from '@/api/axios'
+import toast from 'react-hot-toast'
 
 // filter out those whose category is ethnic
 const ethnicProducts = productsData.products.filter(
@@ -51,6 +53,32 @@ const ethnicProducts = productsData.products.filter(
 
 // Main Component
 const WesternCollections = () => {
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    let mounted = true
+    const fetchProducts = async () => {
+      setLoading(true)
+      try {
+        const res = await api.get('/products')
+        if (mounted) {
+          setProducts(res.data.products || [])
+        }
+      } catch (err) {
+        console.error('Failed to fetch products', err)
+        toast.error(err?.response?.data?.message || 'Failed to load products')
+      } finally {
+        if (mounted) setLoading(false)
+      }
+    }
+
+    fetchProducts()
+    return () => {
+      mounted = false
+    }
+  }, [])
+
   return (
     <PageTransition>
       <FloatingNavbar />
@@ -61,7 +89,7 @@ const WesternCollections = () => {
         subtitle="Contemporary fashion that makes a statement. Explore modern silhouettes and bold designs that redefine everyday elegance and evening glamour"
       />
 
-      <ProductsSection title="OUR WESTERN COLLECTION" products={ethnicProducts} />
+      <ProductsSection title="OUR WESTERN COLLECTION" products={products} />
 
       <Footer />
     </PageTransition>

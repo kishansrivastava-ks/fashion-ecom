@@ -11,6 +11,243 @@ import {
   ChevronLeft,
 } from 'lucide-react'
 import styled from 'styled-components'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '@/contexts/AuthContext'
+
+// Component
+const OTPVerification = () => {
+  const [otp, setOtp] = useState(['', '', '', '', '', ''])
+  const [timer, setTimer] = useState(300) // 5 minutes in seconds
+  const [canResend, setCanResend] = useState(false)
+  const [isVerifying, setIsVerifying] = useState(false)
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState(false)
+  const [resendCount, setResendCount] = useState(0)
+
+  const inputRefs = useRef([])
+
+  const location = useLocation()
+  const navigate = useNavigate()
+  const { verifyEmail } = useAuth()
+  const userEmail = location?.state?.email || 'john.doe@example.com'
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((prev) => {
+        if (prev <= 1) {
+          setCanResend(true)
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60)
+    const secs = seconds % 60
+    return `${mins}:${secs.toString().padStart(2, '0')}`
+  }
+
+  const handleChange = (index, value) => {
+    if (value.length > 1) {
+      value = value.slice(-1)
+    }
+
+    if (!/^\d*$/.test(value)) return
+
+    const newOtp = [...otp]
+    newOtp[index] = value
+    setOtp(newOtp)
+    setError('')
+
+    // Auto-focus next input
+    if (value && index < 5) {
+      inputRefs.current[index + 1]?.focus()
+    }
+  }
+
+  const handleKeyDown = (index, e) => {
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      inputRefs.current[index - 1]?.focus()
+    }
+  }
+
+  const handlePaste = (e) => {
+    e.preventDefault()
+    const pastedData = e.clipboardData.getData('text').slice(0, 6)
+
+    if (!/^\d+$/.test(pastedData)) return
+
+    const newOtp = pastedData.split('')
+    while (newOtp.length < 6) newOtp.push('')
+
+    setOtp(newOtp)
+    inputRefs.current[Math.min(pastedData.length, 5)]?.focus()
+  }
+
+  const handleResend = async () => {
+    if (!canResend) return
+
+    setResendCount((prev) => prev + 1)
+    setTimer(300)
+    setCanResend(false)
+    setOtp(['', '', '', '', '', ''])
+    setError('')
+
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    console.log('OTP resent to:', userEmail)
+  }
+
+  const handleVerify = async () => {
+    const otpValue = otp.join('')
+    if (otpValue.length !== 6) {
+      setError('Please enter the complete 6-digit OTP')
+      return
+    }
+
+    setIsVerifying(true)
+    const res = await verifyEmail(userEmail, otpValue) // will set token on success
+    setIsVerifying(false)
+
+    if (res.ok) {
+      setSuccess(true)
+      setTimeout(() => navigate('/'), 1000) // go to home after short delay
+    } else {
+      setError(res.message || 'Invalid OTP')
+      setOtp(['', '', '', '', '', ''])
+      inputRefs.current[0]?.focus()
+    }
+  }
+
+  const isOtpComplete = otp.every((digit) => digit !== '')
+
+  return (
+    <Container>
+      <Card
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Header>
+          <BackButton onClick={() => window.history.back()} whileHover={{ x: -5 }}>
+            <ChevronLeft size={16} />
+            Back
+          </BackButton>
+
+          <IconWrapper
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <Mail size={36} />
+          </IconWrapper>
+
+          <Logo>LUXE</Logo>
+          <HeaderTitle>Verify Your Email</HeaderTitle>
+          <HeaderText>We've sent a 6-digit verification code to</HeaderText>
+          <EmailDisplay>
+            <Mail size={16} />
+            {userEmail}
+          </EmailDisplay>
+        </Header>
+
+        <Content>
+          {error && (
+            <ErrorMessage initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
+              <AlertCircle size={20} />
+              {error}
+            </ErrorMessage>
+          )}
+
+          {success && (
+            <SuccessMessage initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
+              <CheckCircle size={20} />
+              Email verified successfully! Redirecting to login...
+            </SuccessMessage>
+          )}
+
+          <OTPInputContainer>
+            {otp.map((digit, index) => (
+              <OTPInput
+                key={index}
+                ref={(el) => (inputRefs.current[index] = el)}
+                type="text"
+                inputMode="numeric"
+                maxLength={1}
+                value={digit}
+                onChange={(e) => handleChange(index, e.target.value)}
+                onKeyDown={(e) => handleKeyDown(index, e)}
+                onPaste={index === 0 ? handlePaste : undefined}
+                filled={digit !== ''}
+                hasError={error !== ''}
+                disabled={success}
+              />
+            ))}
+          </OTPInputContainer>
+
+          <TimerSection>
+            <Timer expired={timer === 0}>
+              <Clock size={18} />
+              {timer > 0 ? <>Code expires in {formatTime(timer)}</> : <>Code expired</>}
+            </Timer>
+          </TimerSection>
+
+          <VerifyButton
+            onClick={handleVerify}
+            disabled={!isOtpComplete || isVerifying || success}
+            whileHover={{ scale: !isOtpComplete || isVerifying || success ? 1 : 1.02 }}
+            whileTap={{ scale: !isOtpComplete || isVerifying || success ? 1 : 0.98 }}
+          >
+            {isVerifying ? 'VERIFYING...' : success ? 'VERIFIED!' : 'VERIFY EMAIL'}
+            {!isVerifying && !success && <ArrowRight size={18} />}
+          </VerifyButton>
+
+          <ResendSection>
+            <ResendText>Didn't receive the code?</ResendText>
+            <ResendButton
+              onClick={handleResend}
+              disabled={!canResend || success}
+              whileHover={{ scale: canResend && !success ? 1.05 : 1 }}
+              whileTap={{ scale: canResend && !success ? 0.95 : 1 }}
+            >
+              <RefreshCw size={16} />
+              {canResend ? 'Resend Code' : `Resend available in ${formatTime(timer)}`}
+            </ResendButton>
+            {resendCount > 0 && (
+              <div style={{ fontSize: '0.85rem', color: '#27ae60', marginTop: '0.5rem' }}>
+                ✓ Code resent successfully
+              </div>
+            )}
+          </ResendSection>
+
+          <InfoBox>
+            <InfoTitle>
+              <Shield size={18} />
+              Security Tips
+            </InfoTitle>
+            <InfoList>
+              <InfoItem>Never share your OTP with anyone</InfoItem>
+              <InfoItem>Check your spam folder if you don't see the email</InfoItem>
+              <InfoItem>The code is valid for 5 minutes only</InfoItem>
+              <InfoItem>Contact support if you continue to have issues</InfoItem>
+            </InfoList>
+          </InfoBox>
+
+          <ChangeEmailLink onClick={() => window.history.back()}>
+            Wrong email address? Go back
+          </ChangeEmailLink>
+        </Content>
+      </Card>
+    </Container>
+  )
+}
+
+export default OTPVerification
 
 // Main Container
 const Container = styled.div`
@@ -303,242 +540,3 @@ const ChangeEmailLink = styled.button`
     color: black;
   }
 `
-
-// Component
-const OTPVerification = () => {
-  const [otp, setOtp] = useState(['', '', '', '', '', ''])
-  const [timer, setTimer] = useState(300) // 5 minutes in seconds
-  const [canResend, setCanResend] = useState(false)
-  const [isVerifying, setIsVerifying] = useState(false)
-  const [error, setError] = useState('')
-  const [success, setSuccess] = useState(false)
-  const [resendCount, setResendCount] = useState(0)
-
-  const inputRefs = useRef([])
-  const userEmail = 'john.doe@example.com' // This would come from signup
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimer((prev) => {
-        if (prev <= 1) {
-          setCanResend(true)
-          return 0
-        }
-        return prev - 1
-      })
-    }, 1000)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60)
-    const secs = seconds % 60
-    return `${mins}:${secs.toString().padStart(2, '0')}`
-  }
-
-  const handleChange = (index, value) => {
-    if (value.length > 1) {
-      value = value.slice(-1)
-    }
-
-    if (!/^\d*$/.test(value)) return
-
-    const newOtp = [...otp]
-    newOtp[index] = value
-    setOtp(newOtp)
-    setError('')
-
-    // Auto-focus next input
-    if (value && index < 5) {
-      inputRefs.current[index + 1]?.focus()
-    }
-  }
-
-  const handleKeyDown = (index, e) => {
-    if (e.key === 'Backspace' && !otp[index] && index > 0) {
-      inputRefs.current[index - 1]?.focus()
-    }
-  }
-
-  const handlePaste = (e) => {
-    e.preventDefault()
-    const pastedData = e.clipboardData.getData('text').slice(0, 6)
-
-    if (!/^\d+$/.test(pastedData)) return
-
-    const newOtp = pastedData.split('')
-    while (newOtp.length < 6) newOtp.push('')
-
-    setOtp(newOtp)
-    inputRefs.current[Math.min(pastedData.length, 5)]?.focus()
-  }
-
-  const handleResend = async () => {
-    if (!canResend) return
-
-    setResendCount((prev) => prev + 1)
-    setTimer(300)
-    setCanResend(false)
-    setOtp(['', '', '', '', '', ''])
-    setError('')
-
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-
-    console.log('OTP resent to:', userEmail)
-  }
-
-  const handleVerify = async () => {
-    const otpValue = otp.join('')
-
-    if (otpValue.length !== 6) {
-      setError('Please enter the complete 6-digit OTP')
-      return
-    }
-
-    setIsVerifying(true)
-    setError('')
-
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-
-    // For demo: accept 123456 as valid OTP
-    if (otpValue === '123456') {
-      setSuccess(true)
-      setTimeout(() => {
-        window.location.href = '/login'
-      }, 2000)
-    } else {
-      setError('Invalid OTP. Please try again. (Use 123456 for demo)')
-      setOtp(['', '', '', '', '', ''])
-      inputRefs.current[0]?.focus()
-    }
-
-    setIsVerifying(false)
-  }
-
-  const isOtpComplete = otp.every((digit) => digit !== '')
-
-  return (
-    <Container>
-      <Card
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <Header>
-          <BackButton onClick={() => window.history.back()} whileHover={{ x: -5 }}>
-            <ChevronLeft size={16} />
-            Back
-          </BackButton>
-
-          <IconWrapper
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <Mail size={36} />
-          </IconWrapper>
-
-          <Logo>LUXE</Logo>
-          <HeaderTitle>Verify Your Email</HeaderTitle>
-          <HeaderText>We've sent a 6-digit verification code to</HeaderText>
-          <EmailDisplay>
-            <Mail size={16} />
-            {userEmail}
-          </EmailDisplay>
-        </Header>
-
-        <Content>
-          {error && (
-            <ErrorMessage initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-              <AlertCircle size={20} />
-              {error}
-            </ErrorMessage>
-          )}
-
-          {success && (
-            <SuccessMessage initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-              <CheckCircle size={20} />
-              Email verified successfully! Redirecting to login...
-            </SuccessMessage>
-          )}
-
-          <OTPInputContainer>
-            {otp.map((digit, index) => (
-              <OTPInput
-                key={index}
-                ref={(el) => (inputRefs.current[index] = el)}
-                type="text"
-                inputMode="numeric"
-                maxLength={1}
-                value={digit}
-                onChange={(e) => handleChange(index, e.target.value)}
-                onKeyDown={(e) => handleKeyDown(index, e)}
-                onPaste={index === 0 ? handlePaste : undefined}
-                filled={digit !== ''}
-                hasError={error !== ''}
-                disabled={success}
-              />
-            ))}
-          </OTPInputContainer>
-
-          <TimerSection>
-            <Timer expired={timer === 0}>
-              <Clock size={18} />
-              {timer > 0 ? <>Code expires in {formatTime(timer)}</> : <>Code expired</>}
-            </Timer>
-          </TimerSection>
-
-          <VerifyButton
-            onClick={handleVerify}
-            disabled={!isOtpComplete || isVerifying || success}
-            whileHover={{ scale: !isOtpComplete || isVerifying || success ? 1 : 1.02 }}
-            whileTap={{ scale: !isOtpComplete || isVerifying || success ? 1 : 0.98 }}
-          >
-            {isVerifying ? 'VERIFYING...' : success ? 'VERIFIED!' : 'VERIFY EMAIL'}
-            {!isVerifying && !success && <ArrowRight size={18} />}
-          </VerifyButton>
-
-          <ResendSection>
-            <ResendText>Didn't receive the code?</ResendText>
-            <ResendButton
-              onClick={handleResend}
-              disabled={!canResend || success}
-              whileHover={{ scale: canResend && !success ? 1.05 : 1 }}
-              whileTap={{ scale: canResend && !success ? 0.95 : 1 }}
-            >
-              <RefreshCw size={16} />
-              {canResend ? 'Resend Code' : `Resend available in ${formatTime(timer)}`}
-            </ResendButton>
-            {resendCount > 0 && (
-              <div style={{ fontSize: '0.85rem', color: '#27ae60', marginTop: '0.5rem' }}>
-                ✓ Code resent successfully
-              </div>
-            )}
-          </ResendSection>
-
-          <InfoBox>
-            <InfoTitle>
-              <Shield size={18} />
-              Security Tips
-            </InfoTitle>
-            <InfoList>
-              <InfoItem>Never share your OTP with anyone</InfoItem>
-              <InfoItem>Check your spam folder if you don't see the email</InfoItem>
-              <InfoItem>The code is valid for 5 minutes only</InfoItem>
-              <InfoItem>Contact support if you continue to have issues</InfoItem>
-            </InfoList>
-          </InfoBox>
-
-          <ChangeEmailLink onClick={() => window.history.back()}>
-            Wrong email address? Go back
-          </ChangeEmailLink>
-        </Content>
-      </Card>
-    </Container>
-  )
-}
-
-export default OTPVerification

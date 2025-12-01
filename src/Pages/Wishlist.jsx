@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
 import {
   Heart,
@@ -13,6 +13,307 @@ import {
 } from 'lucide-react'
 import styled from 'styled-components'
 import PageTransition from '@/utils/PageTransition'
+import { useAuth } from '@/contexts/AuthContext'
+import { useNavigate } from 'react-router-dom'
+import api from '@/api/axios'
+import toast from 'react-hot-toast'
+
+// Component
+const Wishlist = () => {
+  const { isAuthenticated, currentUser } = useAuth()
+
+  const [wishlistItems, setWishlistItems] = useState([])
+
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    let mounted = true
+    const fetchWishlist = async () => {
+      setLoading(true)
+      try {
+        const res = await api.get('/wishlist')
+        if (mounted) {
+          setWishlistItems(res.data.products || [])
+        }
+      } catch (err) {
+        console.error('Failed to fetch wishlist', err)
+        toast.error(err?.response?.data?.message || 'Failed to load wishlist')
+      } finally {
+        if (mounted) setLoading(false)
+      }
+    }
+
+    fetchWishlist()
+    return () => {
+      mounted = false
+    }
+  }, [])
+
+  const suggestions = [
+    {
+      id: 101,
+      name: 'Embroidered Kurta Set',
+      price: 3999,
+      image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=500&fit=crop',
+    },
+    {
+      id: 102,
+      name: 'Floral Print Dress',
+      price: 2999,
+      image: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=400&h=500&fit=crop',
+    },
+    {
+      id: 103,
+      name: 'Velvet Jacket',
+      price: 5999,
+      image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&h=500&fit=crop',
+    },
+    {
+      id: 104,
+      name: 'Traditional Sharara',
+      price: 7999,
+      image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400&h=500&fit=crop',
+    },
+  ]
+
+  const suggestionsRef = useRef(null)
+  const suggestionsInView = useInView(suggestionsRef, { once: true, margin: '-100px' })
+
+  const removeFromWishlist = (id) => {
+    setWishlistItems(wishlistItems.filter((item) => item.id !== id))
+  }
+
+  const addToCart = (item) => {
+    console.log('Added to cart:', item)
+    alert(`${item.name} added to cart!`)
+  }
+
+  const handleShare = () => {
+    alert('Share wishlist functionality')
+  }
+  const navigate = useNavigate()
+  if (!isAuthenticated) {
+    return (
+      <PageTransition>
+        <Container>
+          <HeaderSection>
+            <HeaderContainer>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  width: '100%',
+                }}
+              >
+                <BackButton onClick={() => window.history.back()} whileHover={{ x: -5 }}>
+                  <ArrowLeft size={18} />
+                  Back
+                </BackButton>
+
+                <Breadcrumb>
+                  <a href="/">Home</a> / Wishlist
+                </Breadcrumb>
+              </div>
+              <HeaderContent>
+                <TitleSection>
+                  <PageTitle>MY WISHLIST</PageTitle>
+                </TitleSection>
+              </HeaderContent>
+            </HeaderContainer>
+          </HeaderSection>
+          <FallbackSection>
+            Login to view your wishlist
+            <ActionButton onClick={() => navigate('/login')}>Login</ActionButton>
+          </FallbackSection>
+        </Container>
+      </PageTransition>
+    )
+  }
+
+  return (
+    <PageTransition>
+      <Container>
+        {/* Header */}
+        <HeaderSection>
+          <HeaderContainer>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                width: '100%',
+              }}
+            >
+              <BackButton onClick={() => window.history.back()} whileHover={{ x: -5 }}>
+                <ArrowLeft size={18} />
+                Back
+              </BackButton>
+
+              <Breadcrumb>
+                <a href="/">Home</a> / Wishlist
+              </Breadcrumb>
+            </div>
+            <HeaderContent>
+              <TitleSection>
+                <PageTitle>MY WISHLIST</PageTitle>
+                <ItemCount>
+                  {wishlistItems.length} {wishlistItems.length === 1 ? 'item' : 'items'} saved
+                </ItemCount>
+              </TitleSection>
+
+              {wishlistItems.length > 0 && (
+                <HeaderActions>
+                  <ActionButton
+                    onClick={handleShare}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Share2 size={18} />
+                    Share
+                  </ActionButton>
+                </HeaderActions>
+              )}
+            </HeaderContent>
+          </HeaderContainer>
+        </HeaderSection>
+
+        {/* Wishlist Items */}
+        <WishlistSection>
+          {wishlistItems.length === 0 ? (
+            <EmptyState>
+              <EmptyIcon>
+                <Heart size={48} />
+              </EmptyIcon>
+              <EmptyTitle>Your Wishlist is Empty</EmptyTitle>
+              <EmptyText>
+                Save your favorite items here to purchase them later or share with friends.
+              </EmptyText>
+              <EmptyButton
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => (window.location.href = '/collections')}
+              >
+                EXPLORE COLLECTIONS
+                <ChevronRight size={18} />
+              </EmptyButton>
+            </EmptyState>
+          ) : (
+            <WishlistGrid>
+              {wishlistItems.map((item, index) => (
+                <WishlistCard
+                  key={item.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ y: -5 }}
+                >
+                  <ImageContainer>
+                    <ProductImage src={item.images[0].url} alt={item.name} />
+
+                    <RemoveButton
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        removeFromWishlist(item.id)
+                      }}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <X size={18} />
+                    </RemoveButton>
+
+                    <StockBadge inStock={item.inStock}>
+                      {item.inStock ? 'In Stock' : 'Out of Stock'}
+                    </StockBadge>
+
+                    <QuickActions>
+                      <QuickButton
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          addToCart(item)
+                        }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        disabled={!item.inStock}
+                      >
+                        <ShoppingCart size={16} />
+                        Add to Cart
+                      </QuickButton>
+                      <QuickButton
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          window.location.href = `/product`
+                        }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Eye size={16} />
+                        View
+                      </QuickButton>
+                    </QuickActions>
+                  </ImageContainer>
+
+                  <ProductInfo>
+                    <ProductCategory>{item.category}</ProductCategory>
+                    <ProductName>{item.name}</ProductName>
+                    <PriceContainer>
+                      <CurrentPrice>₹{item.price.toLocaleString()}</CurrentPrice>
+                    </PriceContainer>
+                  </ProductInfo>
+                </WishlistCard>
+              ))}
+            </WishlistGrid>
+          )}
+        </WishlistSection>
+
+        {/* Suggestions Section */}
+        <SuggestionsSection ref={suggestionsRef}>
+          <SuggestionsContainer>
+            <SectionHeader>
+              <SectionTitle>You May Also Like</SectionTitle>
+              <ViewAllLink href="/collections">
+                View All
+                <ChevronRight size={16} />
+              </ViewAllLink>
+            </SectionHeader>
+
+            <SuggestionsGrid>
+              {suggestions.map((item, index) => (
+                <SuggestionCard
+                  key={item.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={suggestionsInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ y: -5 }}
+                  onClick={() => (window.location.href = `/product/${item.id}`)}
+                >
+                  <SuggestionImage image={item.image}>
+                    <WishlistIcon
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        console.log('Add to wishlist:', item.id)
+                      }}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <Heart size={16} />
+                    </WishlistIcon>
+                  </SuggestionImage>
+                  <SuggestionInfo>
+                    <SuggestionName>{item.name}</SuggestionName>
+                    <SuggestionPrice>₹{item.price.toLocaleString()}</SuggestionPrice>
+                  </SuggestionInfo>
+                </SuggestionCard>
+              ))}
+            </SuggestionsGrid>
+          </SuggestionsContainer>
+        </SuggestionsSection>
+      </Container>
+    </PageTransition>
+  )
+}
+
+export default Wishlist
 
 // Main Container
 const Container = styled.div`
@@ -472,295 +773,12 @@ const SuggestionPrice = styled.div`
   font-weight: 500;
   color: black;
 `
-
-// Component
-const Wishlist = () => {
-  const [wishlistItems, setWishlistItems] = useState([
-    {
-      id: 1,
-      name: 'Elegant Silk Saree',
-      category: 'Ethnic Wear',
-      currentPrice: 8999,
-      originalPrice: 12999,
-      rating: 4.5,
-      reviews: 124,
-      inStock: true,
-      image: '/images/saree3.jpg',
-    },
-    {
-      id: 2,
-      name: 'Designer Lehenga Set',
-      category: 'Ethnic Wear',
-      currentPrice: 15999,
-      originalPrice: 22999,
-      rating: 4.8,
-      reviews: 89,
-      inStock: true,
-      image: '/images/ethnic.png',
-    },
-    {
-      id: 3,
-      name: 'Contemporary Anarkali',
-      category: 'Ethnic Wear',
-      currentPrice: 6999,
-      originalPrice: 9999,
-      rating: 4.3,
-      reviews: 56,
-      inStock: false,
-      image: '/images/saree2.jpg',
-    },
-    {
-      id: 4,
-      name: 'Silk Palazzo Set',
-      category: 'Ethnic Wear',
-      currentPrice: 4999,
-      originalPrice: 7999,
-      rating: 4.6,
-      reviews: 72,
-      inStock: true,
-      image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=500&fit=crop',
-    },
-  ])
-
-  const suggestions = [
-    {
-      id: 101,
-      name: 'Embroidered Kurta Set',
-      price: 3999,
-      image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=500&fit=crop',
-    },
-    {
-      id: 102,
-      name: 'Floral Print Dress',
-      price: 2999,
-      image: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=400&h=500&fit=crop',
-    },
-    {
-      id: 103,
-      name: 'Velvet Jacket',
-      price: 5999,
-      image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&h=500&fit=crop',
-    },
-    {
-      id: 104,
-      name: 'Traditional Sharara',
-      price: 7999,
-      image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400&h=500&fit=crop',
-    },
-  ]
-
-  const suggestionsRef = useRef(null)
-  const suggestionsInView = useInView(suggestionsRef, { once: true, margin: '-100px' })
-
-  const removeFromWishlist = (id) => {
-    setWishlistItems(wishlistItems.filter((item) => item.id !== id))
-  }
-
-  const addToCart = (item) => {
-    console.log('Added to cart:', item)
-    alert(`${item.name} added to cart!`)
-  }
-
-  const handleShare = () => {
-    alert('Share wishlist functionality')
-  }
-
-  return (
-    <PageTransition>
-      <Container>
-        {/* Header */}
-        <HeaderSection>
-          <HeaderContainer>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                width: '100%',
-              }}
-            >
-              <BackButton onClick={() => window.history.back()} whileHover={{ x: -5 }}>
-                <ArrowLeft size={18} />
-                Back
-              </BackButton>
-
-              <Breadcrumb>
-                <a href="/">Home</a> / Wishlist
-              </Breadcrumb>
-            </div>
-            <HeaderContent>
-              <TitleSection>
-                <PageTitle>MY WISHLIST</PageTitle>
-                <ItemCount>
-                  {wishlistItems.length} {wishlistItems.length === 1 ? 'item' : 'items'} saved
-                </ItemCount>
-              </TitleSection>
-
-              {wishlistItems.length > 0 && (
-                <HeaderActions>
-                  <ActionButton
-                    onClick={handleShare}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Share2 size={18} />
-                    Share
-                  </ActionButton>
-                </HeaderActions>
-              )}
-            </HeaderContent>
-          </HeaderContainer>
-        </HeaderSection>
-
-        {/* Wishlist Items */}
-        <WishlistSection>
-          {wishlistItems.length === 0 ? (
-            <EmptyState>
-              <EmptyIcon>
-                <Heart size={48} />
-              </EmptyIcon>
-              <EmptyTitle>Your Wishlist is Empty</EmptyTitle>
-              <EmptyText>
-                Save your favorite items here to purchase them later or share with friends.
-              </EmptyText>
-              <EmptyButton
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => (window.location.href = '/collections')}
-              >
-                EXPLORE COLLECTIONS
-                <ChevronRight size={18} />
-              </EmptyButton>
-            </EmptyState>
-          ) : (
-            <WishlistGrid>
-              {wishlistItems.map((item, index) => (
-                <WishlistCard
-                  key={item.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  whileHover={{ y: -5 }}
-                >
-                  <ImageContainer>
-                    <ProductImage src={item.image} alt={item.name} />
-
-                    <RemoveButton
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        removeFromWishlist(item.id)
-                      }}
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                    >
-                      <X size={18} />
-                    </RemoveButton>
-
-                    <StockBadge inStock={item.inStock}>
-                      {item.inStock ? 'In Stock' : 'Out of Stock'}
-                    </StockBadge>
-
-                    <QuickActions>
-                      <QuickButton
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          addToCart(item)
-                        }}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        disabled={!item.inStock}
-                      >
-                        <ShoppingCart size={16} />
-                        Add to Cart
-                      </QuickButton>
-                      <QuickButton
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          window.location.href = `/product`
-                        }}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <Eye size={16} />
-                        View
-                      </QuickButton>
-                    </QuickActions>
-                  </ImageContainer>
-
-                  <ProductInfo>
-                    <ProductCategory>{item.category}</ProductCategory>
-                    <ProductName>{item.name}</ProductName>
-                    <PriceContainer>
-                      <CurrentPrice>₹{item.currentPrice.toLocaleString()}</CurrentPrice>
-                      <OriginalPrice>₹{item.originalPrice.toLocaleString()}</OriginalPrice>
-                    </PriceContainer>
-                    <Rating>
-                      <Stars>
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            size={14}
-                            fill={i < Math.floor(item.rating) ? '#ffa500' : 'none'}
-                            color="#ffa500"
-                          />
-                        ))}
-                      </Stars>
-                      <span>
-                        {item.rating} ({item.reviews})
-                      </span>
-                    </Rating>
-                  </ProductInfo>
-                </WishlistCard>
-              ))}
-            </WishlistGrid>
-          )}
-        </WishlistSection>
-
-        {/* Suggestions Section */}
-        <SuggestionsSection ref={suggestionsRef}>
-          <SuggestionsContainer>
-            <SectionHeader>
-              <SectionTitle>You May Also Like</SectionTitle>
-              <ViewAllLink href="/collections">
-                View All
-                <ChevronRight size={16} />
-              </ViewAllLink>
-            </SectionHeader>
-
-            <SuggestionsGrid>
-              {suggestions.map((item, index) => (
-                <SuggestionCard
-                  key={item.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={suggestionsInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  whileHover={{ y: -5 }}
-                  onClick={() => (window.location.href = `/product/${item.id}`)}
-                >
-                  <SuggestionImage image={item.image}>
-                    <WishlistIcon
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        console.log('Add to wishlist:', item.id)
-                      }}
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                    >
-                      <Heart size={16} />
-                    </WishlistIcon>
-                  </SuggestionImage>
-                  <SuggestionInfo>
-                    <SuggestionName>{item.name}</SuggestionName>
-                    <SuggestionPrice>₹{item.price.toLocaleString()}</SuggestionPrice>
-                  </SuggestionInfo>
-                </SuggestionCard>
-              ))}
-            </SuggestionsGrid>
-          </SuggestionsContainer>
-        </SuggestionsSection>
-      </Container>
-    </PageTransition>
-  )
-}
-
-export default Wishlist
+const FallbackSection = styled.div`
+  height: 70dvh;
+  /* border: 2px solid red; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+`

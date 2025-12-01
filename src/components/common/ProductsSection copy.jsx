@@ -1,73 +1,19 @@
 import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
-import { Search, ShoppingCart, Eye, ChevronLeft, ChevronRight, X, Minus, Plus } from 'lucide-react'
-import api from '@/api/axios'
-import toast from 'react-hot-toast'
-import CartSidebar from '../CartSidebar'
+import { Search, ShoppingCart, Eye, ChevronLeft, ChevronRight, X } from 'lucide-react'
 
 // Main Products Section Component
 const ProductsSection = ({ title, products }) => {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedProduct, setSelectedProduct] = useState(null)
-
-  const [quantityModalProduct, setQuantityModalProduct] = useState(null)
-  const [selectedQuantity, setSelectedQuantity] = useState(1)
-  const [isAddingToCart, setIsAddingToCart] = useState(false)
-
-  const [isCartOpen, setIsCartOpen] = useState(false)
-  const [cart, setCart] = useState(null)
-
   const ref = useRef(null)
-
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   // Filter products based on search term (by product code)
   const filteredProducts = products.filter((product) =>
     product.sku.toLowerCase().includes(searchTerm.toLowerCase())
   )
-
-  const fetchCart = async () => {
-    try {
-      const response = await api.get('/cart')
-      console.log('Fetched cart:', response.data.items)
-      setCart(response.data)
-    } catch (error) {
-      console.error('Error fetching cart:', error)
-    }
-  }
-
-  const handleAddToCart = async () => {
-    if (!quantityModalProduct) return
-
-    setIsAddingToCart(true)
-    console.log('Adding to cart:', quantityModalProduct, 'Quantity:', selectedQuantity)
-    try {
-      await api.post('/cart/add', {
-        productId: quantityModalProduct._id,
-        quantity: selectedQuantity,
-      })
-
-      // Close quantity modal
-      setQuantityModalProduct(null)
-      setSelectedQuantity(1)
-
-      // Fetch updated cart
-      await fetchCart()
-
-      // Open cart sidebar
-      setIsCartOpen(true)
-
-      // Optional: show success toast if you're using react-hot-toast
-      toast.success('Added to cart!')
-    } catch (error) {
-      console.error('Error adding to cart:', error)
-      // Optional: show error toast
-      toast.error('Failed to add to cart')
-    } finally {
-      setIsAddingToCart(false)
-    }
-  }
 
   return (
     <Section ref={ref}>
@@ -104,7 +50,6 @@ const ProductsSection = ({ title, products }) => {
                 index={index}
                 isInView={isInView}
                 onQuickView={() => setSelectedProduct(product)}
-                setQuantityModalProduct={setQuantityModalProduct}
               />
             ))}
           </ProductsGrid>
@@ -120,24 +65,6 @@ const ProductsSection = ({ title, products }) => {
       </Container>
 
       <QuickViewModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
-      <QuantityModal
-        product={quantityModalProduct}
-        onClose={() => {
-          setQuantityModalProduct(null)
-          setSelectedQuantity(1)
-        }}
-        onAddToCart={handleAddToCart}
-        quantity={selectedQuantity}
-        setQuantity={setSelectedQuantity}
-        isLoading={isAddingToCart}
-      />
-
-      <CartSidebar
-        open={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        cart={cart}
-        refreshCart={fetchCart}
-      />
     </Section>
   )
 }
@@ -147,7 +74,7 @@ const formatCurrency = (amount) => {
 }
 
 // Product Card Component
-const ProductCard = ({ product, index, isInView, onQuickView, setQuantityModalProduct }) => {
+const ProductCard = ({ product, index, isInView, onQuickView }) => {
   const [isHovered, setIsHovered] = useState(false)
 
   const handleCardClick = (e) => {
@@ -180,7 +107,7 @@ const ProductCard = ({ product, index, isInView, onQuickView, setQuantityModalPr
               <ActionButton
                 onClick={(e) => {
                   e.stopPropagation()
-                  setQuantityModalProduct(product)
+                  console.log('Add to cart:', product.id)
                 }}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
@@ -339,7 +266,7 @@ const QuickViewModal = ({ product, onClose }) => {
                   VIEW DETAILS
                 </PrimaryButton>
                 <SecondaryButton
-                  // onClick={() => setQuantityModalProduct(product)}
+                  onClick={() => console.log('Add to cart:', product.id)}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -350,60 +277,6 @@ const QuickViewModal = ({ product, onClose }) => {
             </DetailsColumn>
           </ModalGrid>
         </ModalContent>
-      </ModalBackdrop>
-    </AnimatePresence>
-  )
-}
-
-const QuantityModal = ({ product, onClose, onAddToCart, quantity, setQuantity, isLoading }) => {
-  if (!product) return null
-
-  const handleBackdropClick = (e) => {
-    if (e.target === e.currentTarget) {
-      onClose()
-    }
-  }
-  console.log('QuantityModal render with quantity:', quantity)
-  console.log('Product in QuantityModal:', product)
-
-  return (
-    <AnimatePresence>
-      <ModalBackdrop
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        onClick={handleBackdropClick}
-      >
-        <QuantityModalContent
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.9, opacity: 0 }}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <CloseButton onClick={onClose}>
-            <X size={20} />
-          </CloseButton>
-
-          <QuantityModalTitle>Select Quantity</QuantityModalTitle>
-          <ProductNameSmall>{product.name}</ProductNameSmall>
-
-          <QuantitySelector>
-            <QuantityBtn
-              onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              disabled={quantity <= 1}
-            >
-              <Minus size={18} />
-            </QuantityBtn>
-            <QuantityValue>{quantity}</QuantityValue>
-            <QuantityBtn onClick={() => setQuantity(quantity + 1)}>
-              <Plus size={18} />
-            </QuantityBtn>
-          </QuantitySelector>
-
-          <AddToCartBtn onClick={onAddToCart} disabled={isLoading}>
-            {isLoading ? 'Adding...' : 'Add to Cart'}
-          </AddToCartBtn>
-        </QuantityModalContent>
       </ModalBackdrop>
     </AnimatePresence>
   )
@@ -877,92 +750,6 @@ const SecondaryButton = styled(motion.button)`
   &:hover {
     background: black;
     color: white;
-  }
-`
-
-// for quantity modal
-const QuantityModalContent = styled(motion.div)`
-  background: white;
-  padding: 2.5rem;
-  border-radius: 8px;
-  max-width: 400px;
-  width: 90%;
-  position: relative;
-  text-align: center;
-`
-
-const QuantityModalTitle = styled.h3`
-  font-size: 1.25rem;
-  font-weight: 500;
-  margin: 0 0 0.5rem 0;
-  color: black;
-`
-
-const ProductNameSmall = styled.p`
-  font-size: 0.9rem;
-  color: #666;
-  margin: 0 0 2rem 0;
-  font-weight: 300;
-`
-
-const QuantitySelector = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-`
-
-const QuantityBtn = styled.button`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 2px solid #e0e0e0;
-  background: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover:not(:disabled) {
-    border-color: black;
-    background: black;
-    color: white;
-  }
-
-  &:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
-`
-
-const QuantityValue = styled.span`
-  font-size: 1.5rem;
-  font-weight: 500;
-  min-width: 40px;
-`
-
-const AddToCartBtn = styled.button`
-  width: 100%;
-  padding: 1rem 2rem;
-  background: black;
-  color: white;
-  border: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover:not(:disabled) {
-    background: #333;
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
   }
 `
 

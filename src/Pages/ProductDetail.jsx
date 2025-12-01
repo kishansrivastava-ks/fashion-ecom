@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import productsData from '../data/data.json'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Heart, ShoppingCart, Ruler, Truck, RotateCcw, Shield, X, Share2 } from 'lucide-react'
 import styled from 'styled-components'
 import PageTransition from '@/utils/PageTransition'
+import api from '@/api/axios'
+import { useCart } from '@/contexts/CartContext'
+import toast from 'react-hot-toast'
 
 // Component
 const ProductDetail = () => {
@@ -13,7 +15,7 @@ const ProductDetail = () => {
   const [selectedImage, setSelectedImage] = useState(0)
   const [selectedSize, setSelectedSize] = useState('')
   const [selectedColor, setSelectedColor] = useState('')
-  const [quantity, setQuantity] = useState(1)
+
   const [isWishlisted, setIsWishlisted] = useState(false)
 
   const [showZoomPreview, setShowZoomPreview] = useState(false)
@@ -26,29 +28,114 @@ const ProductDetail = () => {
   const [showSizeChart, setShowSizeChart] = useState(false)
   const [showShareNotification, setShowShareNotification] = useState(false)
 
+  const [quantity, setQuantity] = useState(1)
+  const [isAddingToCart, setIsAddingToCart] = useState(false)
+  const [cart, setCart] = useState(null)
+  const { openCart, fetchCart, addToCart } = useCart()
+
+  const handleAddToCart = async (productId) => {
+    setIsAddingToCart(true)
+
+    try {
+      await addToCart(productId, quantity)
+      // Close quantity modal
+      setQuantity(1)
+
+      // Fetch updated cart
+      await fetchCart()
+
+      // Open cart sidebar
+      openCart()
+
+      // Optional: show success toast if you're using react-hot-toast
+      toast.success('Added to cart!')
+    } catch (error) {
+      console.error('Error adding to cart:', error)
+      // Optional: show error toast
+      toast.error('Failed to add to cart')
+    } finally {
+      setIsAddingToCart(false)
+    }
+  }
+
   // Fetch product data based on slug
   useEffect(() => {
-    const foundProduct = productsData.products.find((p) => p.slug === slug)
+    const fetchProduct = async () => {
+      setLoading(true)
+      try {
+        const response = await api.get(`/products/slug/${slug}`)
+        const foundProduct = response.data.product
 
-    if (foundProduct) {
-      setProduct(foundProduct)
-      // Set default selections
-      if (foundProduct.sizes && foundProduct.sizes.length > 0) {
-        setSelectedSize(foundProduct.sizes[0])
+        if (foundProduct) {
+          setProduct(foundProduct)
+          // Set default selections
+          if (foundProduct.sizes && foundProduct.sizes.length > 0) {
+            setSelectedSize(foundProduct.sizes[0])
+          }
+          if (foundProduct.colors && foundProduct.colors.length > 0) {
+            const firstAvailableColor = foundProduct.colors.find((c) => c.inStock)
+            setSelectedColor(
+              firstAvailableColor ? firstAvailableColor.value : foundProduct.colors[0].value
+            )
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching product:', error)
+        setProduct(null) // Set to null if error occurs
+      } finally {
+        setLoading(false)
       }
-      if (foundProduct.colors && foundProduct.colors.length > 0) {
-        const firstAvailableColor = foundProduct.colors.find((c) => c.inStock)
-        setSelectedColor(
-          firstAvailableColor ? firstAvailableColor.value : foundProduct.colors[0].value
-        )
-      }
-      setLoading(false)
-    } else {
-      // Product not found, redirect to home or show 404
-      setLoading(false)
-      // Optionally: navigate('/404') or navigate('/')
     }
+
+    fetchProduct()
   }, [slug])
+
+  // Check if product is already in wishlist
+  useEffect(() => {
+    const checkWishlistStatus = async () => {
+      if (!product) return
+
+      try {
+        const response = await api.get('/wishlist')
+        const wishlistProducts = response.data.products
+
+        // Check if current product ID exists in the wishlist array
+        const isFound = wishlistProducts.some((item) => item._id === product._id)
+        setIsWishlisted(isFound)
+      } catch (error) {
+        console.error('Error checking wishlist status:', error)
+        // Optional: Handle 401 Unauthorized if user isn't logged in
+      }
+    }
+
+    checkWishlistStatus()
+  }, [product])
+
+  const handleWishlistToggle = async () => {
+    if (!product) return
+
+    // Optimistic UI update (optional: instant visual feedback before API completes)
+    setIsWishlisted(!isWishlisted)
+
+    try {
+      if (isWishlisted) {
+        // Remove from wishlist
+        await api.post('/wishlist/remove', { productId: product._id })
+        setIsWishlisted(false)
+        toast.success('Removed from wishlist')
+      } else {
+        // Add to wishlist
+        await api.post('/wishlist/add', { productId: product._id })
+        setIsWishlisted(true)
+        toast.success('Added to wishlist')
+      }
+    } catch (error) {
+      console.error('Wishlist error:', error)
+      toast.error('Failed to update wishlist')
+      // Revert state if you used optimistic update
+      setIsWishlisted(!isWishlisted)
+    }
+  }
 
   // Add loading state
   if (loading) {
@@ -123,7 +210,7 @@ const ProductDetail = () => {
               {product.images.map((image, index) => (
                 <Thumbnail
                   key={index}
-                  image={image}
+                  image={image.url}
                   active={selectedImage === index}
                   onClick={() => setSelectedImage(index)}
                   whileHover={{ scale: 1.05 }}
@@ -148,7 +235,7 @@ const ProductDetail = () => {
               )}
               <MainImage
                 ref={imageRef}
-                src={product.images[selectedImage]}
+                src={product.images[selectedImage].url}
                 alt={product.name}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -181,7 +268,7 @@ const ProductDetail = () => {
                   transition={{ duration: 0.2 }}
                 >
                   <ZoomPreviewImage
-                    src={product.images[selectedImage]}
+                    src={product.images[selectedImage].url}
                     alt={product.name}
                     style={{
                       transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`,
@@ -277,9 +364,13 @@ const ProductDetail = () => {
 
             {/* Action Buttons */}
             <ActionButtons>
-              <AddToCartButton whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <AddToCartButton
+                onClick={() => handleAddToCart(product._id)}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
                 <ShoppingCart size={20} />
-                ADD TO CART
+                {isAddingToCart ? 'Adding...' : 'ADD TO CART'}
               </AddToCartButton>
 
               <BuyNowButton whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
@@ -288,11 +379,16 @@ const ProductDetail = () => {
 
               <WishlistButton
                 active={isWishlisted}
-                onClick={() => setIsWishlisted(!isWishlisted)}
+                onClick={handleWishlistToggle}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
+                aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
               >
-                <Heart size={20} fill={isWishlisted ? 'currentColor' : 'none'} />
+                <Heart
+                  size={20}
+                  color={isWishlisted ? '#ff0000' : 'currentColor'} // Red outline if active
+                  fill={isWishlisted ? '#ff0000' : 'none'} // Red fill if active
+                />
               </WishlistButton>
             </ActionButtons>
 
@@ -425,15 +521,17 @@ const ThumbnailList = styled.div`
 const Thumbnail = styled(motion.div)`
   width: 80px;
   height: 100px;
+  border: 2px solid ${(props) => (props.active ? 'black' : 'transparent')};
+  cursor: pointer;
+  overflow: hidden;
+  background: #f5f5f5;
   background-image: url(${(props) => props.image});
   background-size: cover;
   background-position: center;
-  cursor: pointer;
-  border: 2px solid ${(props) => (props.active ? 'black' : '#e0e0e0')};
   transition: border-color 0.3s ease;
 
   &:hover {
-    border-color: black;
+    border-color: ${(props) => (props.active ? 'black' : '#666')};
   }
 
   @media (max-width: 968px) {

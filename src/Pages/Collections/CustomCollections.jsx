@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import FloatingNavbar from '@/components/FloatingNavbar'
 import Footer from '@/components/Footer'
 import PageTransition from '@/utils/PageTransition'
 import CollectionHero from '@/components/common/CollectionHero'
 import ProductsSection from '@/components/common/ProductsSection'
 import productsData from '../../data/data.json'
+import api from '@/api/axios'
+import toast from 'react-hot-toast'
 
 // filter out those whose category is ethnic
 const ethnicProducts = productsData.products.filter(
@@ -51,6 +53,32 @@ const ethnicProducts = productsData.products.filter(
 
 // Main Component
 const CustomCollections = () => {
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    let mounted = true
+    const fetchProducts = async () => {
+      setLoading(true)
+      try {
+        const res = await api.get('/products')
+        if (mounted) {
+          setProducts(res.data.products || [])
+        }
+      } catch (err) {
+        console.error('Failed to fetch products', err)
+        toast.error(err?.response?.data?.message || 'Failed to load products')
+      } finally {
+        if (mounted) setLoading(false)
+      }
+    }
+
+    fetchProducts()
+    return () => {
+      mounted = false
+    }
+  }, [])
+
   return (
     <PageTransition>
       <FloatingNavbar />
@@ -61,7 +89,7 @@ const CustomCollections = () => {
         subtitle="Your vision, our expertise. Bespoke creations tailored exclusively for you, where every stitch tells your unique story and personal style comes to life"
       />
 
-      <ProductsSection title="OUR BRIDAL COLLECTION" products={ethnicProducts} />
+      <ProductsSection title="OUR BRIDAL COLLECTION" products={products} />
 
       <Footer />
     </PageTransition>
