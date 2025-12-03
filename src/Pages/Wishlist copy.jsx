@@ -186,74 +186,83 @@ const Wishlist = () => {
                 <Heart size={48} />
               </EmptyIcon>
               <EmptyTitle>Your Wishlist is Empty</EmptyTitle>
-              <EmptyText>Save your favorite items here to purchase them later.</EmptyText>
-              <EmptyButton onClick={() => (window.location.href = '/collections')}>
-                EXPLORE COLLECTIONS <ChevronRight size={18} />
+              <EmptyText>
+                Save your favorite items here to purchase them later or share with friends.
+              </EmptyText>
+              <EmptyButton
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => (window.location.href = '/collections')}
+              >
+                EXPLORE COLLECTIONS
+                <ChevronRight size={18} />
               </EmptyButton>
             </EmptyState>
           ) : (
-            <WishlistList>
-              {/* 1. Table Headers */}
-              <TableHeaders>
-                <div>Product</div>
-                <div>Price</div>
-                <div>Stock Status</div>
-                <div>Action</div>
-              </TableHeaders>
-
-              {/* 2. Items List */}
+            <WishlistGrid>
               {wishlistItems.map((item, index) => (
-                <WishlistRow
+                <WishlistCard
                   key={item.id}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ y: -5 }}
                 >
-                  {/* Column 1: Product Details */}
-                  <ProductColumn>
-                    <ItemImage
-                      src={item.images[0].url}
-                      alt={item.name}
-                      onClick={() => (window.location.href = `/products/${item.slug}`)}
-                    />
-                    <ProductDetail>
-                      <ProductName
-                        onClick={() => (window.location.href = `/products/${item.slug}`)}
-                      >
-                        {item.name}
-                      </ProductName>
-                      <ProductCategory>{item.category}</ProductCategory>
-                      <RemoveText onClick={() => removeFromWishlist(item.id)}>Remove</RemoveText>
-                    </ProductDetail>
-                  </ProductColumn>
+                  <ImageContainer>
+                    <ProductImage src={item.images[0].url} alt={item.name} />
 
-                  {/* Column 2: Price */}
-                  <CenterColumn>
-                    <PriceText>₹{item.price.toLocaleString()}</PriceText>
-                  </CenterColumn>
-
-                  {/* Column 3: Stock Status */}
-                  <CenterColumn>
-                    <StatusBadge inStock={item.inStock}>
-                      {item.inStock ? 'In Stock' : 'Out of Stock'}
-                    </StatusBadge>
-                  </CenterColumn>
-
-                  {/* Column 4: Action Button */}
-                  <CenterColumn>
-                    <AddToCartButton
-                      onClick={() => addToCart(item)}
-                      disabled={!item.inStock}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+                    <RemoveButton
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        removeFromWishlist(item.id)
+                      }}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
                     >
-                      <ShoppingCart size={16} />
-                      Add to Cart
-                    </AddToCartButton>
-                  </CenterColumn>
-                </WishlistRow>
+                      <X size={18} />
+                    </RemoveButton>
+
+                    <StockBadge inStock={item.inStock}>
+                      {item.inStock ? 'In Stock' : 'Out of Stock'}
+                    </StockBadge>
+
+                    <QuickActions>
+                      <QuickButton
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          addToCart(item)
+                        }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        disabled={!item.inStock}
+                      >
+                        <ShoppingCart size={16} />
+                        Add to Cart
+                      </QuickButton>
+                      <QuickButton
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          window.location.href = `/product`
+                        }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Eye size={16} />
+                        View
+                      </QuickButton>
+                    </QuickActions>
+                  </ImageContainer>
+
+                  <ProductInfo>
+                    <ProductCategory>{item.category}</ProductCategory>
+                    <ProductName>{item.name}</ProductName>
+                    <PriceContainer>
+                      <CurrentPrice>₹{item.price.toLocaleString()}</CurrentPrice>
+                    </PriceContainer>
+                  </ProductInfo>
+                </WishlistCard>
               ))}
-            </WishlistList>
+            </WishlistGrid>
           )}
         </WishlistSection>
 
@@ -556,7 +565,6 @@ const ProductName = styled.h3`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  cursor: pointer;
 `
 
 const PriceContainer = styled.div`
@@ -773,131 +781,4 @@ const FallbackSection = styled.div`
   align-items: center;
   justify-content: center;
   gap: 2rem;
-`
-const WishlistList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-`
-
-const TableHeaders = styled.div`
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1.2fr; /* 4 Columns */
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #e0e0e0;
-  font-weight: 600;
-  color: black;
-
-  div:not(:first-child) {
-    text-align: center;
-  }
-
-  @media (max-width: 768px) {
-    display: none; /* Hide headers on mobile */
-  }
-`
-
-const WishlistRow = styled(motion.div)`
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1.2fr;
-  align-items: center;
-  padding: 1rem 0;
-  border-bottom: 1px solid #e0e0e0;
-  background: white;
-
-  @media (max-width: 768px) {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1.5rem;
-    border: 1px solid #eee;
-    align-items: flex-start;
-  }
-`
-
-const ProductColumn = styled.div`
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-`
-
-const ItemImage = styled.img`
-  width: 100px;
-  height: 130px;
-  object-fit: cover;
-  cursor: pointer;
-  background: #f8f8f8;
-`
-
-const ProductDetail = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-`
-
-const RemoveText = styled.button`
-  background: none;
-  border: none;
-  color: #666;
-  text-decoration: underline;
-  cursor: pointer;
-  padding: 0;
-  font-size: 0.85rem;
-  text-align: left;
-  margin-top: 0.5rem;
-  width: fit-content;
-
-  &:hover {
-    color: #e74c3c;
-  }
-`
-
-const CenterColumn = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  @media (max-width: 768px) {
-    justify-content: flex-start;
-    width: 100%;
-  }
-`
-
-const PriceText = styled.div`
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: black;
-`
-
-const StatusBadge = styled.span`
-  color: ${(props) => (props.inStock ? '#27ae60' : '#e74c3c')};
-  background: ${(props) => (props.inStock ? 'rgba(39, 174, 96, 0.1)' : 'rgba(231, 76, 60, 0.1)')};
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  font-weight: 500;
-`
-
-const AddToCartButton = styled(motion.button)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.8rem 1.2rem;
-  background: black;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 0.9rem;
-  width: 100%;
-  max-width: 180px;
-
-  &:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-  }
-
-  &:hover:not(:disabled) {
-    background: #333;
-  }
 `

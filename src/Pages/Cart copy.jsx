@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
 import {
   ShoppingCart,
@@ -13,67 +13,132 @@ import {
   ChevronRight,
   Gift,
   AlertCircle,
+  Loader2,
 } from 'lucide-react'
 import styled from 'styled-components'
 import { useAuth } from '@/contexts/AuthContext'
 import { Navigate, useNavigate } from 'react-router-dom'
+import api from '@/api/axios'
+import toast from 'react-hot-toast'
 
 // Component
 const Cart = () => {
   const { isAuthenticated } = useAuth()
 
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: 'Elegant Silk Saree',
-      category: 'Ethnic Wear',
-      size: 'Free Size',
-      color: 'Black',
-      quantity: 1,
-      price: 8999,
-      originalPrice: 12999,
-      image: '/images/saree2.jpg',
-    },
-    {
-      id: 2,
-      name: 'Designer Lehenga Set',
-      category: 'Ethnic Wear',
-      size: 'M',
-      color: 'Maroon',
-      quantity: 1,
-      price: 15999,
-      originalPrice: 22999,
-      image: '/images/ethnic.png',
-    },
-  ])
+  const [cartItems, setCartItems] = useState([])
+  const [loading, setLoading] = useState(true)
 
   const [promoCode, setPromoCode] = useState('')
   const [appliedPromo, setAppliedPromo] = useState(null)
 
-  const updateQuantity = (id, change) => {
-    setCartItems(
-      cartItems.map((item) => {
-        if (item.id === id) {
-          const newQuantity = Math.max(1, Math.min(10, item.quantity + change))
-          return { ...item, quantity: newQuantity }
-        }
-        return item
+  const [updatingItems, setUpdatingItems] = useState(new Set())
+
+  // Fetch Cart Data
+  useEffect(() => {
+    const fetchCart = async () => {
+      if (!isAuthenticated) return
+
+      try {
+        setLoading(true)
+        const response = await api.get('/cart')
+
+        // Transform API response to match the structure used in your UI
+        const formattedItems = response.data.items.map((item) => ({
+          id: item.product._id,
+          name: item.product.name,
+          slug: item.product.slug,
+          price: item.product.price,
+          // API doesn't return originalPrice/size/color in your example, so we handle fallbacks
+          originalPrice: item.product.price,
+          image:
+            item.product.images.find((img) => img.isPrimary)?.url || item.product.images[0]?.url,
+          quantity: item.quantity,
+          stockQuantity: item.product.stockQuantity,
+          // These fields were in dummy data but not in API example.
+          // You can remove them or keep them empty/default.
+          category: 'General',
+          size: 'N/A',
+          color: 'N/A',
+        }))
+
+        setCartItems(formattedItems)
+      } catch (error) {
+        console.error('Error fetching cart:', error)
+        toast.error('Failed to load cart')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchCart()
+  }, [isAuthenticated])
+
+  const handleUpdateQuantity = async (itemId, newQuantity) => {
+    // 1. Validation checks
+    if (newQuantity < 1 || newQuantity > 10) return
+    if (updatingItems.has(itemId)) return // Prevent double clicks
+
+    // 2. Add item to loading state
+    setUpdatingItems((prev) => new Set(prev).add(itemId))
+
+    try {
+      // 3. Call API
+      await api.post('/cart/update', {
+        productId: itemId,
+        quantity: newQuantity,
       })
-    )
+
+      // 4. Update local state on success
+      setCartItems((prev) =>
+        prev.map((item) => (item.id === itemId ? { ...item, quantity: newQuantity } : item))
+      )
+    } catch (error) {
+      console.error('Update error:', error)
+      toast.error('Failed to update quantity')
+    } finally {
+      // 5. Remove item from loading state
+      setUpdatingItems((prev) => {
+        const next = new Set(prev)
+        next.delete(itemId)
+        return next
+      })
+    }
+  }
+  const removeItem = async (productId) => {
+    try {
+      await api.post('/cart/remove', { productId })
+
+      // Update local state to remove item from UI immediately
+      setCartItems((prev) => prev.filter((item) => item.id !== productId))
+      toast.success('Item removed from cart')
+    } catch (error) {
+      console.error('Error removing item:', error)
+      toast.error('Failed to remove item')
+    }
   }
 
-  const removeItem = (id) => {
-    setCartItems(cartItems.filter((item) => item.id !== id))
+  const moveToWishlist = async (item) => {
+    try {
+      // 1. Add to wishlist
+      await api.post('/wishlist/add', { productId: item.id })
+
+      // 2. Remove from cart
+      await api.post('/cart/remove', { productId: item.id })
+
+      // 3. Update UI
+      setCartItems((prev) => prev.filter((i) => i.id !== item.id))
+      toast.success('Moved to wishlist')
+    } catch (error) {
+      console.error('Error moving to wishlist:', error)
+      toast.error('Failed to move to wishlist')
+    }
   }
 
-  const moveToWishlist = (item) => {
-    console.log('Move to wishlist:', item)
-    removeItem(item.id)
-  }
-
-  const clearCart = () => {
+  const clearCart = async () => {
     if (window.confirm('Are you sure you want to clear your cart?')) {
+      await api.post('/cart/clear')
       setCartItems([])
+      toast.success('Cart cleared')
     }
   }
 
@@ -126,7 +191,9 @@ const Cart = () => {
 
       {/* Main Content */}
       <MainContent>
-        {!isAuthenticated ? (
+        {loading ? (
+          <div style={{ textAlign: 'center', padding: '4rem' }}>Loading cart...</div>
+        ) : !isAuthenticated ? (
           <FallbackSection>
             <div>Login to view your cart</div>
             <EmptyButton onClick={() => navigate('/login')}>Login</EmptyButton>
@@ -143,7 +210,7 @@ const Cart = () => {
                 <EmptyButton
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => (window.location.href = '/collections')}
+                  onClick={() => (window.location.href = '/')}
                 >
                   START SHOPPING
                   <ChevronRight size={18} />
@@ -192,27 +259,52 @@ const Cart = () => {
                             </RemoveButton>
                           </ItemHeader>
 
-                          <ItemOptions>
-                            <Option>
-                              <strong>Size:</strong> {item.size}
-                            </Option>
-                            <Option>
-                              <strong>Color:</strong> {item.color}
-                            </Option>
-                          </ItemOptions>
+                          {(item.size !== 'N/A' || item.color !== 'N/A') && (
+                            <ItemOptions>
+                              {item.size !== 'N/A' && (
+                                <Option>
+                                  <strong>Size:</strong> {item.size}
+                                </Option>
+                              )}
+                              {item.color !== 'N/A' && (
+                                <Option>
+                                  <strong>Color:</strong> {item.color}
+                                </Option>
+                              )}
+                            </ItemOptions>
+                          )}
 
                           <ItemActions>
                             <QuantitySelector>
                               <QuantityButton
-                                onClick={() => updateQuantity(item.id, -1)}
-                                disabled={item.quantity <= 1}
+                                onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
+                                disabled={item.quantity <= 1 || updatingItems.has(item.id)}
+                                style={{ opacity: updatingItems.has(item.id) ? 0.5 : 1 }}
                               >
                                 <Minus size={16} />
                               </QuantityButton>
-                              <QuantityDisplay>{item.quantity}</QuantityDisplay>
+
+                              <QuantityDisplay>
+                                {updatingItems.has(item.id) ? (
+                                  <motion.div
+                                    animate={{ rotate: 360 }}
+                                    transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                                  >
+                                    <Loader2 size={14} />
+                                  </motion.div>
+                                ) : (
+                                  item.quantity
+                                )}
+                              </QuantityDisplay>
+
                               <QuantityButton
-                                onClick={() => updateQuantity(item.id, 1)}
-                                disabled={item.quantity >= 10}
+                                onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
+                                disabled={
+                                  item.quantity >= 10 ||
+                                  item.quantity >= item.stockQuantity ||
+                                  updatingItems.has(item.id)
+                                }
+                                style={{ opacity: updatingItems.has(item.id) ? 0.5 : 1 }}
                               >
                                 <Plus size={16} />
                               </QuantityButton>
@@ -230,13 +322,21 @@ const Cart = () => {
 
                         <ItemPricing>
                           <ItemPrice>₹{(item.price * item.quantity).toLocaleString()}</ItemPrice>
-                          <OriginalPrice>
-                            ₹{(item.originalPrice * item.quantity).toLocaleString()}
-                          </OriginalPrice>
-                          <Savings>
-                            Save ₹
-                            {((item.originalPrice - item.price) * item.quantity).toLocaleString()}
-                          </Savings>
+                          {/* Only show original price/savings if distinct from current price */}
+                          {item.originalPrice > item.price && (
+                            <>
+                              <OriginalPrice>
+                                ₹{(item.originalPrice * item.quantity).toLocaleString()}
+                              </OriginalPrice>
+                              <Savings>
+                                Save ₹
+                                {(
+                                  (item.originalPrice - item.price) *
+                                  item.quantity
+                                ).toLocaleString()}
+                              </Savings>
+                            </>
+                          )}
                         </ItemPricing>
                       </CartItem>
                     ))}

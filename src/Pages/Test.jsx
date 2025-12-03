@@ -14,6 +14,7 @@ import CallToAction from '@/components/common/CallToAction'
 import BentoGallery from '@/components/common/BentoGallery'
 import Banner from '@/components/common/Banner'
 import EthnicBannerScroll from '@/components/home/EthnicBannerScroll'
+import StandardNavbar from '@/components/StandardNavbar'
 
 // Component Functions
 const HeroSection = () => {
@@ -398,8 +399,9 @@ const Test = () => {
   return (
     <PageTransition>
       <Banner />
+      <StandardNavbar />
       {/* <FloatingNavbar /> */}
-      <FloatingNavbarWrapper />
+      {/* <FloatingNavbarWrapper /> */}
       <HeroSection />
       <QuoteDivider />
       {/* <FeaturedCollection /> */}

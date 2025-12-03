@@ -33,6 +33,8 @@ const Cart = () => {
 
   const [updatingItems, setUpdatingItems] = useState(new Set())
 
+  const [orderNotes, setOrderNotes] = useState('')
+
   // Fetch Cart Data
   useEffect(() => {
     const fetchCart = async () => {
@@ -228,119 +230,86 @@ const Cart = () => {
                   </CartHeader>
 
                   <CartItemsList>
+                    {/* 1. Add the Table Header Row */}
+                    <TableHeaders>
+                      <div>Product</div>
+                      <div>Price</div>
+                      <div>Quantity</div>
+                      <div>Total</div>
+                    </TableHeaders>
+
+                    {/* 2. Update the Item Structure */}
                     {cartItems.map((item, index) => (
                       <CartItem
                         key={item.id}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.3, delay: index * 0.1 }}
                       >
-                        <ItemImage
-                          image={item.image}
-                          onClick={() => (window.location.href = `/product/${item.id}`)}
-                        />
-
-                        <ItemDetails>
-                          <ItemHeader>
-                            <ItemInfo>
-                              <ItemName
-                                onClick={() => (window.location.href = `/product/${item.id}`)}
-                              >
-                                {item.name}
-                              </ItemName>
-                              <ItemCategory>{item.category}</ItemCategory>
-                            </ItemInfo>
-                            <RemoveButton
-                              onClick={() => removeItem(item.id)}
-                              whileHover={{ scale: 1.1 }}
-                              whileTap={{ scale: 0.9 }}
+                        {/* Column 1: Product Image & Details */}
+                        <ProductColumn>
+                          <ItemImage
+                            image={item.image}
+                            onClick={() => (window.location.href = `/product/${item.id}`)}
+                          />
+                          <ProductInfo>
+                            <ItemName
+                              onClick={() => (window.location.href = `/product/${item.id}`)}
                             >
-                              <X size={20} />
-                            </RemoveButton>
-                          </ItemHeader>
+                              {item.name}
+                            </ItemName>
+                            <ItemCategory>{item.category}</ItemCategory>
+                            {/* "Remove" text link matches the image style */}
+                            <RemoveText onClick={() => removeItem(item.id)}>Remove</RemoveText>
+                          </ProductInfo>
+                        </ProductColumn>
 
-                          {(item.size !== 'N/A' || item.color !== 'N/A') && (
-                            <ItemOptions>
-                              {item.size !== 'N/A' && (
-                                <Option>
-                                  <strong>Size:</strong> {item.size}
-                                </Option>
-                              )}
-                              {item.color !== 'N/A' && (
-                                <Option>
-                                  <strong>Color:</strong> {item.color}
-                                </Option>
-                              )}
-                            </ItemOptions>
-                          )}
+                        {/* Column 2: Unit Price */}
+                        <CenterColumn>
+                          <ItemPrice>₹{item.price.toLocaleString()}</ItemPrice>
+                        </CenterColumn>
 
-                          <ItemActions>
-                            <QuantitySelector>
-                              <QuantityButton
-                                onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
-                                disabled={item.quantity <= 1 || updatingItems.has(item.id)}
-                                style={{ opacity: updatingItems.has(item.id) ? 0.5 : 1 }}
-                              >
-                                <Minus size={16} />
-                              </QuantityButton>
-
-                              <QuantityDisplay>
-                                {updatingItems.has(item.id) ? (
-                                  <motion.div
-                                    animate={{ rotate: 360 }}
-                                    transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                                  >
-                                    <Loader2 size={14} />
-                                  </motion.div>
-                                ) : (
-                                  item.quantity
-                                )}
-                              </QuantityDisplay>
-
-                              <QuantityButton
-                                onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
-                                disabled={
-                                  item.quantity >= 10 ||
-                                  item.quantity >= item.stockQuantity ||
-                                  updatingItems.has(item.id)
-                                }
-                                style={{ opacity: updatingItems.has(item.id) ? 0.5 : 1 }}
-                              >
-                                <Plus size={16} />
-                              </QuantityButton>
-                            </QuantitySelector>
-
-                            <WishlistButton
-                              onClick={() => moveToWishlist(item)}
-                              whileHover={{ scale: 1.05 }}
+                        {/* Column 3: Quantity Selector */}
+                        <CenterColumn>
+                          <QuantitySelector>
+                            <QuantityButton
+                              onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
+                              disabled={item.quantity <= 1 || updatingItems.has(item.id)}
                             >
-                              <Heart size={16} />
-                              Move to Wishlist
-                            </WishlistButton>
-                          </ItemActions>
-                        </ItemDetails>
+                              <Minus size={14} />
+                            </QuantityButton>
+                            <QuantityDisplay>
+                              {updatingItems.has(item.id) ? (
+                                <Loader2 size={14} className="animate-spin" />
+                              ) : (
+                                item.quantity
+                              )}
+                            </QuantityDisplay>
+                            <QuantityButton
+                              onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
+                              disabled={item.quantity >= 10 || updatingItems.has(item.id)}
+                            >
+                              <Plus size={14} />
+                            </QuantityButton>
+                          </QuantitySelector>
+                        </CenterColumn>
 
-                        <ItemPricing>
+                        {/* Column 4: Total Price */}
+                        <CenterColumn>
                           <ItemPrice>₹{(item.price * item.quantity).toLocaleString()}</ItemPrice>
-                          {/* Only show original price/savings if distinct from current price */}
-                          {item.originalPrice > item.price && (
-                            <>
-                              <OriginalPrice>
-                                ₹{(item.originalPrice * item.quantity).toLocaleString()}
-                              </OriginalPrice>
-                              <Savings>
-                                Save ₹
-                                {(
-                                  (item.originalPrice - item.price) *
-                                  item.quantity
-                                ).toLocaleString()}
-                              </Savings>
-                            </>
-                          )}
-                        </ItemPricing>
+                        </CenterColumn>
                       </CartItem>
                     ))}
                   </CartItemsList>
+
+                  <OrderNotesContainer>
+                    <OrderNotesLabel>Order notes</OrderNotesLabel>
+                    <OrderNotesTextarea
+                      placeholder="Notes about your order, e.g. special notes for delivery."
+                      value={orderNotes}
+                      onChange={(e) => setOrderNotes(e.target.value)}
+                    />
+                  </OrderNotesContainer>
                 </CartItemsSection>
 
                 {/* Order Summary */}
@@ -554,8 +523,8 @@ const CartHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
   border-bottom: 1px solid #e0e0e0;
 `
 
@@ -587,16 +556,19 @@ const CartItemsList = styled.div`
 
 const CartItem = styled(motion.div)`
   display: grid;
-  grid-template-columns: 140px 1fr auto;
-  gap: 1.5rem;
-  padding: 1.5rem;
-  background: #f8f8f8;
-  border-radius: 4px;
-  position: relative;
+  grid-template-columns: 2fr 1fr 1fr 1fr; /* 4 Columns */
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e0e0e0;
+  background: white;
 
   @media (max-width: 768px) {
-    grid-template-columns: 100px 1fr;
-    gap: 1rem;
+    /* Stack on mobile */
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border: 1px solid #eee;
   }
 `
 
@@ -708,41 +680,35 @@ const ItemActions = styled.div`
 const QuantitySelector = styled.div`
   display: flex;
   align-items: center;
-  border: 1px solid #e0e0e0;
-  background: white;
-  width: fit-content;
+  background: #f3f3f3; /* Light gray background */
+  border-radius: 4px;
+  padding: 0.2rem;
 `
 
 const QuantityButton = styled.button`
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   border: none;
-  background: none;
+  background: transparent;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.3s ease;
-
-  &:hover {
-    background: #f8f8f8;
-  }
+  color: #333;
 
   &:disabled {
     opacity: 0.3;
-    cursor: not-allowed;
+  }
+  &:hover:not(:disabled) {
+    color: black;
   }
 `
 
 const QuantityDisplay = styled.div`
-  width: 50px;
-  height: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 30px;
+  text-align: center;
   font-size: 0.95rem;
-  border-left: 1px solid #e0e0e0;
-  border-right: 1px solid #e0e0e0;
+  font-weight: 500;
 `
 
 const WishlistButton = styled(motion.button)`
@@ -1066,4 +1032,90 @@ const FallbackSection = styled.div`
   justify-content: center;
   gap: 2rem;
   width: 92vw;
+`
+const TableHeaders = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr; /* Matches the 4 columns */
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  /* margin-bottom: 1rem; */
+  font-weight: 600;
+  color: black;
+
+  /* Center align the last 3 headers */
+  div:not(:first-child) {
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    display: none; /* Hide headers on mobile */
+  }
+`
+
+const ProductColumn = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+`
+
+const ProductInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+`
+
+const CenterColumn = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const RemoveText = styled.button`
+  background: none;
+  border: none;
+  color: #666;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.85rem;
+  text-align: left;
+  margin-top: 0.5rem;
+
+  &:hover {
+    color: black;
+  }
+`
+const OrderNotesContainer = styled.div`
+  margin-top: 3rem;
+  padding-top: 2rem;
+  max-width: 500px;
+`
+
+const OrderNotesLabel = styled.h3`
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0 0 1rem 0;
+  color: black;
+`
+
+const OrderNotesTextarea = styled.textarea`
+  width: 100%;
+  min-height: 120px;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  background: white;
+  font-family: inherit; /* Ensures it uses your site's font */
+  font-size: 0.95rem;
+  resize: vertical; /* Allows user to drag to resize height only */
+  color: #333;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: black;
+  }
+
+  &::placeholder {
+    color: #888;
+  }
 `
