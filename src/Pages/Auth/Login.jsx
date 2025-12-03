@@ -76,7 +76,7 @@ const Login = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            LUXE
+            SHAASHEE
           </Logo>
 
           <BrandingContent
@@ -115,8 +115,8 @@ const Login = () => {
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             <TestimonialText>
-              "The quality and craftsmanship of Luxe Fashion pieces are unmatched. Every purchase
-              feels like an investment in timeless elegance."
+              "The quality and craftsmanship of Shaashee Fashion pieces are unmatched. Every
+              purchase feels like an investment in timeless elegance."
             </TestimonialText>
             <TestimonialAuthor>— Priya S., Verified Customer</TestimonialAuthor>
           </Testimonial>
@@ -133,7 +133,7 @@ const Login = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <MobileLogo>LUXE</MobileLogo>
+            <MobileLogo>SHAASHEE</MobileLogo>
 
             <FormHeader>
               <FormTitle>Sign In</FormTitle>
@@ -208,7 +208,7 @@ const Login = () => {
               </SubmitButton>
             </FormWrapper>
 
-            <Divider>New to Luxe?</Divider>
+            <Divider>New to Shaashee?</Divider>
 
             <SignupPrompt>
               Don't have an account? <a href="/signup">Create one now</a>

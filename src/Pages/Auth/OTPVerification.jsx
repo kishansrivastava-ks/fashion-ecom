@@ -147,7 +147,7 @@ const OTPVerification = () => {
             <Mail size={36} />
           </IconWrapper>
 
-          <Logo>LUXE</Logo>
+          <Logo>SHAASHEE</Logo>
           <HeaderTitle>Verify Your Email</HeaderTitle>
           <HeaderText>We've sent a 6-digit verification code to</HeaderText>
           <EmailDisplay>
