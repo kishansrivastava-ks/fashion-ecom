@@ -7,6 +7,9 @@ import PageTransition from '@/utils/PageTransition'
 import api from '@/api/axios'
 import { useCart } from '@/contexts/CartContext'
 import toast from 'react-hot-toast'
+import Banner from '@/components/common/Banner'
+import StandardNavbar from '@/components/StandardNavbar'
+import Footer from '@/components/Footer'
 
 // Component
 const ProductDetail = () => {
@@ -202,6 +205,8 @@ const ProductDetail = () => {
 
   return (
     <PageTransition>
+      <Banner />
+      <StandardNavbar />
       <Container>
         <ProductSection>
           {/* Image Gallery */}
@@ -373,9 +378,9 @@ const ProductDetail = () => {
                 {isAddingToCart ? 'Adding...' : 'ADD TO CART'}
               </AddToCartButton>
 
-              <BuyNowButton whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              {/* <BuyNowButton whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 BUY NOW
-              </BuyNowButton>
+              </BuyNowButton> */}
 
               <WishlistButton
                 active={isWishlisted}
@@ -440,12 +445,13 @@ const ProductDetail = () => {
                 <SizeChartCloseButton onClick={() => setShowSizeChart(false)}>
                   <X size={24} />
                 </SizeChartCloseButton>
-                <SizeChartImage src="/images/size-chart.webp" alt="Size Chart" />
+                <SizeChartImage src="/images/size-chart.png" alt="Size Chart" />
               </SizeChartContent>
             </SizeChartModal>
           )}
         </AnimatePresence>
       </Container>
+      <Footer />
     </PageTransition>
   )
 }
@@ -742,7 +748,7 @@ const AddToCartButton = styled(motion.button)`
   background: black;
   color: white;
   border: none;
-  padding: 1.2rem 2rem;
+  padding: 0.8rem 2rem;
   font-size: 1rem;
   font-weight: 500;
   letter-spacing: 0.05em;
@@ -912,10 +918,12 @@ const SizeChartContent = styled(motion.div)`
   max-width: 1200px;
   background: white;
   overflow: hidden;
+  padding: 2rem;
 
   @media (max-width: 768px) {
     width: 95vw;
     height: 95vh;
+    padding: 1rem;
   }
 `
 

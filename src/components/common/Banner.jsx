@@ -14,6 +14,7 @@ const StyledBanner = styled.div`
     padding: 0.5rem 0;
     letter-spacing: 10px;
     font-size: 1.2rem;
+    display: none;
   }
 `
 

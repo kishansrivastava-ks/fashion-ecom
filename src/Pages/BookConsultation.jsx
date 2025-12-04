@@ -4,6 +4,8 @@ import { Calendar, Clock, Phone, Video, MessageCircle, User, Mail, CheckCircle }
 import styled from 'styled-components'
 import FloatingNavbar from '@/components/FloatingNavbar'
 import Footer from '@/components/Footer'
+import Banner from '@/components/common/Banner'
+import StandardNavbar from '@/components/StandardNavbar'
 
 // Hero Section Styles
 const HeroContainer = styled.section`
@@ -436,7 +438,9 @@ const BookConsultation = () => {
 
   return (
     <div>
-      <FloatingNavbar />
+      {/* <FloatingNavbar /> */}
+      <Banner />
+      <StandardNavbar />
       {/* Hero Section */}
       <HeroContainer>
         <HeroContent>

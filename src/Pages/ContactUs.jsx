@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import FloatingNavbar from '@/components/FloatingNavbar'
 import Footer from '@/components/Footer'
 import PageTransition from '@/utils/PageTransition'
+import Banner from '@/components/common/Banner'
+import StandardNavbar from '@/components/StandardNavbar'
 
 // Hero Section Styles
 const HeroContainer = styled.section`
@@ -603,7 +605,9 @@ const WhatsAppCTA = () => {
 const ContactUs = () => {
   return (
     <PageTransition>
-      <FloatingNavbar />
+      {/* <FloatingNavbar /> */}
+      <Banner />
+      <StandardNavbar />
       <HeroSection />
       <ContactFormSection />
       <WhatsAppCTA />

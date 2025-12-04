@@ -5,6 +5,7 @@ import { Search, ShoppingCart, Eye, ChevronLeft, ChevronRight, X, Minus, Plus } 
 import api from '@/api/axios'
 import toast from 'react-hot-toast'
 import CartSidebar from '../CartSidebar'
+import { useAuth } from '@/contexts/AuthContext'
 
 // Main Products Section Component
 const ProductsSection = ({ title, products }) => {
@@ -163,7 +164,7 @@ const ProductCard = ({ product, index, isInView, onQuickView, setQuantityModalPr
       animate={isInView ? { y: 0, opacity: 1 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1 }}
       whileHover={{ y: -8 }}
-      onClick={handleCardClick}
+      // onClick={handleCardClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -413,10 +414,10 @@ const QuantityModal = ({ product, onClose, onAddToCart, quantity, setQuantity, i
 const Section = styled.section`
   min-height: 100vh;
   background: white;
-  padding: 8rem 2rem;
+  padding: 3rem 2rem;
 
   @media (max-width: 768px) {
-    padding: 5rem 2rem;
+    padding: 3rem 2rem;
   }
 `
 
@@ -429,7 +430,7 @@ const HeaderRow = styled(motion.div)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
   gap: 2rem;
 
   @media (max-width: 768px) {

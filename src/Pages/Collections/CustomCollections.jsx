@@ -7,6 +7,8 @@ import ProductsSection from '@/components/common/ProductsSection'
 import productsData from '../../data/data.json'
 import api from '@/api/axios'
 import toast from 'react-hot-toast'
+import Banner from '@/components/common/Banner'
+import StandardNavbar from '@/components/StandardNavbar'
 
 // filter out those whose category is ethnic
 const ethnicProducts = productsData.products.filter(
@@ -81,7 +83,9 @@ const CustomCollections = () => {
 
   return (
     <PageTransition>
-      <FloatingNavbar />
+      {/* <FloatingNavbar /> */}
+      <Banner />
+      <StandardNavbar />
 
       <CollectionHero
         image="/images/ethnic/ethnic-hero.jpg"

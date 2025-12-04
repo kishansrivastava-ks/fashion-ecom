@@ -1,6 +1,6 @@
-import React from "react";
-import styled, { keyframes } from "styled-components";
-import { FaWhatsapp } from "react-icons/fa";
+import React from 'react'
+import styled, { keyframes } from 'styled-components'
+import { FaWhatsapp } from 'react-icons/fa'
 
 // A simple pulse animation for the button
 const pulse = keyframes`
@@ -16,7 +16,7 @@ const pulse = keyframes`
     transform: scale(1);
     box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
   }
-`;
+`
 
 // The main styled component for our floating button
 const FloatingButton = styled.a`
@@ -24,7 +24,7 @@ const FloatingButton = styled.a`
   position: fixed;
   bottom: 25px;
   right: 25px;
-  z-index: 1000; /* Ensures it's on top of other content */
+  z-index: 1003; /* Ensures it's on top of other content */
 
   /* Appearance */
   width: 60px;
@@ -48,12 +48,19 @@ const FloatingButton = styled.a`
     transform: scale(1.1);
     animation: none; /* Stop pulsing on hover for a smoother feel */
   }
-`;
+
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+    bottom: 6px;
+    right: 15px;
+  }
+`
 
 // Style for the icon itself
 const WhatsappIcon = styled(FaWhatsapp)`
   font-size: 36px; /* A good size for the 60px button */
-`;
+`
 
 /**
  * A reusable floating WhatsApp contact icon component.
@@ -62,8 +69,8 @@ const WhatsappIcon = styled(FaWhatsapp)`
  * @param {string} props.message - The default message to pre-fill the chat.
  */
 const WhatsApp = ({ phoneNumber, message }) => {
-  const encodedMessage = encodeURIComponent(message);
-  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+  const encodedMessage = encodeURIComponent(message)
+  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`
 
   return (
     <FloatingButton
@@ -74,11 +81,11 @@ const WhatsApp = ({ phoneNumber, message }) => {
     >
       <WhatsappIcon />
     </FloatingButton>
-  );
-};
+  )
+}
 
 WhatsApp.defaultProps = {
-  message: "Hello! I saw your website and have a question.",
-};
+  message: 'Hello! I saw your website and have a question.',
+}
 
-export default WhatsApp;
+export default WhatsApp

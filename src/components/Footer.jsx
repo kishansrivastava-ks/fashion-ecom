@@ -19,6 +19,7 @@ import {
   Star,
 } from 'lucide-react'
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 
 // Footer Container
 const FooterContainer = styled.footer`
@@ -415,9 +416,30 @@ const PaymentIcon = styled.div`
   font-weight: bold;
 `
 
+const BookButton = styled(motion.button)`
+  background: black;
+  color: white;
+  border: 1px solid black;
+  padding: 0.8rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: transparent;
+    color: black;
+  }
+`
+
 // Component
 const Footer = () => {
   const [email, setEmail] = useState('')
+  const navigate = useNavigate()
 
   const handleNewsletterSubmit = (e) => {
     e.preventDefault()
@@ -520,39 +542,6 @@ const Footer = () => {
             initial={{ y: 50, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-          >
-            <ColumnTitle>Collections</ColumnTitle>
-            <FooterLink href="/western">
-              <ArrowRight size={14} />
-              Western Wear
-            </FooterLink>
-            <FooterLink href="/ethnic">
-              <ArrowRight size={14} />
-              Ethnic Collection
-            </FooterLink>
-            <FooterLink href="/sarees">
-              <ArrowRight size={14} />
-              Sarees
-            </FooterLink>
-            <FooterLink href="/lehengas">
-              <ArrowRight size={14} />
-              Lehengas
-            </FooterLink>
-            <FooterLink href="/dresses">
-              <ArrowRight size={14} />
-              Dresses
-            </FooterLink>
-            <FooterLink href="/custom">
-              <ArrowRight size={14} />
-              Custom Collection
-            </FooterLink>
-          </FooterColumn>
-
-          <FooterColumn
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <ColumnTitle>Quick Links</ColumnTitle>
@@ -619,6 +608,33 @@ const Footer = () => {
                 <div>WhatsApp Support</div>
               </ContactItem>
             </ContactInfo>
+          </FooterColumn>
+
+          <FooterColumn
+            initial={{ y: 50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <ColumnTitle>Personal Styling Session</ColumnTitle>
+            <p
+              style={{
+                fontSize: '0.95rem',
+                fontWeight: 300,
+                color: '#555',
+                lineHeight: 1.6,
+                margin: 0,
+              }}
+            >
+              Let’s create your dream outfit together — book your slot now.
+            </p>
+            <BookButton
+              onClick={() => navigate('/appointment')}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Book Consultation <ArrowRight size={16} />
+            </BookButton>
           </FooterColumn>
         </FooterGrid>
       </FooterMain>

@@ -17,10 +17,15 @@ const NavRoot = styled(motion.nav)`
   right: 0;
   z-index: 1000;
   background: #ffffff;
-  border-bottom: 1px solid #f0f0f0;
+  /* border-bottom: 1px solid #f0f0f0; */
+  border-top: 1px solid #f0f0f0; /* Added for mobile view */
   height: 70px; /* Fixed thin height */
   display: flex;
   align-items: center;
+  @media (max-width: 768px) {
+    height: 60px;
+    border-top: none;
+  }
 `
 
 const NavContainer = styled.div`
@@ -29,14 +34,14 @@ const NavContainer = styled.div`
   padding: 0 2rem;
   width: 100%;
   display: grid;
-  grid-template-columns: auto 1fr auto; /* Brand - Nav - Icons */
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   height: 100%;
-  border-top: 1px solid #f0f0f0;
 
   @media (max-width: 768px) {
-    grid-template-columns: auto 1fr;
-    padding: 0 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
   }
 `
 
@@ -49,6 +54,12 @@ const Brand = styled(motion.div)`
   /* cursor: pointer; */
   text-transform: uppercase;
   z-index: 1001; /* Ensure above dropdowns */
+  @media (max-width: 768px) {
+    color: #000;
+    font-size: 1rem;
+    letter-spacing: 0.4rem;
+    font-weight: 600;
+  }
 `
 
 // Center Navigation
@@ -152,14 +163,15 @@ const CartBadge = styled(motion.span)`
 
 const DropdownWrapper = styled(motion.div)`
   position: absolute;
-  top: 70px; /* Matches navbar height */
+  top: 140px; /* Matches navbar height */
   left: 0;
   width: 100%;
-  background: rgba(255, 255, 255, 0.98);
+  background: #fff;
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  padding: 3rem 0;
+  /* border: 2px solid red; */
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.05); */
+  /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); */
+  padding: 2rem 0;
   z-index: 999;
   display: flex;
   justify-content: center;
@@ -168,7 +180,7 @@ const DropdownWrapper = styled(motion.div)`
 const DropdownContent = styled.div`
   max-width: 1400px;
   width: 100%;
-  padding: 0 2rem;
+  /* padding: 0 2rem; */
 `
 
 const DropdownGrid = styled.div`
@@ -235,6 +247,7 @@ const MobileMenuToggle = styled(motion.button)`
   padding: 0;
   cursor: pointer;
   color: #333;
+  margin-right: 1rem;
 
   @media (max-width: 768px) {
     display: flex;
@@ -243,14 +256,17 @@ const MobileMenuToggle = styled(motion.button)`
 
 const MobileMenuOverlay = styled(motion.div)`
   position: fixed;
-  top: 70px;
+  top: 60px;
   left: 0;
-  right: 0;
   bottom: 0;
+  width: 80%;
+  max-width: 300px;
   background: white;
   z-index: 998;
   padding: 2rem;
   overflow-y: auto;
+  border-right: 1px solid #f0f0f0;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
 `
 
 const MobileLink = styled.a`
@@ -263,6 +279,31 @@ const MobileLink = styled.a`
   border-bottom: 1px solid #f0f0f0;
   text-transform: uppercase;
 `
+const MobileBottomBar = styled.div`
+  display: none;
+  @media (max-width: 768px) {
+    display: grid;
+    position: fixed;
+    grid-template-columns: repeat(4, 1fr);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: white;
+    border-top: 1px solid #f0f0f0;
+    z-index: 1002;
+    align-items: center;
+    justify-content: space-around; /* Centers the two icons */
+    padding-bottom: env(safe-area-inset-bottom); /* iOS safe area */
+  }
+`
+
+const AccordionHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+`
 
 // --- Component Definition ---
 
@@ -270,6 +311,7 @@ const StandardNavbar = () => {
   const [showDropdown, setShowDropdown] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [cartCount, setCartCount] = useState(0)
+  const [mobileCollectionsOpen, setMobileCollectionsOpen] = useState(false)
 
   const navigate = useNavigate()
   const { openCart } = useCart()
@@ -328,10 +370,15 @@ const StandardNavbar = () => {
     <>
       <NavRoot sticky={true}>
         <NavContainer>
-          {/* 1. Brand */}
+          {/* 1. Left: Hamburger (Visible on Mobile Only) */}
+          <MobileMenuToggle onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </MobileMenuToggle>
+
+          {/* 2. Center/Left: Brand */}
           <Brand>SHAASHEE</Brand>
 
-          {/* 2. Center Navigation */}
+          {/* 3. Center: Desktop Nav (Hidden on Mobile) */}
           <CenterNav>
             {navItems.map((item) => (
               <NavItem
@@ -346,12 +393,19 @@ const StandardNavbar = () => {
             ))}
           </CenterNav>
 
-          {/* 3. Right Icons */}
+          {/* 4. Right: Icons */}
           <IconGroup>
-            <IconButton whileHover={{ scale: 1.1 }} title="Search">
-              <Search size={20} strokeWidth={1.5} />
-            </IconButton>
+            {/* Search: Hidden on mobile (moved to bottom bar) */}
+            <div
+              className="hidden md:block"
+              style={{ display: window.innerWidth <= 768 ? 'none' : 'block' }}
+            >
+              <IconButton whileHover={{ scale: 1.1 }} title="Search">
+                <Search size={20} strokeWidth={1.5} />
+              </IconButton>
+            </div>
 
+            {/* Wishlist: Keep as is (or hide if not needed on mobile, code below keeps it) */}
             <IconButton
               onClick={() => navigate('/wishlist')}
               whileHover={{ scale: 1.1 }}
@@ -360,6 +414,7 @@ const StandardNavbar = () => {
               <Heart size={20} strokeWidth={1.5} />
             </IconButton>
 
+            {/* Cart: Always visible */}
             <IconButton onClick={openCart} whileHover={{ scale: 1.1 }} title="Cart">
               <ShoppingBag size={20} strokeWidth={1.5} />
               {cartCount > 0 && (
@@ -369,6 +424,7 @@ const StandardNavbar = () => {
               )}
             </IconButton>
 
+            {/* User: Top Right on Mobile as requested */}
             <IconButton
               onClick={() =>
                 navigate(
@@ -380,10 +436,6 @@ const StandardNavbar = () => {
             >
               <User size={20} strokeWidth={1.5} />
             </IconButton>
-
-            <MobileMenuToggle onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </MobileMenuToggle>
           </IconGroup>
         </NavContainer>
       </NavRoot>
@@ -424,41 +476,102 @@ const StandardNavbar = () => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <MobileMenuOverlay
-            initial={{ opacity: 0, x: '100%' }}
+            initial={{ opacity: 0, x: '-100%' }} // Changed to slide from LEFT
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
+            exit={{ opacity: 0, x: '-100%' }} // Changed to slide out to LEFT
             transition={{ type: 'tween', duration: 0.3 }}
           >
             {navItems.map((item) => (
               <div key={item.name}>
-                <MobileLink href={item.href} onClick={() => setIsMobileMenuOpen(false)}>
-                  {item.name}
-                </MobileLink>
-                {/* Render sub-links for Collections in mobile if needed */}
-                {item.hasDropdown && (
-                  <div style={{ paddingLeft: '1rem', marginBottom: '1rem' }}>
-                    {collectionItems.map((sub) => (
+                {item.hasDropdown ? (
+                  // Logic for Collections with (+) button
+                  <>
+                    <AccordionHeader>
                       <MobileLink
-                        key={sub.name}
-                        href={sub.href}
-                        style={{
-                          fontSize: '1rem',
-                          borderBottom: 'none',
-                          padding: '0.5rem 0',
-                          color: '#666',
+                        href={item.href}
+                        style={{ borderBottom: 'none', flex: 1 }}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          setMobileCollectionsOpen(!mobileCollectionsOpen)
                         }}
-                        onClick={() => setIsMobileMenuOpen(false)}
                       >
-                        - {sub.name}
+                        {item.name}
                       </MobileLink>
-                    ))}
-                  </div>
+                      <button
+                        onClick={() => setMobileCollectionsOpen(!mobileCollectionsOpen)}
+                        style={{ background: 'none', border: 'none', padding: '1rem' }}
+                      >
+                        {/* Rotate icon based on state */}
+                        <motion.div animate={{ rotate: mobileCollectionsOpen ? 45 : 0 }}>
+                          <span style={{ fontSize: '1.5rem', fontWeight: 200 }}>+</span>
+                        </motion.div>
+                      </button>
+                    </AccordionHeader>
+
+                    <AnimatePresence>
+                      {mobileCollectionsOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          style={{ overflow: 'hidden' }}
+                        >
+                          <div style={{ paddingLeft: '1rem', marginBottom: '1rem' }}>
+                            {collectionItems.map((sub) => (
+                              <MobileLink
+                                key={sub.name}
+                                href={sub.href}
+                                style={{
+                                  fontSize: '1rem',
+                                  borderBottom: 'none',
+                                  padding: '0.5rem 0',
+                                  color: '#666',
+                                }}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                - {sub.name}
+                              </MobileLink>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </>
+                ) : (
+                  // Standard Links
+                  <MobileLink href={item.href} onClick={() => setIsMobileMenuOpen(false)}>
+                    {item.name}
+                  </MobileLink>
                 )}
               </div>
             ))}
           </MobileMenuOverlay>
         )}
       </AnimatePresence>
+      <MobileBottomBar>
+        <IconButton onClick={() => navigate('/wishlist')} title="Wishlist">
+          <Heart size={24} strokeWidth={1.5} />
+        </IconButton>
+        <IconButton
+          onClick={() => {
+            /* Toggle Search Logic */
+          }}
+          title="Search"
+        >
+          <Search size={24} strokeWidth={1.5} />
+        </IconButton>
+
+        <IconButton
+          onClick={() =>
+            navigate(
+              `${!isAuthenticated ? '/login' : currentUser?.role === 'admin' ? '/admin' : '/dashboard'}`
+            )
+          }
+          title="Account"
+        >
+          <User size={24} strokeWidth={1.5} />
+        </IconButton>
+      </MobileBottomBar>
     </>
   )
 }

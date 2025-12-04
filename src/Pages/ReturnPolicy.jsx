@@ -12,6 +12,9 @@ import {
 import styled from 'styled-components'
 import FloatingNavbar from '@/components/FloatingNavbar'
 import PageTransition from '@/utils/PageTransition'
+import Banner from '@/components/common/Banner'
+import StandardNavbar from '@/components/StandardNavbar'
+import Footer from '@/components/Footer'
 
 // Hero Section Styles
 const HeroContainer = styled.section`
@@ -311,7 +314,9 @@ const ReturnPolicy = () => {
 
   return (
     <PageTransition>
-      <FloatingNavbar />
+      <Banner />
+      <StandardNavbar />
+      {/* <FloatingNavbar /> */}
       {/* Hero Section */}
       <HeroContainer>
         <HeroContent>
@@ -620,6 +625,7 @@ const ReturnPolicy = () => {
           </CTAContent>
         </ContactCTA>
       </ContentSection>
+      <Footer />
     </PageTransition>
   )
 }

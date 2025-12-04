@@ -6,6 +6,8 @@ import { Eye, Target, Leaf, Sparkles, Palette } from 'lucide-react'
 import Footer from '@/components/Footer'
 import PageTransition from '@/utils/PageTransition'
 import { useNavigate } from 'react-router-dom'
+import Banner from '@/components/common/Banner'
+import StandardNavbar from '@/components/StandardNavbar'
 
 // Hero Section Styles
 const HeroContainer = styled.section`
@@ -816,7 +818,9 @@ const CallToAction = () => {
 const AboutUs = () => {
   return (
     <PageTransition>
-      <FloatingNavbar />
+      {/* <FloatingNavbar /> */}
+      <Banner />
+      <StandardNavbar />
       <HeroSection />
       <FounderStory />
       {/* <VisionMission /> */}

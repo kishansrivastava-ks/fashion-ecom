@@ -12,6 +12,7 @@ const DividerSection = styled.div`
     /* margin: 10rem 0; */
     padding: 0;
     /* border: 2px solid red; */
+    margin: 1rem 0;
   }
 `
 
@@ -25,6 +26,10 @@ const DividerText = styled(motion.p)`
   margin: 0 auto;
   /* border: 2px solid red; */
   color: #000;
+  @media (max-width: 768px) {
+    font-size: clamp(1rem, 2vw, 2rem);
+    letter-spacing: 0.4rem;
+  }
 `
 
 // The Reusable Component

@@ -14,12 +14,16 @@ import {
   Gift,
   AlertCircle,
   Loader2,
+  Ban,
 } from 'lucide-react'
 import styled from 'styled-components'
 import { useAuth } from '@/contexts/AuthContext'
 import { Navigate, useNavigate } from 'react-router-dom'
 import api from '@/api/axios'
 import toast from 'react-hot-toast'
+import Banner from '@/components/common/Banner'
+import StandardNavbar from '@/components/StandardNavbar'
+import PageTransition from '@/utils/PageTransition'
 
 // Component
 const Cart = () => {
@@ -165,279 +169,285 @@ const Cart = () => {
 
   const navigate = useNavigate()
   return (
-    <Container>
-      {/* Header */}
-      <HeaderSection>
-        <HeaderContainer>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              width: '100%',
-            }}
-          >
-            <BackButton onClick={() => window.history.back()} whileHover={{ x: -5 }}>
-              <ArrowLeft size={18} />
-              Continue Shopping
-            </BackButton>
+    <PageTransition>
+      <Banner />
+      <StandardNavbar />
+      <Container>
+        {/* Header */}
+        <HeaderSection>
+          <HeaderContainer>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                width: '100%',
+                padding: '0 2rem ',
+              }}
+            >
+              <BackButton onClick={() => window.history.back()} whileHover={{ x: -5 }}>
+                <ArrowLeft size={18} />
+                Continue Shopping
+              </BackButton>
 
-            <Breadcrumb>
-              <a href="/">Home</a> / Shopping Cart
-            </Breadcrumb>
-          </div>
+              <Breadcrumb>
+                <a href="/">Home</a> / Shopping Cart
+              </Breadcrumb>
+            </div>
 
-          <PageTitle>SHOPPING CART</PageTitle>
-        </HeaderContainer>
-      </HeaderSection>
+            <PageTitle>SHOPPING CART</PageTitle>
+          </HeaderContainer>
+        </HeaderSection>
 
-      {/* Main Content */}
-      <MainContent>
-        {loading ? (
-          <div style={{ textAlign: 'center', padding: '4rem' }}>Loading cart...</div>
-        ) : !isAuthenticated ? (
-          <FallbackSection>
-            <div>Login to view your cart</div>
-            <EmptyButton onClick={() => navigate('/login')}>Login</EmptyButton>
-          </FallbackSection>
-        ) : (
-          <>
-            {cartItems.length === 0 ? (
-              <EmptyCart>
-                <EmptyIcon>
-                  <ShoppingCart size={48} />
-                </EmptyIcon>
-                <EmptyTitle>Your Cart is Empty</EmptyTitle>
-                <EmptyText>Looks like you haven't added anything to your cart yet.</EmptyText>
-                <EmptyButton
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => (window.location.href = '/')}
-                >
-                  START SHOPPING
-                  <ChevronRight size={18} />
-                </EmptyButton>
-              </EmptyCart>
-            ) : (
-              <>
-                {/* Cart Items */}
-                <CartItemsSection>
-                  <CartHeader>
-                    <ItemCount>
-                      {cartItems.length} {cartItems.length === 1 ? 'Item' : 'Items'}
-                    </ItemCount>
-                    <ClearCart onClick={clearCart}>Clear Cart</ClearCart>
-                  </CartHeader>
-
-                  <CartItemsList>
-                    {/* 1. Add the Table Header Row */}
-                    <TableHeaders>
-                      <div>Product</div>
-                      <div>Price</div>
-                      <div>Quantity</div>
-                      <div>Total</div>
-                    </TableHeaders>
-
-                    {/* 2. Update the Item Structure */}
-                    {cartItems.map((item, index) => (
-                      <CartItem
-                        key={item.id}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.1 }}
-                      >
-                        {/* Column 1: Product Image & Details */}
-                        <ProductColumn>
-                          <ItemImage
-                            image={item.image}
-                            onClick={() => (window.location.href = `/product/${item.id}`)}
-                          />
-                          <ProductInfo>
-                            <ItemName
-                              onClick={() => (window.location.href = `/product/${item.id}`)}
-                            >
-                              {item.name}
-                            </ItemName>
-                            <ItemCategory>{item.category}</ItemCategory>
-                            {/* "Remove" text link matches the image style */}
-                            <RemoveText onClick={() => removeItem(item.id)}>Remove</RemoveText>
-                          </ProductInfo>
-                        </ProductColumn>
-
-                        {/* Column 2: Unit Price */}
-                        <CenterColumn>
-                          <ItemPrice>₹{item.price.toLocaleString()}</ItemPrice>
-                        </CenterColumn>
-
-                        {/* Column 3: Quantity Selector */}
-                        <CenterColumn>
-                          <QuantitySelector>
-                            <QuantityButton
-                              onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
-                              disabled={item.quantity <= 1 || updatingItems.has(item.id)}
-                            >
-                              <Minus size={14} />
-                            </QuantityButton>
-                            <QuantityDisplay>
-                              {updatingItems.has(item.id) ? (
-                                <Loader2 size={14} className="animate-spin" />
-                              ) : (
-                                item.quantity
-                              )}
-                            </QuantityDisplay>
-                            <QuantityButton
-                              onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
-                              disabled={item.quantity >= 10 || updatingItems.has(item.id)}
-                            >
-                              <Plus size={14} />
-                            </QuantityButton>
-                          </QuantitySelector>
-                        </CenterColumn>
-
-                        {/* Column 4: Total Price */}
-                        <CenterColumn>
-                          <ItemPrice>₹{(item.price * item.quantity).toLocaleString()}</ItemPrice>
-                        </CenterColumn>
-                      </CartItem>
-                    ))}
-                  </CartItemsList>
-
-                  <OrderNotesContainer>
-                    <OrderNotesLabel>Order notes</OrderNotesLabel>
-                    <OrderNotesTextarea
-                      placeholder="Notes about your order, e.g. special notes for delivery."
-                      value={orderNotes}
-                      onChange={(e) => setOrderNotes(e.target.value)}
-                    />
-                  </OrderNotesContainer>
-                </CartItemsSection>
-
-                {/* Order Summary */}
-                <SummarySection>
-                  <SummaryCard
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
+        {/* Main Content */}
+        <MainContent>
+          {loading ? (
+            <div style={{ textAlign: 'center', padding: '4rem' }}>Loading cart...</div>
+          ) : !isAuthenticated ? (
+            <FallbackSection>
+              <div>Login to view your cart</div>
+              <EmptyButton onClick={() => navigate('/login')}>Login</EmptyButton>
+            </FallbackSection>
+          ) : (
+            <>
+              {cartItems.length === 0 ? (
+                <EmptyCart>
+                  <EmptyIcon>
+                    <ShoppingCart size={48} />
+                  </EmptyIcon>
+                  <EmptyTitle>Your Cart is Empty</EmptyTitle>
+                  <EmptyText>Looks like you haven't added anything to your cart yet.</EmptyText>
+                  <EmptyButton
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => (window.location.href = '/')}
                   >
-                    <SummaryTitle>Order Summary</SummaryTitle>
+                    START SHOPPING
+                    <ChevronRight size={18} />
+                  </EmptyButton>
+                </EmptyCart>
+              ) : (
+                <>
+                  {/* Cart Items */}
+                  <CartItemsSection>
+                    <CartHeader>
+                      <ItemCount>
+                        {cartItems.length} {cartItems.length === 1 ? 'Item' : 'Items'}
+                      </ItemCount>
+                      <ClearCart onClick={clearCart}>Clear Cart</ClearCart>
+                    </CartHeader>
 
-                    {/* Free Shipping Progress */}
-                    {remainingForFreeShipping > 0 && (
-                      <FreeShippingBar>
-                        <Truck size={20} />
-                        <div style={{ flex: 1 }}>
-                          <div>
-                            Add ₹{remainingForFreeShipping.toLocaleString()} more for FREE shipping!
-                          </div>
-                          <ProgressBar>
-                            <Progress percent={shippingProgress} />
-                          </ProgressBar>
-                        </div>
-                      </FreeShippingBar>
-                    )}
+                    <CartItemsList>
+                      {/* 1. Add the Table Header Row */}
+                      <TableHeaders>
+                        <div>Product</div>
+                        <div>Price</div>
+                        <div>Quantity</div>
+                        <div>Total</div>
+                      </TableHeaders>
 
-                    {/* Promo Code */}
-                    <PromoSection>
-                      {!appliedPromo ? (
-                        <PromoInput>
-                          <Input
-                            type="text"
-                            placeholder="Enter promo code"
-                            value={promoCode}
-                            onChange={(e) => setPromoCode(e.target.value)}
-                          />
-                          <ApplyButton
-                            onClick={applyPromo}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            Apply
-                          </ApplyButton>
-                        </PromoInput>
-                      ) : (
-                        <PromoApplied>
-                          <span>
-                            <Tag size={16} style={{ display: 'inline', marginRight: '0.5rem' }} />
-                            {appliedPromo.code} applied ({appliedPromo.discount}% off)
-                          </span>
-                          <RemovePromo onClick={() => setAppliedPromo(null)}>
-                            <X size={16} />
-                          </RemovePromo>
-                        </PromoApplied>
-                      )}
-                    </PromoSection>
+                      {/* 2. Update the Item Structure */}
+                      {cartItems.map((item, index) => (
+                        <CartItem
+                          key={item.id}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: index * 0.1 }}
+                        >
+                          {/* Column 1: Product Image & Details */}
+                          <ProductColumn>
+                            <ItemImage
+                              image={item.image}
+                              onClick={() => (window.location.href = `/product/${item.id}`)}
+                            />
+                            <ProductInfo>
+                              <ItemName
+                                onClick={() => (window.location.href = `/product/${item.id}`)}
+                              >
+                                {item.name}
+                              </ItemName>
+                              <ItemCategory>{item.category}</ItemCategory>
+                              {/* "Remove" text link matches the image style */}
+                              <RemoveText onClick={() => removeItem(item.id)}>Remove</RemoveText>
+                            </ProductInfo>
+                          </ProductColumn>
 
-                    {/* Price Breakdown */}
-                    <SummaryDetails>
-                      <SummaryRow>
-                        <span>Subtotal</span>
-                        <span>₹{subtotal.toLocaleString()}</span>
-                      </SummaryRow>
-                      {savings > 0 && (
-                        <SummaryRow highlight>
-                          <span>Discount</span>
-                          <span style={{ color: '#27ae60' }}>-₹{savings.toLocaleString()}</span>
-                        </SummaryRow>
-                      )}
-                      {appliedPromo && (
-                        <SummaryRow highlight>
-                          <span>Promo Code ({appliedPromo.code})</span>
-                          <span style={{ color: '#27ae60' }}>-₹{discount.toLocaleString()}</span>
-                        </SummaryRow>
-                      )}
-                      <SummaryRow>
-                        <span>Shipping</span>
-                        <span>{shipping === 0 ? 'FREE' : `₹${shipping}`}</span>
-                      </SummaryRow>
-                    </SummaryDetails>
+                          {/* Column 2: Unit Price */}
+                          <CenterColumn>
+                            <ItemPrice>₹{item.price.toLocaleString()}</ItemPrice>
+                          </CenterColumn>
 
-                    <TotalRow>
-                      <span>Total</span>
-                      <span>₹{total.toLocaleString()}</span>
-                    </TotalRow>
+                          {/* Column 3: Quantity Selector */}
+                          <CenterColumn>
+                            <QuantitySelector>
+                              <QuantityButton
+                                onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
+                                disabled={item.quantity <= 1 || updatingItems.has(item.id)}
+                              >
+                                <Minus size={14} />
+                              </QuantityButton>
+                              <QuantityDisplay>
+                                {updatingItems.has(item.id) ? (
+                                  <Loader2 size={14} className="animate-spin" />
+                                ) : (
+                                  item.quantity
+                                )}
+                              </QuantityDisplay>
+                              <QuantityButton
+                                onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
+                                disabled={item.quantity >= 10 || updatingItems.has(item.id)}
+                              >
+                                <Plus size={14} />
+                              </QuantityButton>
+                            </QuantitySelector>
+                          </CenterColumn>
 
-                    <CheckoutButton
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => (window.location.href = '/checkout')}
+                          {/* Column 4: Total Price */}
+                          <CenterColumn>
+                            <ItemPrice>₹{(item.price * item.quantity).toLocaleString()}</ItemPrice>
+                          </CenterColumn>
+                        </CartItem>
+                      ))}
+                    </CartItemsList>
+
+                    <OrderNotesContainer>
+                      <OrderNotesLabel>Order notes</OrderNotesLabel>
+                      <OrderNotesTextarea
+                        placeholder="Notes about your order, e.g. special notes for delivery."
+                        value={orderNotes}
+                        onChange={(e) => setOrderNotes(e.target.value)}
+                      />
+                    </OrderNotesContainer>
+                  </CartItemsSection>
+
+                  {/* Order Summary */}
+                  <SummarySection>
+                    <SummaryCard
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5 }}
                     >
-                      PROCEED TO CHECKOUT
-                      <ChevronRight size={20} />
-                    </CheckoutButton>
+                      <SummaryTitle>Order Summary</SummaryTitle>
 
-                    <ContinueShopping onClick={() => (window.location.href = '/collections')}>
-                      Continue Shopping
-                    </ContinueShopping>
-
-                    {/* Features */}
-                    <Features>
-                      <Feature>
-                        <FeatureIcon>
-                          <Shield size={20} />
-                        </FeatureIcon>
-                        <span>Secure Payment</span>
-                      </Feature>
-                      <Feature>
-                        <FeatureIcon>
+                      {/* Free Shipping Progress */}
+                      {remainingForFreeShipping > 0 && (
+                        <FreeShippingBar>
                           <Truck size={20} />
-                        </FeatureIcon>
-                        <span>Free Shipping</span>
-                      </Feature>
-                      <Feature>
-                        <FeatureIcon>
-                          <Gift size={20} />
-                        </FeatureIcon>
-                        <span>Gift Wrap</span>
-                      </Feature>
-                    </Features>
-                  </SummaryCard>
-                </SummarySection>
-              </>
-            )}
-          </>
-        )}
-      </MainContent>
-    </Container>
+                          <div style={{ flex: 1 }}>
+                            <div>
+                              Add ₹{remainingForFreeShipping.toLocaleString()} more for FREE
+                              shipping!
+                            </div>
+                            <ProgressBar>
+                              <Progress percent={shippingProgress} />
+                            </ProgressBar>
+                          </div>
+                        </FreeShippingBar>
+                      )}
+
+                      {/* Promo Code */}
+                      <PromoSection>
+                        {!appliedPromo ? (
+                          <PromoInput>
+                            <Input
+                              type="text"
+                              placeholder="Enter promo code"
+                              value={promoCode}
+                              onChange={(e) => setPromoCode(e.target.value)}
+                            />
+                            <ApplyButton
+                              onClick={applyPromo}
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              Apply
+                            </ApplyButton>
+                          </PromoInput>
+                        ) : (
+                          <PromoApplied>
+                            <span>
+                              <Tag size={16} style={{ display: 'inline', marginRight: '0.5rem' }} />
+                              {appliedPromo.code} applied ({appliedPromo.discount}% off)
+                            </span>
+                            <RemovePromo onClick={() => setAppliedPromo(null)}>
+                              <X size={16} />
+                            </RemovePromo>
+                          </PromoApplied>
+                        )}
+                      </PromoSection>
+
+                      {/* Price Breakdown */}
+                      <SummaryDetails>
+                        <SummaryRow>
+                          <span>Subtotal</span>
+                          <span>₹{subtotal.toLocaleString()}</span>
+                        </SummaryRow>
+                        {savings > 0 && (
+                          <SummaryRow highlight>
+                            <span>Discount</span>
+                            <span style={{ color: '#27ae60' }}>-₹{savings.toLocaleString()}</span>
+                          </SummaryRow>
+                        )}
+                        {appliedPromo && (
+                          <SummaryRow highlight>
+                            <span>Promo Code ({appliedPromo.code})</span>
+                            <span style={{ color: '#27ae60' }}>-₹{discount.toLocaleString()}</span>
+                          </SummaryRow>
+                        )}
+                        <SummaryRow>
+                          <span>Shipping</span>
+                          <span>{shipping === 0 ? 'FREE' : `₹${shipping}`}</span>
+                        </SummaryRow>
+                      </SummaryDetails>
+
+                      <TotalRow>
+                        <span>Total</span>
+                        <span>₹{total.toLocaleString()}</span>
+                      </TotalRow>
+
+                      <CheckoutButton
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => (window.location.href = '/checkout')}
+                      >
+                        PROCEED TO CHECKOUT
+                        <ChevronRight size={20} />
+                      </CheckoutButton>
+
+                      <ContinueShopping onClick={() => (window.location.href = '/collections')}>
+                        Continue Shopping
+                      </ContinueShopping>
+
+                      {/* Features */}
+                      <Features>
+                        <Feature>
+                          <FeatureIcon>
+                            <Shield size={20} />
+                          </FeatureIcon>
+                          <span>Secure Payment</span>
+                        </Feature>
+                        <Feature>
+                          <FeatureIcon>
+                            <Truck size={20} />
+                          </FeatureIcon>
+                          <span>Free Shipping</span>
+                        </Feature>
+                        <Feature>
+                          <FeatureIcon>
+                            <Gift size={20} />
+                          </FeatureIcon>
+                          <span>Gift Wrap</span>
+                        </Feature>
+                      </Features>
+                    </SummaryCard>
+                  </SummarySection>
+                </>
+              )}
+            </>
+          )}
+        </MainContent>
+      </Container>
+    </PageTransition>
   )
 }
 
@@ -453,13 +463,15 @@ const Container = styled.div`
 const HeaderSection = styled.section`
   background: #f8f8f8;
   padding: 2rem 0;
-  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0;
+  /* border: 2px solid red; */
 `
 
 const HeaderContainer = styled.div`
-  max-width: 1400px;
+  /* max-width: 1400px; */
   margin: 0 auto;
-  padding: 0 2rem;
+  /* padding: 0 2rem; */
+  border-bottom: 1px solid #e0e0e0;
 `
 
 const BackButton = styled(motion.button)`
@@ -495,11 +507,14 @@ const Breadcrumb = styled.div`
 `
 
 const PageTitle = styled.h1`
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(1rem, 3vw, 2rem);
   font-weight: 100;
   margin: 0;
-  color: black;
+  color: #fff;
+  padding: 1rem 0;
   letter-spacing: 0.05em;
+  background-color: #000;
+  text-align: center;
 `
 
 // Main Content

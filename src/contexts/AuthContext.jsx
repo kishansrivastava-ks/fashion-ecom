@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
       setToken(null)
       setCurrentUser(null)
       localStorage.removeItem('token')
-      toast.error('Session expired. Please sign in again.')
+      // toast.error('Session expired. Please sign in again.')
       // optionally redirect: window.location.href = '/login'
     }
     window.addEventListener('unauthorized', onUnauthorized)

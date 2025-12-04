@@ -41,6 +41,7 @@ const HeroContainer = styled.section`
 
   @media (max-width: 768px) {
     background-attachment: scroll;
+    height: 70vh;
   }
 `
 
@@ -62,7 +63,7 @@ const HeroContent = styled.div`
   max-width: 900px;
   padding: 0 2rem;
   margin-top: auto;
-  margin-bottom: 5rem;
+  margin-bottom: 10rem;
   @media (max-width: 640px) {
     margin-bottom: auto;
   }

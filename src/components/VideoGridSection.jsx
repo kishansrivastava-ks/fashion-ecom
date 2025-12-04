@@ -10,6 +10,9 @@ const Section = styled.section`
   overflow: hidden;
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
   /* margin-bottom: 10rem; */
+  @media (max-width: 768px) {
+    background: #fff;
+  }
 `
 
 // Video Grid Container
@@ -34,7 +37,7 @@ const VideoGrid = styled.div`
     grid-template-columns: 1fr;
     grid-template-rows: repeat(4, 1fr);
     height: 300vh; /* Adjusted for mobile */
-    gap: 0;
+    gap: 2rem;
   }
 `
 

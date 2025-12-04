@@ -4,6 +4,9 @@ import { Calendar, Shield, Eye, Lock, Database, UserCheck } from 'lucide-react'
 import styled from 'styled-components'
 import FloatingNavbar from '@/components/FloatingNavbar'
 import PageTransition from '@/utils/PageTransition'
+import Banner from '@/components/common/Banner'
+import StandardNavbar from '@/components/StandardNavbar'
+import Footer from '@/components/Footer'
 
 // Hero Section Styles
 const HeroContainer = styled.section`
@@ -170,7 +173,9 @@ const PrivacyPolicy = () => {
 
   return (
     <PageTransition>
-      <FloatingNavbar />
+      {/* <FloatingNavbar /> */}
+      <Banner />
+      <StandardNavbar />
       {/* Hero Section */}
       <HeroContainer>
         <HeroContent>
@@ -452,6 +457,7 @@ const PrivacyPolicy = () => {
           </CTAContent>
         </ContactCTA>
       </ContentSection>
+      <Footer />
     </PageTransition>
   )
 }

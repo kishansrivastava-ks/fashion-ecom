@@ -17,6 +17,8 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import api from '@/api/axios'
 import toast from 'react-hot-toast'
+import StandardNavbar from '@/components/StandardNavbar'
+import Banner from '@/components/common/Banner'
 
 // Component
 const Wishlist = () => {
@@ -95,6 +97,8 @@ const Wishlist = () => {
   if (!isAuthenticated) {
     return (
       <PageTransition>
+        <Banner />
+        <StandardNavbar />
         <Container>
           <HeaderSection>
             <HeaderContainer>
@@ -103,7 +107,7 @@ const Wishlist = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  width: '100%',
+                  padding: '0 4rem',
                 }}
               >
                 <BackButton onClick={() => window.history.back()} whileHover={{ x: -5 }}>
@@ -133,6 +137,7 @@ const Wishlist = () => {
 
   return (
     <PageTransition>
+      <StandardNavbar />
       <Container>
         {/* Header */}
         <HeaderSection>
@@ -142,7 +147,8 @@ const Wishlist = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                width: '100%',
+                padding: '0 2rem',
+                // border: '2px solid red',
               }}
             >
               <BackButton onClick={() => window.history.back()} whileHover={{ x: -5 }}>
@@ -316,13 +322,17 @@ const Container = styled.div`
 const HeaderSection = styled.section`
   background: #f8f8f8;
   padding: 2rem 0;
+  padding-bottom: 0;
   border-bottom: 1px solid #e0e0e0;
+
+  @media (max-width: 768px) {
+  }
 `
 
 const HeaderContainer = styled.div`
-  max-width: 1400px;
+  /* max-width: 1400px; */
   margin: 0 auto;
-  padding: 0 2rem;
+  /* padding: 0 2rem; */
 `
 
 const BackButton = styled(motion.button)`
@@ -361,22 +371,26 @@ const HeaderContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #000;
+  padding: 0.5rem 2rem;
+  margin-top: 2rem;
 
   @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
+    margin-top: 0;
   }
 `
 
 const TitleSection = styled.div``
 
 const PageTitle = styled.h1`
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(1rem, 3vw, 2rem);
   font-weight: 100;
-  margin: 0 0 0.5rem 0;
-  color: black;
+  padding: 0.5rem 0;
+  color: white;
   letter-spacing: 0.05em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const ItemCount = styled.p`

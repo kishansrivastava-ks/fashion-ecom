@@ -21,6 +21,10 @@ const BannerContainer = styled.div`
   overflow: hidden;
   background-color: #f9fafb;
   margin-bottom: 3rem;
+  @media (max-width: 768px) {
+    height: 70vh;
+    margin-top: -3rem;
+  }
 `
 
 const ImageTrack = styled.div`
@@ -32,12 +36,18 @@ const ImageTrack = styled.div`
   &:hover {
     animation-play-state: paused;
   }
+  @media (max-width: 768px) {
+    animation: ${scrollLeft} 8s linear infinite;
+  }
 `
 
 const ImageContainer = styled.div`
   width: 16.666667%;
   height: 100%;
   flex-shrink: 0;
+  @media (max-width: 768px) {
+    min-width: 60%;
+  }
 `
 
 const Image = styled.img`
@@ -63,8 +73,9 @@ const CTAOverlay = styled.div`
   background: rgba(255, 255, 255, 0.4);
 
   @media (max-width: 640px) {
-    padding: 2.5rem;
-    max-width: 20rem;
+    padding: 2rem;
+    /* max-width: 20rem; */
+    width: 90%;
   }
 `
 
@@ -90,6 +101,7 @@ const Description = styled.p`
 
   @media (max-width: 640px) {
     font-size: 0.875rem;
+    color: #fff;
   }
 `
 
