@@ -570,7 +570,7 @@ const FormContainer = styled(motion.div)`
 
 const MobileLogo = styled.h1`
   font-size: 2rem;
-  font-weight: 100;
+  font-weight: 300;
   letter-spacing: 0.2rem;
   margin: 0 0 2rem 0;
   color: black;

@@ -59,7 +59,12 @@ const HeroSection = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1, delay: 1.1 }}
           whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          onClick={() => {
+            window.scrollTo({
+              top: window.innerHeight, // scroll exactly 100vh
+              behavior: 'smooth',
+            })
+          }}
         >
           EXPLORE COLLECTION
         </HeroButton>
@@ -405,7 +410,7 @@ const Test = () => {
       <HeroSection />
       <QuoteDivider />
       {/* <FeaturedCollection /> */}
-      <EditorialShowcase />
+      <EditorialShowcase id="editorial-section" />
       <EthnicBannerScroll />
       {/* <VideoGridSection /> */}
       {/* <ProductCarousel /> */}

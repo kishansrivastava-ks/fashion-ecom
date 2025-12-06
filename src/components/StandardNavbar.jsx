@@ -7,6 +7,486 @@ import { useAuth } from '@/contexts/AuthContext'
 import api from '@/api/axios'
 import { useCart } from '@/contexts/CartContext'
 
+const StandardNavbar = () => {
+  const [showDropdown, setShowDropdown] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [cartCount, setCartCount] = useState(0)
+  const [mobileCollectionsOpen, setMobileCollectionsOpen] = useState(false)
+
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchResults, setSearchResults] = useState([])
+  const [isSearching, setIsSearching] = useState(false)
+
+  const navigate = useNavigate()
+  const { openCart, fetchCart } = useCart()
+  const { isAuthenticated, currentUser } = useAuth()
+
+  const handleBagClick = () => {
+    fetchCart()
+    openCart()
+  }
+
+  const handleSearch = async () => {
+    if (!searchQuery.trim()) {
+      setSearchResults([])
+      return
+    }
+
+    setIsSearching(true)
+    try {
+      const res = await api.get('/products', {
+        params: {
+          search: searchQuery,
+          limit: 20,
+        },
+      })
+      console.log('Search results:', res)
+      setSearchResults(res.data.products || [])
+    } catch (error) {
+      console.error('Search error:', error)
+      setSearchResults([])
+    } finally {
+      setIsSearching(false)
+    }
+  }
+
+  const handleSearchKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch()
+    }
+  }
+
+  const closeSearch = () => {
+    setIsSearchOpen(false)
+    setSearchQuery('')
+    setSearchResults([])
+  }
+
+  // --- Logic: Cart Count (Identical to previous) ---
+  useEffect(() => {
+    let mounted = true
+    const fetchCartCount = async () => {
+      if (!isAuthenticated) {
+        if (mounted) setCartCount(0)
+        return
+      }
+      try {
+        const res = await api.get('/cart')
+        const count =
+          res.data.totalItems ?? res.data.items?.reduce((s, it) => s + (it.quantity || 0), 0) ?? 0
+        if (mounted) setCartCount(count)
+      } catch (err) {
+        if (mounted) setCartCount(0)
+      }
+    }
+    fetchCartCount()
+    const onCartUpdated = (evt) => {
+      if (evt?.detail) {
+        const d = evt.detail
+        const count = d.totalItems ?? d.items?.reduce((s, it) => s + (it.quantity || 0), 0) ?? 0
+        setCartCount(count)
+      } else {
+        fetchCartCount()
+      }
+    }
+    window.addEventListener('cartUpdated', onCartUpdated)
+    return () => {
+      mounted = false
+      window.removeEventListener('cartUpdated', onCartUpdated)
+    }
+  }, [isAuthenticated])
+
+  // --- Data ---
+  const navItems = [
+    { name: 'Home', href: '/home', hasDropdown: false },
+    { name: 'Collections', href: '#collections', hasDropdown: true },
+    { name: 'About Us', href: '/about', hasDropdown: false },
+    { name: 'Contact', href: '/contact', hasDropdown: false },
+  ]
+
+  const collectionItems = [
+    { name: 'Ethnic', href: '/collections/ethnic', image: '/images/ethnic/ethnic42.jpg' },
+    { name: 'Western', href: '/collections/western', image: '/images/ethnic/ethnic61.jpg' },
+    { name: 'Bridal', href: '/collections/bridal', image: '/images/ethnic/ethnic34.jpg' },
+    { name: 'Custom', href: '/collections/custom', image: '/images/ethnic/ethnic2.jpg' },
+  ]
+
+  return (
+    <>
+      <NavRoot sticky={true}>
+        <NavContainer>
+          {/* 1. Left: Hamburger (Visible on Mobile Only) */}
+          <MobileMenuToggle onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </MobileMenuToggle>
+
+          {/* 2. Center/Left: Brand */}
+          <Brand>SHAASHEE</Brand>
+
+          {/* 3. Center: Desktop Nav (Hidden on Mobile) */}
+          <CenterNav>
+            {navItems.map((item) => (
+              <NavItem
+                key={item.name}
+                onMouseEnter={() => item.hasDropdown && setShowDropdown(true)}
+                onMouseLeave={() => item.hasDropdown && setShowDropdown(false)}
+              >
+                <NavLink href={item.href} onClick={() => !item.hasDropdown && navigate(item.href)}>
+                  {item.name}
+                </NavLink>
+              </NavItem>
+            ))}
+          </CenterNav>
+
+          {/* 4. Right: Icons */}
+          <IconGroup>
+            {/* Search: Hidden on mobile (moved to bottom bar) */}
+            <div
+              className="hidden md:block"
+              style={{ display: window.innerWidth <= 768 ? 'none' : 'block' }}
+            >
+              <IconButton
+                onClick={() => setIsSearchOpen(true)}
+                whileHover={{ scale: 1.1 }}
+                title="Search"
+              >
+                <Search size={20} strokeWidth={1.5} />
+              </IconButton>
+            </div>
+
+            {/* Wishlist: Keep as is (or hide if not needed on mobile, code below keeps it) */}
+            <IconButton
+              onClick={() => navigate('/wishlist')}
+              whileHover={{ scale: 1.1 }}
+              title="Wishlist"
+            >
+              <Heart size={20} strokeWidth={1.5} />
+            </IconButton>
+
+            {/* Cart: Always visible */}
+            <IconButton onClick={handleBagClick} whileHover={{ scale: 1.1 }} title="Cart">
+              <ShoppingBag size={20} strokeWidth={1.5} />
+              {cartCount > 0 && (
+                <CartBadge initial={{ scale: 0 }} animate={{ scale: 1 }}>
+                  {cartCount}
+                </CartBadge>
+              )}
+            </IconButton>
+
+            {/* User: Top Right on Mobile as requested */}
+            <IconButton
+              onClick={() =>
+                navigate(
+                  `${!isAuthenticated ? '/login' : currentUser?.role === 'admin' ? '/admin' : '/dashboard'}`
+                )
+              }
+              whileHover={{ scale: 1.1 }}
+              title="Account"
+            >
+              <User size={20} strokeWidth={1.5} />
+            </IconButton>
+          </IconGroup>
+        </NavContainer>
+      </NavRoot>
+
+      {/* 4. The Mega Menu Dropdown (Outside NavContainer to span full width, but inside MouseLeave area logic conceptually) */}
+      <AnimatePresence>
+        {showDropdown && (
+          <DropdownWrapper
+            onMouseEnter={() => setShowDropdown(true)}
+            onMouseLeave={() => setShowDropdown(false)}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+          >
+            <DropdownContent>
+              <DropdownGrid>
+                {collectionItems.map((collection, idx) => (
+                  <CollectionCard
+                    key={collection.name}
+                    href={collection.href}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: idx * 0.05 }}
+                  >
+                    <CollectionCardImage src={collection.image} alt={collection.name} />
+                    <CollectionCardOverlay />
+                    <CollectionCardText>{collection.name}</CollectionCardText>
+                  </CollectionCard>
+                ))}
+              </DropdownGrid>
+            </DropdownContent>
+          </DropdownWrapper>
+        )}
+      </AnimatePresence>
+
+      {/* 5. Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <MobileMenuOverlay
+            initial={{ opacity: 0, x: '-100%' }} // Changed to slide from LEFT
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '-100%' }} // Changed to slide out to LEFT
+            transition={{ type: 'tween', duration: 0.3 }}
+          >
+            {navItems.map((item) => (
+              <div key={item.name}>
+                {item.hasDropdown ? (
+                  // Logic for Collections with (+) button
+                  <>
+                    <AccordionHeader>
+                      <MobileLink
+                        href={item.href}
+                        style={{ borderBottom: 'none', flex: 1 }}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          setMobileCollectionsOpen(!mobileCollectionsOpen)
+                        }}
+                      >
+                        {item.name}
+                      </MobileLink>
+                      <button
+                        onClick={() => setMobileCollectionsOpen(!mobileCollectionsOpen)}
+                        style={{ background: 'none', border: 'none', padding: '1rem' }}
+                      >
+                        {/* Rotate icon based on state */}
+                        <motion.div animate={{ rotate: mobileCollectionsOpen ? 45 : 0 }}>
+                          <span style={{ fontSize: '1.5rem', fontWeight: 200 }}>+</span>
+                        </motion.div>
+                      </button>
+                    </AccordionHeader>
+
+                    <AnimatePresence>
+                      {mobileCollectionsOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          style={{ overflow: 'hidden' }}
+                        >
+                          <div style={{ paddingLeft: '1rem', marginBottom: '1rem' }}>
+                            {collectionItems.map((sub) => (
+                              <MobileLink
+                                key={sub.name}
+                                href={sub.href}
+                                style={{
+                                  fontSize: '1rem',
+                                  borderBottom: 'none',
+                                  padding: '0.5rem 0',
+                                  color: '#666',
+                                }}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                - {sub.name}
+                              </MobileLink>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </>
+                ) : (
+                  // Standard Links
+                  <MobileLink href={item.href} onClick={() => setIsMobileMenuOpen(false)}>
+                    {item.name}
+                  </MobileLink>
+                )}
+              </div>
+            ))}
+          </MobileMenuOverlay>
+        )}
+      </AnimatePresence>
+      <MobileBottomBar>
+        <IconButton onClick={() => navigate('/wishlist')} title="Wishlist">
+          <Heart size={24} strokeWidth={1.5} />
+        </IconButton>
+        <IconButton onClick={() => setIsSearchOpen(true)} title="Search">
+          <Search size={24} strokeWidth={1.5} />
+        </IconButton>
+
+        <IconButton
+          onClick={() =>
+            navigate(
+              `${!isAuthenticated ? '/login' : currentUser?.role === 'admin' ? '/admin' : '/dashboard'}`
+            )
+          }
+          title="Account"
+        >
+          <User size={24} strokeWidth={1.5} />
+        </IconButton>
+      </MobileBottomBar>
+
+      {/* Search Modal/Sidebar */}
+      <AnimatePresence>
+        {isSearchOpen && (
+          <>
+            {/* Desktop: Modal */}
+            <SearchModalOverlay
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeSearch}
+              className="desktop-search"
+            >
+              <SearchModalContent
+                initial={{ opacity: 0, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -50 }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <SearchHeader>
+                  <SearchTitle>Search Products</SearchTitle>
+                  <CloseButton onClick={closeSearch}>
+                    <X size={24} />
+                  </CloseButton>
+                </SearchHeader>
+
+                <SearchInputWrapper>
+                  <Search size={20} style={{ color: '#999' }} />
+                  <SearchInput
+                    type="text"
+                    placeholder="Search by name, SKU, category, subcategory, or tags..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyPress={handleSearchKeyPress}
+                    autoFocus
+                  />
+                  <SearchButton onClick={handleSearch} disabled={isSearching}>
+                    {isSearching ? 'Searching...' : 'Search'}
+                  </SearchButton>
+                </SearchInputWrapper>
+
+                <SearchResultsContainer>
+                  {isSearching ? (
+                    <LoadingState>Searching...</LoadingState>
+                  ) : searchResults.length > 0 ? (
+                    <SearchResultsGrid>
+                      {searchResults.map((product) => (
+                        <SearchResultCard
+                          key={product._id}
+                          onClick={() => {
+                            navigate(`/products/${product.slug}`)
+                            closeSearch()
+                          }}
+                          whileHover={{ y: -5 }}
+                        >
+                          <SearchResultImage
+                            src={
+                              product.images.find((img) => img.isPrimary)?.url ||
+                              product.images[0]?.url
+                            }
+                            alt={product.name}
+                          />
+                          <SearchResultInfo>
+                            <SearchResultName>{product.name}</SearchResultName>
+                            <SearchResultMeta>
+                              <span>SKU: {product.sku}</span>
+                              <span>•</span>
+                              <span>{product.category}</span>
+                              {product.subCategory && (
+                                <>
+                                  <span>•</span>
+                                  <span>{product.subCategory}</span>
+                                </>
+                              )}
+                            </SearchResultMeta>
+                            <SearchResultPrice>₹{product.price.toLocaleString()}</SearchResultPrice>
+                          </SearchResultInfo>
+                        </SearchResultCard>
+                      ))}
+                    </SearchResultsGrid>
+                  ) : searchQuery ? (
+                    <EmptySearchState>No products found for "{searchQuery}"</EmptySearchState>
+                  ) : (
+                    <EmptySearchState>Start typing to search products...</EmptySearchState>
+                  )}
+                </SearchResultsContainer>
+              </SearchModalContent>
+            </SearchModalOverlay>
+
+            {/* Mobile: Sidebar */}
+            <SearchSidebarOverlay
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeSearch}
+              className="mobile-search"
+            />
+            <SearchSidebar
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'tween', duration: 0.3 }}
+              className="mobile-search"
+            >
+              <SearchHeader>
+                <SearchTitle>Search Products</SearchTitle>
+                <CloseButton onClick={closeSearch}>
+                  <X size={24} />
+                </CloseButton>
+              </SearchHeader>
+
+              <SearchInputWrapper style={{ padding: '0 1rem' }}>
+                <Search size={18} style={{ color: '#999' }} />
+                <SearchInput
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyPress={handleSearchKeyPress}
+                  autoFocus
+                />
+                <SearchButton onClick={handleSearch} disabled={isSearching}>
+                  {isSearching ? '...' : 'Go'}
+                </SearchButton>
+              </SearchInputWrapper>
+
+              <MobileSearchResults>
+                {isSearching ? (
+                  <LoadingState>Searching...</LoadingState>
+                ) : searchResults.length > 0 ? (
+                  searchResults.map((product) => (
+                    <MobileSearchItem
+                      key={product._id}
+                      onClick={() => {
+                        navigate(`/products/${product.slug}`)
+                        closeSearch()
+                      }}
+                    >
+                      <MobileSearchImage
+                        src={
+                          product.images.find((img) => img.isPrimary)?.url || product.images[0]?.url
+                        }
+                        alt={product.name}
+                      />
+                      <MobileSearchInfo>
+                        <MobileSearchName>{product.name}</MobileSearchName>
+                        <MobileSearchMeta>
+                          SKU: {product.sku} • {product.category}
+                          {product.subCategory && ` • ${product.subCategory}`}
+                        </MobileSearchMeta>
+                        <MobileSearchPrice>₹{product.price.toLocaleString()}</MobileSearchPrice>
+                      </MobileSearchInfo>
+                    </MobileSearchItem>
+                  ))
+                ) : searchQuery ? (
+                  <EmptySearchState>No products found</EmptySearchState>
+                ) : (
+                  <EmptySearchState>Start typing to search...</EmptySearchState>
+                )}
+              </MobileSearchResults>
+            </SearchSidebar>
+          </>
+        )}
+      </AnimatePresence>
+    </>
+  )
+}
+
+export default StandardNavbar
+
 // --- Styled Components ---
 
 // Main Navbar Wrapper (Full width, white, thin)
@@ -305,280 +785,320 @@ const AccordionHeader = styled.div`
   border-bottom: 1px solid #f0f0f0;
 `
 
-// --- Component Definition ---
+// Search Modal/Sidebar Styles
+const SearchModalOverlay = styled(motion.div)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 5vh;
+  overflow-y: auto;
 
-const StandardNavbar = () => {
-  const [showDropdown, setShowDropdown] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [cartCount, setCartCount] = useState(0)
-  const [mobileCollectionsOpen, setMobileCollectionsOpen] = useState(false)
+  @media (max-width: 768px) {
+    display: none;
+  }
+`
 
-  const navigate = useNavigate()
-  const { openCart, fetchCart } = useCart()
-  const { isAuthenticated, currentUser } = useAuth()
+const SearchModalContent = styled(motion.div)`
+  background: white;
+  width: 90%;
+  max-width: 900px;
+  max-height: 85vh;
+  border-radius: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+`
 
-  const handleBagClick = () => {
-    fetchCart()
-    openCart()
+const SearchSidebarOverlay = styled(motion.div)`
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+  }
+`
+
+const SearchSidebar = styled(motion.div)`
+  display: none;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 400px;
+    background: white;
+    z-index: 2001;
+    overflow-y: auto;
+  }
+`
+
+const SearchHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #f0f0f0;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+`
+
+const SearchTitle = styled.h2`
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin: 0;
+  letter-spacing: 0.05em;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
+`
+
+const CloseButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: #333;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    color: #000;
+  }
+`
+
+const SearchInputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #f0f0f0;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+`
+
+const SearchInput = styled.input`
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  color: #333;
+
+  &::placeholder {
+    color: #999;
   }
 
-  // --- Logic: Cart Count (Identical to previous) ---
-  useEffect(() => {
-    let mounted = true
-    const fetchCartCount = async () => {
-      if (!isAuthenticated) {
-        if (mounted) setCartCount(0)
-        return
-      }
-      try {
-        const res = await api.get('/cart')
-        const count =
-          res.data.totalItems ?? res.data.items?.reduce((s, it) => s + (it.quantity || 0), 0) ?? 0
-        if (mounted) setCartCount(count)
-      } catch (err) {
-        if (mounted) setCartCount(0)
-      }
-    }
-    fetchCartCount()
-    const onCartUpdated = (evt) => {
-      if (evt?.detail) {
-        const d = evt.detail
-        const count = d.totalItems ?? d.items?.reduce((s, it) => s + (it.quantity || 0), 0) ?? 0
-        setCartCount(count)
-      } else {
-        fetchCartCount()
-      }
-    }
-    window.addEventListener('cartUpdated', onCartUpdated)
-    return () => {
-      mounted = false
-      window.removeEventListener('cartUpdated', onCartUpdated)
-    }
-  }, [isAuthenticated])
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+`
 
-  // --- Data ---
-  const navItems = [
-    { name: 'Home', href: '/home', hasDropdown: false },
-    { name: 'Collections', href: '#collections', hasDropdown: true },
-    { name: 'About Us', href: '/about', hasDropdown: false },
-    { name: 'Contact', href: '/contact', hasDropdown: false },
-  ]
+const SearchButton = styled.button`
+  background: black;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  white-space: nowrap;
 
-  const collectionItems = [
-    { name: 'Ethnic', href: '/collections/ethnic', image: '/images/ethnic/ethnic42.jpg' },
-    { name: 'Western', href: '/collections/western', image: '/images/ethnic/ethnic61.jpg' },
-    { name: 'Bridal', href: '/collections/bridal', image: '/images/ethnic/ethnic34.jpg' },
-    { name: 'Custom', href: '/collections/custom', image: '/images/ethnic/ethnic2.jpg' },
-  ]
+  &:hover:not(:disabled) {
+    background: #333;
+  }
 
-  return (
-    <>
-      <NavRoot sticky={true}>
-        <NavContainer>
-          {/* 1. Left: Hamburger (Visible on Mobile Only) */}
-          <MobileMenuToggle onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </MobileMenuToggle>
+  &:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
 
-          {/* 2. Center/Left: Brand */}
-          <Brand>SHAASHEE</Brand>
+  @media (max-width: 768px) {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+`
 
-          {/* 3. Center: Desktop Nav (Hidden on Mobile) */}
-          <CenterNav>
-            {navItems.map((item) => (
-              <NavItem
-                key={item.name}
-                onMouseEnter={() => item.hasDropdown && setShowDropdown(true)}
-                onMouseLeave={() => item.hasDropdown && setShowDropdown(false)}
-              >
-                <NavLink href={item.href} onClick={() => !item.hasDropdown && navigate(item.href)}>
-                  {item.name}
-                </NavLink>
-              </NavItem>
-            ))}
-          </CenterNav>
+const SearchResultsContainer = styled.div`
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
 
-          {/* 4. Right: Icons */}
-          <IconGroup>
-            {/* Search: Hidden on mobile (moved to bottom bar) */}
-            <div
-              className="hidden md:block"
-              style={{ display: window.innerWidth <= 768 ? 'none' : 'block' }}
-            >
-              <IconButton whileHover={{ scale: 1.1 }} title="Search">
-                <Search size={20} strokeWidth={1.5} />
-              </IconButton>
-            </div>
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+`
 
-            {/* Wishlist: Keep as is (or hide if not needed on mobile, code below keeps it) */}
-            <IconButton
-              onClick={() => navigate('/wishlist')}
-              whileHover={{ scale: 1.1 }}
-              title="Wishlist"
-            >
-              <Heart size={20} strokeWidth={1.5} />
-            </IconButton>
+const SearchResultsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
 
-            {/* Cart: Always visible */}
-            <IconButton onClick={handleBagClick} whileHover={{ scale: 1.1 }} title="Cart">
-              <ShoppingBag size={20} strokeWidth={1.5} />
-              {cartCount > 0 && (
-                <CartBadge initial={{ scale: 0 }} animate={{ scale: 1 }}>
-                  {cartCount}
-                </CartBadge>
-              )}
-            </IconButton>
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+`
 
-            {/* User: Top Right on Mobile as requested */}
-            <IconButton
-              onClick={() =>
-                navigate(
-                  `${!isAuthenticated ? '/login' : currentUser?.role === 'admin' ? '/admin' : '/dashboard'}`
-                )
-              }
-              whileHover={{ scale: 1.1 }}
-              title="Account"
-            >
-              <User size={20} strokeWidth={1.5} />
-            </IconButton>
-          </IconGroup>
-        </NavContainer>
-      </NavRoot>
+const SearchResultCard = styled(motion.div)`
+  cursor: pointer;
+  border: 1px solid #f0f0f0;
+  overflow: hidden;
+  transition: all 0.3s ease;
 
-      {/* 4. The Mega Menu Dropdown (Outside NavContainer to span full width, but inside MouseLeave area logic conceptually) */}
-      <AnimatePresence>
-        {showDropdown && (
-          <DropdownWrapper
-            onMouseEnter={() => setShowDropdown(true)}
-            onMouseLeave={() => setShowDropdown(false)}
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-          >
-            <DropdownContent>
-              <DropdownGrid>
-                {collectionItems.map((collection, idx) => (
-                  <CollectionCard
-                    key={collection.name}
-                    href={collection.href}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: idx * 0.05 }}
-                  >
-                    <CollectionCardImage src={collection.image} alt={collection.name} />
-                    <CollectionCardOverlay />
-                    <CollectionCardText>{collection.name}</CollectionCardText>
-                  </CollectionCard>
-                ))}
-              </DropdownGrid>
-            </DropdownContent>
-          </DropdownWrapper>
-        )}
-      </AnimatePresence>
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+`
 
-      {/* 5. Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <MobileMenuOverlay
-            initial={{ opacity: 0, x: '-100%' }} // Changed to slide from LEFT
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '-100%' }} // Changed to slide out to LEFT
-            transition={{ type: 'tween', duration: 0.3 }}
-          >
-            {navItems.map((item) => (
-              <div key={item.name}>
-                {item.hasDropdown ? (
-                  // Logic for Collections with (+) button
-                  <>
-                    <AccordionHeader>
-                      <MobileLink
-                        href={item.href}
-                        style={{ borderBottom: 'none', flex: 1 }}
-                        onClick={(e) => {
-                          e.preventDefault()
-                          setMobileCollectionsOpen(!mobileCollectionsOpen)
-                        }}
-                      >
-                        {item.name}
-                      </MobileLink>
-                      <button
-                        onClick={() => setMobileCollectionsOpen(!mobileCollectionsOpen)}
-                        style={{ background: 'none', border: 'none', padding: '1rem' }}
-                      >
-                        {/* Rotate icon based on state */}
-                        <motion.div animate={{ rotate: mobileCollectionsOpen ? 45 : 0 }}>
-                          <span style={{ fontSize: '1.5rem', fontWeight: 200 }}>+</span>
-                        </motion.div>
-                      </button>
-                    </AccordionHeader>
+const SearchResultImage = styled.img`
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  background: #f8f8f8;
 
-                    <AnimatePresence>
-                      {mobileCollectionsOpen && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          style={{ overflow: 'hidden' }}
-                        >
-                          <div style={{ paddingLeft: '1rem', marginBottom: '1rem' }}>
-                            {collectionItems.map((sub) => (
-                              <MobileLink
-                                key={sub.name}
-                                href={sub.href}
-                                style={{
-                                  fontSize: '1rem',
-                                  borderBottom: 'none',
-                                  padding: '0.5rem 0',
-                                  color: '#666',
-                                }}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                              >
-                                - {sub.name}
-                              </MobileLink>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </>
-                ) : (
-                  // Standard Links
-                  <MobileLink href={item.href} onClick={() => setIsMobileMenuOpen(false)}>
-                    {item.name}
-                  </MobileLink>
-                )}
-              </div>
-            ))}
-          </MobileMenuOverlay>
-        )}
-      </AnimatePresence>
-      <MobileBottomBar>
-        <IconButton onClick={() => navigate('/wishlist')} title="Wishlist">
-          <Heart size={24} strokeWidth={1.5} />
-        </IconButton>
-        <IconButton
-          onClick={() => {
-            /* Toggle Search Logic */
-          }}
-          title="Search"
-        >
-          <Search size={24} strokeWidth={1.5} />
-        </IconButton>
+  @media (max-width: 768px) {
+    height: 150px;
+  }
+`
 
-        <IconButton
-          onClick={() =>
-            navigate(
-              `${!isAuthenticated ? '/login' : currentUser?.role === 'admin' ? '/admin' : '/dashboard'}`
-            )
-          }
-          title="Account"
-        >
-          <User size={24} strokeWidth={1.5} />
-        </IconButton>
-      </MobileBottomBar>
-    </>
-  )
-}
+const SearchResultInfo = styled.div`
+  padding: 1rem;
+`
 
-export default StandardNavbar
+const SearchResultName = styled.h3`
+  font-size: 0.95rem;
+  font-weight: 400;
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+  }
+`
+
+const SearchResultMeta = styled.div`
+  font-size: 0.75rem;
+  color: #999;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+  text-transform: capitalize;
+
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+  }
+`
+
+const SearchResultPrice = styled.div`
+  font-size: 1rem;
+  font-weight: 500;
+  color: #000;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+`
+
+const LoadingState = styled.div`
+  text-align: center;
+  padding: 3rem;
+  color: #999;
+  font-size: 1rem;
+`
+
+const EmptySearchState = styled.div`
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #999;
+  font-size: 1rem;
+
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+    font-size: 0.9rem;
+  }
+`
+
+// Mobile Search Results
+const MobileSearchResults = styled.div`
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+`
+
+const MobileSearchItem = styled.div`
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: #f8f8f8;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+`
+
+const MobileSearchImage = styled.img`
+  width: 80px;
+  height: 100px;
+  object-fit: cover;
+  background: #f8f8f8;
+  flex-shrink: 0;
+`
+
+const MobileSearchInfo = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+`
+
+const MobileSearchName = styled.h3`
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin: 0;
+  color: #333;
+`
+
+const MobileSearchMeta = styled.div`
+  font-size: 0.7rem;
+  color: #999;
+  text-transform: capitalize;
+`
+
+const MobileSearchPrice = styled.div`
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #000;
+  margin-top: auto;
+`
