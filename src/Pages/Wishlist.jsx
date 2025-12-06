@@ -19,10 +19,12 @@ import api from '@/api/axios'
 import toast from 'react-hot-toast'
 import StandardNavbar from '@/components/StandardNavbar'
 import Banner from '@/components/common/Banner'
+import { useCart } from '@/contexts/CartContext'
 
 // Component
 const Wishlist = () => {
   const { isAuthenticated, currentUser } = useAuth()
+  const { addToCart: addToCartContext, fetchCart, openCart } = useCart()
 
   const [wishlistItems, setWishlistItems] = useState([])
 
@@ -81,13 +83,37 @@ const Wishlist = () => {
   const suggestionsRef = useRef(null)
   const suggestionsInView = useInView(suggestionsRef, { once: true, margin: '-100px' })
 
-  const removeFromWishlist = (id) => {
-    setWishlistItems(wishlistItems.filter((item) => item.id !== id))
+  const removeFromWishlist = async (productId) => {
+    try {
+      await api.post('/wishlist/remove', { productId })
+      // Update local state
+      setWishlistItems(wishlistItems.filter((item) => item._id !== productId))
+      toast.success('Item removed from wishlist')
+    } catch (error) {
+      console.error('Error removing from wishlist:', error)
+      toast.error(error?.response?.data?.message || 'Failed to remove item')
+    }
   }
+  const addToCart = async (item) => {
+    try {
+      // First, remove from wishlist
+      await api.post('/wishlist/remove', { productId: item._id })
 
-  const addToCart = (item) => {
-    console.log('Added to cart:', item)
-    alert(`${item.name} added to cart!`)
+      // Then, add to cart
+      await addToCartContext(item._id, 1)
+
+      // Update local wishlist state
+      setWishlistItems(wishlistItems.filter((wishlistItem) => wishlistItem._id !== item._id))
+
+      // Fetch updated cart and open cart sidebar
+      await fetchCart()
+      openCart()
+
+      toast.success(`${item.name} moved to cart!`)
+    } catch (error) {
+      console.error('Error moving item to cart:', error)
+      toast.error(error?.response?.data?.message || 'Failed to add item to cart')
+    }
   }
 
   const handleShare = () => {
@@ -147,8 +173,7 @@ const Wishlist = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                padding: '0 2rem',
-                // border: '2px solid red',
+                padding: '0 1rem',
               }}
             >
               <BackButton onClick={() => window.history.back()} whileHover={{ x: -5 }}>
@@ -229,7 +254,9 @@ const Wishlist = () => {
                         {item.name}
                       </ProductName>
                       <ProductCategory>{item.category}</ProductCategory>
-                      <RemoveText onClick={() => removeFromWishlist(item.id)}>Remove</RemoveText>
+                      <RemoveText onClick={() => removeFromWishlist(item._id)}>
+                        Remove
+                      </RemoveText>{' '}
                     </ProductDetail>
                   </ProductColumn>
 
@@ -350,6 +377,11 @@ const BackButton = styled(motion.button)`
   &:hover {
     color: black;
   }
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    gap: 0.3rem;
+  }
 `
 
 const Breadcrumb = styled.div`
@@ -365,6 +397,10 @@ const Breadcrumb = styled.div`
       color: black;
     }
   }
+
+  @media (max-width: 768px) {
+    display: none; // Hide breadcrumb on mobile
+  }
 `
 
 const HeaderContent = styled.div`
@@ -377,6 +413,7 @@ const HeaderContent = styled.div`
 
   @media (max-width: 768px) {
     margin-top: 0;
+    padding: 0.5rem 1rem;
   }
 `
 
@@ -403,6 +440,10 @@ const ItemCount = styled.p`
 const HeaderActions = styled.div`
   display: flex;
   gap: 1rem;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 
 const ActionButton = styled(motion.button)`
@@ -427,6 +468,10 @@ const WishlistSection = styled.section`
   max-width: 1400px;
   margin: 0 auto;
   padding: 3rem 2rem;
+
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+  }
 `
 
 const WishlistGrid = styled.div`
@@ -571,8 +616,13 @@ const ProductName = styled.h3`
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
-`
 
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
+    white-space: normal;
+    margin: 0 0 0.4rem 0;
+  }
+`
 const PriceContainer = styled.div`
   display: flex;
   align-items: center;
@@ -610,8 +660,11 @@ const Stars = styled.div`
 const EmptyState = styled.div`
   text-align: center;
   padding: 5rem 2rem;
-`
 
+  @media (max-width: 768px) {
+    padding: 3rem 1rem;
+  }
+`
 const EmptyIcon = styled.div`
   width: 100px;
   height: 100px;
@@ -655,18 +708,31 @@ const EmptyButton = styled(motion.button)`
   &:hover {
     background: #333;
   }
+
+  @media (max-width: 768px) {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
 `
 
 // Suggestions Section
 const SuggestionsSection = styled.section`
   background: #f8f8f8;
   padding: 4rem 0;
+
+  @media (max-width: 768px) {
+    padding: 3rem 0;
+  }
 `
 
 const SuggestionsContainer = styled.div`
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 2rem;
+
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+  }
 `
 
 const SectionHeader = styled.div`
@@ -841,6 +907,11 @@ const ItemImage = styled.img`
   object-fit: cover;
   cursor: pointer;
   background: #f8f8f8;
+
+  @media (max-width: 768px) {
+    width: 80px;
+    height: 100px;
+  }
 `
 
 const ProductDetail = styled.div`
@@ -913,5 +984,11 @@ const AddToCartButton = styled(motion.button)`
 
   &:hover:not(:disabled) {
     background: #333;
+  }
+
+  @media (max-width: 768px) {
+    max-width: 100%; // Full width on mobile
+    padding: 0.7rem 1rem;
+    font-size: 0.85rem;
   }
 `

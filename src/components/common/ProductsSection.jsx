@@ -625,7 +625,7 @@ const ModalContent = styled(motion.div)`
   /* border-radius: 8px; */
 
   @media (max-width: 768px) {
-    max-height: none;
+    /* max-height: none; */
     border-radius: 0;
   }
 `
@@ -669,17 +669,34 @@ const ModalGrid = styled.div`
   }
 `
 
+// const ImageColumn = styled.div`
+//   background: #f5f5f5;
+//   /* padding: 3rem; */
+//   display: flex;
+//   flex-direction: column;
+//   gap: 1.5rem;
+//   position: relative;
+//   height: 90dvh;
+
+//   @media (max-width: 768px) {
+//     padding: 2rem 1rem;
+//   }
+// `
+
 const ImageColumn = styled.div`
   background: #f5f5f5;
-  /* padding: 3rem; */
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   position: relative;
-  height: 90dvh;
+  height: 90dvh; // Keeps desktop fixed height
 
   @media (max-width: 768px) {
-    padding: 2rem 1rem;
+    height: auto; // FIX: Allows container to shrink to image size
+    min-height: auto;
+    background: white; // CLEANER UX: Seamless background on mobile
+    padding: 0; // CLEANER UX: Edge-to-edge image looks more modern
+    padding-bottom: 2rem; // Space for the indicators
   }
 `
 
@@ -720,8 +737,22 @@ const NavButton = styled(motion.button)`
     background: black;
     color: white;
   }
+
+  @media (max-width: 768px) {
+    width: 32px; // Smaller buttons on mobile
+    height: 32px;
+  }
 `
 
+// const ImageIndicators = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   gap: 0.5rem;
+//   position: absolute;
+//   bottom: 1rem;
+//   left: 50%;
+//   transform: translateX(-50%);
+// `
 const ImageIndicators = styled.div`
   display: flex;
   justify-content: center;
@@ -730,6 +761,10 @@ const ImageIndicators = styled.div`
   bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
+
+  @media (max-width: 768px) {
+    bottom: 0.5rem; // Moves dots closer to the image edge
+  }
 `
 
 const Indicator = styled.button`
@@ -754,7 +789,8 @@ const DetailsColumn = styled.div`
   gap: 1.5rem;
 
   @media (max-width: 768px) {
-    padding: 2rem 1.5rem;
+    padding: 1.5rem 1.25rem;
+    padding-bottom: 2rem;
   }
 `
 

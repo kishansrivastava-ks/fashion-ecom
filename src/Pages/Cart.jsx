@@ -176,27 +176,27 @@ const Cart = () => {
         {/* Header */}
         <HeaderSection>
           <HeaderContainer>
-            <div
+            {/* <div
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 width: '100%',
                 padding: '0 2rem ',
+                border: '2px solid red',
               }}
-            >
-              <BackButton onClick={() => window.history.back()} whileHover={{ x: -5 }}>
-                <ArrowLeft size={18} />
-                Continue Shopping
-              </BackButton>
+            > */}
+            <BackButton onClick={() => window.history.back()} whileHover={{ x: -5 }}>
+              <ArrowLeft size={18} />
+              Continue Shopping
+            </BackButton>
 
-              <Breadcrumb>
-                <a href="/">Home</a> / Shopping Cart
-              </Breadcrumb>
-            </div>
-
-            <PageTitle>SHOPPING CART</PageTitle>
+            <Breadcrumb>
+              <a href="/">Home</a> / Shopping Cart
+            </Breadcrumb>
+            {/* </div> */}
           </HeaderContainer>
+          <PageTitle>SHOPPING CART</PageTitle>
         </HeaderSection>
 
         {/* Main Content */}
@@ -457,6 +457,7 @@ export default Cart
 const Container = styled.div`
   background: white;
   min-height: 100vh;
+  /* border: 2px solid red; */
 `
 
 // Header Section
@@ -464,14 +465,21 @@ const HeaderSection = styled.section`
   background: #f8f8f8;
   padding: 2rem 0;
   padding-bottom: 0;
-  /* border: 2px solid red; */
+  /* border: 2px solid blue; */
 `
 
 const HeaderContainer = styled.div`
   /* max-width: 1400px; */
   margin: 0 auto;
-  /* padding: 0 2rem; */
+  padding: 0 2rem;
   border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+  }
 `
 
 const BackButton = styled(motion.button)`
@@ -504,6 +512,10 @@ const Breadcrumb = styled.div`
       color: black;
     }
   }
+
+  @media (max-width: 768px) {
+    margin-bottom: 1rem;
+  }
 `
 
 const PageTitle = styled.h1`
@@ -525,14 +537,24 @@ const MainContent = styled.section`
   display: grid;
   grid-template-columns: 1fr 400px;
   gap: 3rem;
+  /* border: 2px solid orange; */
 
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;
+    padding: 1.5rem 1rem; // FIX: Reduce padding for more screen space
+    gap: 2rem;
   }
 `
 
 // Cart Items Section
-const CartItemsSection = styled.div``
+const CartItemsSection = styled.div`
+  /* border: 2px solid purple; */
+  /* width: 100%; */
+  @media (max-width: 768px) {
+    /* max-width: 100%; */
+    max-width: 22rem;
+  }
+`
 
 const CartHeader = styled.div`
   display: flex;
@@ -571,19 +593,36 @@ const CartItemsList = styled.div`
 
 const CartItem = styled(motion.div)`
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr; /* 4 Columns */
+  grid-template-columns: 2fr 1fr 1fr 1fr;
   align-items: center;
   padding: 1rem 0;
   border-bottom: 1px solid #e0e0e0;
   background: white;
 
   @media (max-width: 768px) {
-    /* Stack on mobile */
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    padding: 1.5rem;
-    border: 1px solid #eee;
+    display: block; // FIX: Switch to block to control spacing better
+    position: relative;
+    padding: 1.5rem 0;
+    border: none; // Remove the boxy border
+    border-bottom: 1px solid #eee; // Keep the divider
+
+    /* Target the Price Column (2nd Child) */
+    & > div:nth-child(2) {
+      justify-content: flex-start;
+      margin-left: 116px;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Target the Quantity Column (3rd Child) */
+    & > div:nth-child(3) {
+      justify-content: flex-start;
+      margin-left: 116px;
+    }
+
+    /* Target the Total Column (4th Child) */
+    & > div:nth-child(4) {
+      display: none;
+    }
   }
 `
 
@@ -594,6 +633,7 @@ const ItemImage = styled.div`
   background-size: cover;
   background-position: center;
   cursor: pointer;
+  flex-shrink: 0;
 
   @media (max-width: 768px) {
     width: 100px;
@@ -777,7 +817,10 @@ const Savings = styled.div`
 // Summary Section
 const SummarySection = styled.div`
   @media (max-width: 1024px) {
-    order: -1;
+    /* order: -1; */
+
+    /* border: 2px solid green; */
+    max-width: 22rem;
   }
 `
 
@@ -790,6 +833,11 @@ const SummaryCard = styled(motion.div)`
 
   @media (max-width: 1024px) {
     position: static;
+  }
+
+  @media (max-width: 768px) {
+    position: relative;
+    margin-top: -2rem;
   }
 `
 
@@ -804,12 +852,17 @@ const PromoSection = styled.div`
   margin-bottom: 1.5rem;
   padding-bottom: 1.5rem;
   border-bottom: 1px solid #e0e0e0;
+  /* border: 2px solid red; */
 `
 
 const PromoInput = styled.div`
   display: flex;
   gap: 0.5rem;
   margin-bottom: 1rem;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    margin-bottom: 0;
+  }
 `
 
 const Input = styled.input`
@@ -1070,7 +1123,11 @@ const TableHeaders = styled.div`
 const ProductColumn = styled.div`
   display: flex;
   gap: 1rem;
-  align-items: center;
+  align-items: flex-start; // FIX: align top so image/text match
+
+  @media (max-width: 768px) {
+    margin-bottom: 0.25rem;
+  }
 `
 
 const ProductInfo = styled.div`
@@ -1124,7 +1181,7 @@ const OrderNotesTextarea = styled.textarea`
   resize: vertical; /* Allows user to drag to resize height only */
   color: #333;
   transition: border-color 0.2s ease;
-
+  max-width: 500px;
   &:focus {
     outline: none;
     border-color: black;
@@ -1132,5 +1189,9 @@ const OrderNotesTextarea = styled.textarea`
 
   &::placeholder {
     color: #888;
+  }
+  @media (max-width: 768px) {
+    margin-top: 1.5rem; // FIX: Reduce gap on mobile
+    padding-top: 1.5rem;
   }
 `
