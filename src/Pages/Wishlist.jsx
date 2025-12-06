@@ -25,6 +25,7 @@ import { useCart } from '@/contexts/CartContext'
 const Wishlist = () => {
   const { isAuthenticated, currentUser } = useAuth()
   const { addToCart: addToCartContext, fetchCart, openCart } = useCart()
+  const [isAddingToCart, setIsAddingToCart] = useState(false)
 
   const [wishlistItems, setWishlistItems] = useState([])
 
@@ -96,6 +97,7 @@ const Wishlist = () => {
   }
   const addToCart = async (item) => {
     try {
+      setIsAddingToCart(true)
       // First, remove from wishlist
       await api.post('/wishlist/remove', { productId: item._id })
 
@@ -113,6 +115,8 @@ const Wishlist = () => {
     } catch (error) {
       console.error('Error moving item to cart:', error)
       toast.error(error?.response?.data?.message || 'Failed to add item to cart')
+    } finally {
+      setIsAddingToCart(false)
     }
   }
 
@@ -281,7 +285,7 @@ const Wishlist = () => {
                       whileTap={{ scale: 0.98 }}
                     >
                       <ShoppingCart size={16} />
-                      Add to Cart
+                      {isAddingToCart ? 'Adding...' : 'Add to Cart'}
                     </AddToCartButton>
                   </CenterColumn>
                 </WishlistRow>

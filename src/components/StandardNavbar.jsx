@@ -86,8 +86,8 @@ const NavItem = styled.li`
 
 const NavLink = styled.a`
   position: relative;
-  font-size: 0.9rem;
-  font-weight: 400;
+  font-size: 1rem;
+  font-weight: 500;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: #333;
@@ -314,8 +314,13 @@ const StandardNavbar = () => {
   const [mobileCollectionsOpen, setMobileCollectionsOpen] = useState(false)
 
   const navigate = useNavigate()
-  const { openCart } = useCart()
+  const { openCart, fetchCart } = useCart()
   const { isAuthenticated, currentUser } = useAuth()
+
+  const handleBagClick = () => {
+    fetchCart()
+    openCart()
+  }
 
   // --- Logic: Cart Count (Identical to previous) ---
   useEffect(() => {
@@ -415,7 +420,7 @@ const StandardNavbar = () => {
             </IconButton>
 
             {/* Cart: Always visible */}
-            <IconButton onClick={openCart} whileHover={{ scale: 1.1 }} title="Cart">
+            <IconButton onClick={handleBagClick} whileHover={{ scale: 1.1 }} title="Cart">
               <ShoppingBag size={20} strokeWidth={1.5} />
               {cartCount > 0 && (
                 <CartBadge initial={{ scale: 0 }} animate={{ scale: 1 }}>

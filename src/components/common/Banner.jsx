@@ -9,6 +9,7 @@ const StyledBanner = styled.div`
   font-size: 1.5rem;
   letter-spacing: 15px;
   font-family: 'Arial', sans-serif;
+  font-weight: 600;
 
   @media (max-width: 640px) {
     padding: 0.5rem 0;
