@@ -120,7 +120,11 @@ const ProductsSection = ({ title, products }) => {
         )}
       </Container>
 
-      <QuickViewModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
+      <QuickViewModal
+        product={selectedProduct}
+        onClose={() => setSelectedProduct(null)}
+        setQuantityModalProduct={setQuantityModalProduct}
+      />
       <QuantityModal
         product={quantityModalProduct}
         onClose={() => {
@@ -213,7 +217,7 @@ const ProductCard = ({ product, index, isInView, onQuickView, setQuantityModalPr
 }
 
 // Quick View Modal Component
-const QuickViewModal = ({ product, onClose }) => {
+const QuickViewModal = ({ product, onClose, setQuantityModalProduct }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   if (!product) return null
@@ -340,7 +344,10 @@ const QuickViewModal = ({ product, onClose }) => {
                   VIEW DETAILS
                 </PrimaryButton>
                 <SecondaryButton
-                  // onClick={() => setQuantityModalProduct(product)}
+                  onClick={() => {
+                    setQuantityModalProduct(product)
+                    onClose()
+                  }}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >

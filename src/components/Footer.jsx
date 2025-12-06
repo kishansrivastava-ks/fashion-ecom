@@ -160,7 +160,7 @@ const BrandColumn = styled(FooterColumn)`
 
 const BrandLogo = styled.h2`
   font-size: 2.5rem;
-  font-weight: 100;
+  font-weight: 400;
   letter-spacing: 0.2rem;
   margin: 0 0 1.5rem 0;
   color: black;
@@ -497,7 +497,7 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <BrandLogo>SHASHEE</BrandLogo>
+            <BrandLogo>SHAASHEE</BrandLogo>
             <BrandTagline>
               Redefining modern fashion through the perfect blend of traditional craftsmanship and
               contemporary design. Where every piece tells a story of elegance and sophistication.
@@ -708,7 +708,7 @@ const Footer = () => {
       <BottomSection>
         <BottomContainer>
           <Copyright>
-            © {currentYear} SHASHEE Fashion. All rights reserved. Designed with ❤️ in India
+            © {currentYear} SHAASHEE Fashion. All rights reserved. Designed with ❤️ in India
           </Copyright>
 
           <LegalLinks>
