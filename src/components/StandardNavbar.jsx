@@ -37,8 +37,8 @@ const StandardNavbar = () => {
     try {
       const res = await api.get('/products', {
         params: {
-          search: searchQuery,
-          limit: 20,
+          query: searchQuery,
+          // limit: 20,
         },
       })
       console.log('Search results:', res)
