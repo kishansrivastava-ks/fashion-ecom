@@ -35,6 +35,8 @@ import AllOrders from './Pages/Dashboard/Admin/AllOrders'
 import OrderDetails from './Pages/Dashboard/Admin/OrderDetails'
 import { CartProvider } from './contexts/CartContext'
 import GlobalCartSidebar from './components/GlobalCartSidebar'
+import ForgotPassword from './Pages/Auth/ForgotPassword'
+import ResetPassword from './Pages/Auth/ResetPassword'
 
 function App() {
   return (
@@ -70,6 +72,8 @@ function App() {
                 <Route path="login" element={<Login />} />
                 <Route path="signup" element={<Signup />} />
                 <Route path="verify-otp" element={<OTPVerification />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password/:token" element={<ResetPassword />} />
 
                 <Route
                   path="dashboard"

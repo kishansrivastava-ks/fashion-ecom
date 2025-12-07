@@ -193,7 +193,9 @@ const Login = () => {
                   />
                   Remember me
                 </RememberMe>
-                <ForgotPassword href="/forgot-password">Forgot Password?</ForgotPassword>
+                <ForgotPassword onClick={() => navigate('/forgot-password')}>
+                  Forgot Password?
+                </ForgotPassword>
               </FormOptions>
 
               <SubmitButton
@@ -523,11 +525,16 @@ const RememberMe = styled.label`
 const ForgotPassword = styled.a`
   font-size: 0.9rem;
   color: #666;
+  background: none;
+  border: none;
+  cursor: pointer;
   text-decoration: none;
   transition: color 0.3s ease;
+  padding: 0;
 
   &:hover {
     color: black;
+    text-decoration: underline;
   }
 `
 
