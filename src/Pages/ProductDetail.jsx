@@ -205,8 +205,8 @@ const ProductDetail = () => {
 
   return (
     <PageTransition>
-      <Banner />
-      <StandardNavbar />
+      {/* <Banner /> */}
+      {/* <StandardNavbar /> */}
       <Container>
         <ProductSection>
           {/* Image Gallery */}
@@ -451,7 +451,7 @@ const ProductDetail = () => {
           )}
         </AnimatePresence>
       </Container>
-      <Footer />
+      {/* <Footer /> */}
     </PageTransition>
   )
 }
