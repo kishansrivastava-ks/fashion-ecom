@@ -40,7 +40,7 @@ const ForgotPassword = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            SHAASHEE
+            VASTRAA
           </Logo>
 
           <BrandingContent
@@ -91,7 +91,7 @@ const ForgotPassword = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <MobileLogo>SHAASHEE</MobileLogo>
+            <MobileLogo>VASTRAA</MobileLogo>
 
             {!success ? (
               <>

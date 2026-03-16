@@ -20,7 +20,7 @@ const StyledBanner = styled.div`
 `
 
 function Banner() {
-  return <StyledBanner>SHAASHEE</StyledBanner>
+  return <StyledBanner>VASTRAA</StyledBanner>
 }
 
 export default Banner

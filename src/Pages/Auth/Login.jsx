@@ -76,7 +76,7 @@ const Login = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            SHAASHEE
+            VASTRAA
           </Logo>
 
           <BrandingContent
@@ -115,8 +115,8 @@ const Login = () => {
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             <TestimonialText>
-              "The quality and craftsmanship of Shaashee Fashion pieces are unmatched. Every
-              purchase feels like an investment in timeless elegance."
+              "The quality and craftsmanship of Vastraa Fashion pieces are unmatched. Every purchase
+              feels like an investment in timeless elegance."
             </TestimonialText>
             <TestimonialAuthor>— Priya S., Verified Customer</TestimonialAuthor>
           </Testimonial>
@@ -133,7 +133,7 @@ const Login = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <MobileLogo>SHAASHEE</MobileLogo>
+            <MobileLogo>Vastraa</MobileLogo>
 
             <FormHeader>
               <FormTitle>Sign In</FormTitle>
@@ -210,7 +210,7 @@ const Login = () => {
               </SubmitButton>
             </FormWrapper>
 
-            <Divider>New to Shaashee?</Divider>
+            <Divider>New to Vastraa?</Divider>
 
             <SignupPrompt>
               Don't have an account? <a href="/signup">Create one now</a>

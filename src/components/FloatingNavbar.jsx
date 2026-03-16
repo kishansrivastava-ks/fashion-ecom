@@ -492,7 +492,7 @@ const FloatingNavbar = () => {
             whileTap={{ scale: 0.95 }}
             onClick={() => navigate('/')}
           >
-            SHAASHEE
+            VASTRAA
           </Brand>
 
           {/* Desktop Navigation */}

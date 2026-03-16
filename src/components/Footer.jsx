@@ -497,7 +497,7 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <BrandLogo>SHAASHEE</BrandLogo>
+            <BrandLogo>VASTRAA</BrandLogo>
             <BrandTagline>
               Redefining modern fashion through the perfect blend of traditional craftsmanship and
               contemporary design. Where every piece tells a story of elegance and sophistication.
@@ -599,7 +599,7 @@ const Footer = () => {
                 <ContactIcon>
                   <Mail size={16} />
                 </ContactIcon>
-                <div>hello@shasheefashion.com</div>
+                <div>hello@vastraafashion.com</div>
               </ContactItem>
               <ContactItem>
                 <ContactIcon>
@@ -708,7 +708,7 @@ const Footer = () => {
       <BottomSection>
         <BottomContainer>
           <Copyright>
-            © {currentYear} SHAASHEE Fashion. All rights reserved. Designed with ❤️ in India
+            © {currentYear} VASTRAA Fashion. All rights reserved. Designed with ❤️ in India
           </Copyright>
 
           <LegalLinks>

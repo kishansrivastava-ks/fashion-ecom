@@ -122,7 +122,7 @@ const StandardNavbar = () => {
           </MobileMenuToggle>
 
           {/* 2. Center/Left: Brand */}
-          <Brand>SHAASHEE</Brand>
+          <Brand>VASTRAA</Brand>
 
           {/* 3. Center: Desktop Nav (Hidden on Mobile) */}
           <CenterNav>

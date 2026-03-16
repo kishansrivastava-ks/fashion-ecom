@@ -109,7 +109,7 @@ const Signup = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            SHAASHEE
+            VASTRAA
           </Logo>
 
           <BrandingContent
@@ -117,7 +117,7 @@ const Signup = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <BrandingTitle>Join the Shaashee Fashion Family</BrandingTitle>
+            <BrandingTitle>Join the VASTRAA Fashion Family</BrandingTitle>
 
             <BrandingText>
               Create your account today and unlock a world of exclusive fashion, personalized
@@ -169,7 +169,7 @@ const Signup = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <MobileLogo>SHAASHEE</MobileLogo>
+            <MobileLogo>VASTRAA</MobileLogo>
 
             <FormHeader>
               <FormTitle>Create Account</FormTitle>
